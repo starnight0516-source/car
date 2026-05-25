@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>換車成本分析｜CRV6 vs Foxtron Cavira Emerge 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root{
+  --blue:#1D4ED8; --blue-l:#EFF6FF; --blue-bd:#BFDBFE;
+  --crv:#B45309;  --crv-l:#FFF7ED; --crv-bd:#FED7AA;
+  --grn:#15803D;  --grn-l:#F0FDF4; --grn-bd:#BBF7D0;
+  --red:#B91C1C;  --red-l:#FEF2F2; --red-bd:#FECACA;
+  --amber:#92400E; --amber-l:#FFFBEB; --amber-bd:#FDE68A;
+  --ink:#0F172A; --body:#1E293B; --muted:#64748B; --faint:#94A3B8;
+  --border:#E2E8F0; --bg:#F8FAFC; --card:#FFFFFF;
+  --f:'Inter','Noto Sans TC',system-ui,sans-serif;
+  --r:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--f);color:var(--body);background:var(--bg);font-size:20px;line-height:1.9}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--border);
+  display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+.nav-logo{display:flex;align-items:center;padding:0 20px 0 16px;font-size:17px;font-weight:800;
+  color:var(--blue);white-space:nowrap;border-right:1px solid var(--border);flex-shrink:0;letter-spacing:.3px}
+a.nl{padding:13px 14px;font-size:16px;font-weight:600;color:var(--muted);white-space:nowrap;
+  text-decoration:none;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;flex-shrink:0}
+a.nl:hover{color:var(--blue)}
+a.nl.on{color:var(--blue);border-bottom-color:var(--blue)}
+
+/* WRAPPER */
+.wrap{max-width:1060px;margin:0 auto;padding:60px 28px}
+.wrap+.wrap{padding-top:0}
+.divider{max-width:1060px;margin:0 auto;height:1px;background:var(--border)}
+
+/* PAGE HEADER */
+.ph{margin-bottom:28px}
+.ph-num{font-size:16px;font-weight:700;color:var(--blue);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px}
+.ph-title{font-size:36px;font-weight:800;color:var(--ink);line-height:1.2;margin-bottom:6px}
+.ph-sub{font-size:18px;color:var(--muted)}
+
+/* HERO / COVER */
+.hero{background:linear-gradient(135deg,#1E3A8A 0%,#1D4ED8 100%);display:grid;grid-template-columns:1fr 1fr}
+.hero-l{padding:52px 44px;display:flex;flex-direction:column;justify-content:center;gap:18px;background:linear-gradient(135deg,#1E3A8A,#2563EB)}
+.hero-r{background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-left:1px solid rgba(255,255,255,.15);padding:52px 44px;display:flex;flex-direction:column;justify-content:center;gap:18px}
+.hero-eye{font-size:15px;font-weight:700;letter-spacing:3px;color:rgba(255,255,255,.6);text-transform:uppercase}
+.hero-h{font-size:clamp(30px,4vw,50px);font-weight:800;color:#fff;line-height:1.1}
+.hero-h em{color:#FCD34D;font-style:normal}
+.hero-tag{display:inline-block;padding:4px 11px;border-radius:4px;font-size:14px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.tc{background:var(--crv);color:#FFF7ED} .te{background:var(--blue);color:#EFF6FF}
+.hero-name{font-size:24px;font-weight:700;color:#fff}
+.hero-sub{font-size:17px;color:rgba(255,255,255,.8)}
+.hero-meta{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);border-radius:8px;overflow:hidden}
+.hmc{background:rgba(255,255,255,.12);padding:10px 14px}
+.hmk{font-size:15px;font-weight:700;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.hmv{font-size:18px;font-weight:700;color:#fff}
+.hero-kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.hk{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:10px 13px}
+.hkl{font-size:14px;font-weight:700;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.hkv{font-size:26px;font-weight:800}
+
+/* KPI ROW */
+.krow{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px;margin-bottom:24px}
+.kc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;position:relative;overflow:hidden}
+.kc::before{content:"";position:absolute;top:0;left:0;right:0;height:3px}
+.kb::before{background:var(--blue)} .kb .kv{color:var(--blue)}
+.kcrv::before{background:var(--crv)} .kcrv .kv{color:var(--crv)}
+.kg::before{background:var(--grn)} .kg .kv{color:var(--grn)}
+.kr::before{background:var(--red)} .kr .kv{color:var(--red)}
+.km::before{background:var(--muted)} .km .kv{color:var(--muted)}
+.kl{font-size:16px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.kv{font-size:34px;font-weight:800;color:var(--ink);line-height:1}
+.ks{font-size:16px;color:var(--muted);margin-top:5px}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r)}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:18px}
+.tbl th{background:var(--ink);color:#fff;padding:11px 14px;font-size:14px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;text-align:left}
+.tbl th:not(:first-child){text-align:right}
+.tbl td{padding:13px 16px;border-bottom:1px solid var(--border);color:var(--body)}
+.tbl td:not(:first-child){text-align:right;font-variant-numeric:tabular-nums}
+.tbl tr:nth-child(even) td{background:#FAFBFD}
+.tbl tr:last-child td{border-bottom:none}
+.tbl .tot td{background:var(--ink);color:#fff;font-weight:700}
+.tbl .sub td{background:#F1F5F9;font-weight:700;color:var(--ink)}
+.pos{color:var(--grn);font-weight:700} .neg{color:var(--red);font-weight:700}
+.cbl{color:var(--blue);font-weight:700} .ccr{color:var(--crv);font-weight:700}
+.cat{font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 6px;border-radius:3px;margin-right:4px}
+.cs{background:var(--grn-l);color:var(--grn)}
+.cb2{background:var(--red-l);color:var(--red)}
+.cm{background:#F1F5F9;color:var(--muted)}
+
+/* INFO BOX */
+.ib{padding:14px 18px;border-radius:8px;font-size:18px;line-height:1.9;font-weight:500;margin:16px 0}
+.ib.blue{background:var(--blue-l);border-left:3px solid var(--blue);color:#1E3A8A}
+.ib.grn{background:var(--grn-l);border-left:3px solid var(--grn);color:#14532D}
+.ib.warn{background:var(--amber-l);border-left:3px solid var(--amber);color:var(--amber)}
+.ib.red{background:var(--red-l);border-left:3px solid var(--red);color:#7F1D1D}
+
+/* SPEC GRID */
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:20px}
+.scol{background:var(--card)}
+.shd{padding:14px 20px;font-size:18px;font-weight:700;color:#fff}
+.shd.hc{background:var(--crv)} .shd.he{background:var(--blue)}
+.shd small{display:block;font-weight:400;font-size:16px;opacity:.8;margin-top:2px}
+.sr{display:grid;grid-template-columns:110px 1fr;padding:11px 20px;border-bottom:1px solid var(--border);gap:10px;align-items:start;font-size:18px}
+.sr:last-child{border-bottom:none}
+.sr:nth-child(even){background:#FAFBFD}
+.sk{color:var(--muted);font-size:16px;padding-top:1px}
+.sv{font-weight:500;color:var(--ink)}
+.sv.ev{color:var(--blue);font-weight:700}
+.bge{display:inline-block;font-size:13px;padding:1px 5px;border-radius:3px;margin-left:4px;font-weight:700;vertical-align:middle}
+.bgg{background:var(--grn-l);color:var(--grn)}
+.bgb{background:var(--blue-l);color:var(--blue)}
+.bga{background:var(--amber-l);color:var(--amber)}
+
+/* G2 G3 */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+
+/* CHART CARD */
+.cc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px}
+.ccl{font-size:16px;font-weight:700;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:14px}
+
+/* TIRE TABLE */
+.tt{width:100%;border-collapse:collapse;font-size:17px;border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.tt th{background:var(--ink);color:#fff;padding:10px 11px;font-size:15px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;text-align:center}
+.tt th:first-child{text-align:left}
+.tt td{padding:10px 11px;border-bottom:1px solid var(--border);text-align:center;color:var(--body)}
+.tt td:first-child{text-align:left}
+.tt tr:nth-child(even) td{background:#FAFBFD}
+.tt tr:last-child td{border-bottom:none}
+.tw{display:inline-block;padding:2px 8px;border-radius:4px;font-weight:800;font-size:16px;color:#fff;min-width:38px;text-align:center}
+.twa{background:var(--grn)} .twb{background:var(--blue)} .twc{background:#D97706} .twd{background:var(--red)}
+.ga{color:var(--blue);font-weight:700} .gb{color:#D97706;font-weight:700}
+
+/* BRAND CARD */
+.bc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.bch{padding:11px 15px;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.bcn{font-size:18px;font-weight:700}
+.bcb{font-size:16px;opacity:.75;margin-top:2px}
+.bcbody{padding:14px 16px;font-size:17px}
+.bcrow{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)}
+.bcrow:last-of-type{border-bottom:none}
+.bck{color:var(--muted)} .bcv{font-weight:700;color:var(--ink)}
+.pros{margin-top:10px}
+.pros p{font-size:13.5px;padding:3px 0;line-height:1.9}
+.pro{color:var(--grn)} .con{color:var(--red)}
+.rbg{font-size:14px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap;border:1.5px solid currentColor;background:transparent}
+
+/* STEPS */
+.steps{display:flex;gap:0;overflow-x:auto;margin:14px 0}
+.step{flex:1;min-width:90px;background:var(--card);border:1px solid var(--border);border-left:none;padding:12px 8px;text-align:center}
+.step:first-child{border-left:1px solid var(--border);border-radius:8px 0 0 8px}
+.step:last-child{border-radius:0 8px 8px 0}
+.sn{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#fff;margin:0 auto 6px}
+.st{font-size:16px;font-weight:700;color:var(--ink);line-height:1.3}
+.ss{font-size:16px;color:var(--muted);margin-top:3px}
+
+/* SCENARIO CARD */
+.sc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.sch{padding:12px 18px;color:#fff;font-weight:700;font-size:18px}
+.scb{padding:14px 16px}
+.scbig{font-size:48px;font-weight:800;line-height:1;margin:6px 0 4px;color:var(--ink)}
+.scsub{font-size:16px;color:var(--muted)}
+
+/* VERDICT */
+.vc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px}
+.vt{font-size:19px;font-weight:700;margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--border)}
+.vi{display:flex;gap:8px;font-size:18px;padding:5px 0;line-height:1.9;color:var(--body)}
+.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.vlbl{font-size:15px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin:12px 0 7px}
+
+/* LOAN */
+.loan{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.loanhd{padding:13px 18px;font-weight:700;font-size:18px;color:#fff;display:flex;justify-content:space-between;align-items:center}
+.lrate{font-size:16px;font-weight:400;opacity:.85}
+.lt{width:100%;border-collapse:collapse;font-size:14.5px}
+.lt th{background:#F1F5F9;padding:11px 15px;font-size:15px;color:var(--muted);letter-spacing:.5px;font-weight:700;text-align:right;border-bottom:1px solid var(--border)}
+.lt th:first-child{text-align:left}
+.lt td{padding:10px 14px;border-bottom:1px solid var(--border);text-align:right;font-variant-numeric:tabular-nums;color:var(--body)}
+.lt td:first-child{text-align:left;color:var(--muted)}
+.lt tr:last-child td{border-bottom:none}
+.lh{font-weight:800;font-size:19px}
+
+/* FINAL HERO */
+.final{background:var(--ink);border-radius:var(--r);padding:36px;margin-bottom:20px}
+.fkpis{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-bottom:24px}
+.fkl{font-size:15px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px}
+.fkv{font-size:53px;font-weight:800;line-height:1}
+.frecs{background:rgba(0,0,0,.2);border-radius:8px;padding:20px 24px}
+.frt{font-size:15px;font-weight:700;color:#93C5FD;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.fr{display:flex;gap:9px;font-size:18px;color:#93C5FD;padding:6px 0;line-height:1.9}
+.frdot{width:5px;height:5px;background:var(--blue);border-radius:50%;flex-shrink:0;margin-top:6px}
+
+/* LEGEND */
+.lgd{display:flex;gap:14px;flex-wrap:wrap;font-size:16px;color:var(--muted);margin-top:10px}
+.lgd span{display:flex;align-items:center;gap:5px}
+.lsq{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+
+/* FOOT */
+footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padding:28px;line-height:1.9}
+
+@media(max-width:720px){
+  /* layout */
+  .hero,.sg,.g2,.g3,.fkpis{grid-template-columns:1fr}
+  .hero-r{border-left:none;border-top:1px solid rgba(255,255,255,.2);padding:32px 24px}
+  .hero-l{padding:36px 24px}
+  .wrap{padding:32px 16px}
+  /* nav */
+  .nav-logo{padding:0 14px 0 12px;font-size:16px}
+  a.nl{padding:11px 10px;font-size:16px}
+  /* spec */
+  .sr{grid-template-columns:1fr}
+  .sk{display:none}
+  /* steps */
+  .steps{flex-direction:column}
+  .step{border-left:1px solid var(--border)!important;border-radius:8px!important;margin-bottom:3px}
+  /* kpi */
+  .krow{grid-template-columns:1fr 1fr}
+  .kv{font-size:24px}
+  /* hero kpis */
+  .hero-kpis{grid-template-columns:1fr 1fr}
+  /* g3 loan */
+  .g3{grid-template-columns:1fr}
+  /* final */
+  .final{padding:24px 20px}
+  .fkv{font-size:34px}
+  /* table horizontal scroll */
+  .tt-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  /* scenario big numbers */
+  .scbig{font-size:34px}
+  /* chart height */
+}
+@media(max-width:480px){
+  .wrap{padding:24px 14px}
+  .krow{grid-template-columns:1fr 1fr}
+  .hero-h{font-size:34px}
+  .fkpis{grid-template-columns:1fr}
+  .hero-meta{grid-template-columns:1fr 1fr}
+  .ib{font-size:16px;padding:12px 15px}
+  .ph-title{font-size:26px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">CRV6 × CAVIRA</div>
+  <a class="nl" href="#hero">封面</a>
+  <a class="nl" href="#s01">規格對比</a>
+  <a class="nl" href="#s02">換車成本</a>
+  <a class="nl" href="#s03">能源費用</a>
+  <a class="nl" href="#s04">輪胎保險</a>
+  <a class="nl" href="#s05">10年總成本</a>
+  <a class="nl" href="#s06">損益平衡</a>
+  <a class="nl" href="#s07">輪胎指南</a>
+  <a class="nl" href="#s08">綜合評估</a>
+  <a class="nl" href="#s09">充電樁</a>
+  <a class="nl" href="#s10">社區安裝</a>
+  <a class="nl" href="#s11">您的方案</a>
+  <a class="nl" href="#s11b">電費影響</a><a class="nl" href="#s12">資金規劃</a>
+  <a class="nl" href="#s13">理財建議</a>
+  <a class="nl" href="#s14">最終結論</a><a class="nl" href="#s15">互動試算</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="hero">
+  <div class="hero-l">
+    <div class="hero-eye">換車成本總分析報告 · 2026.05.20</div>
+    <div class="hero-h">十年<em>總持有</em><br>成本分析</div>
+    <div>
+      <span class="hero-tag tc" style="display:inline-block;margin-bottom:8px">持有中</span>
+      <div class="hero-name">Honda CR-V 6th Gen Prestige</div>
+      <div class="hero-sub">2024年式 · 白色 · 7萬公里 · 保固至 2029/9</div>
+    </div>
+    <div class="hero-meta">
+      <div class="hmc"><div class="hmk">年均里程</div><div class="hmv">42,000 km</div></div>
+      <div class="hmc"><div class="hmk">分析年限</div><div class="hmv">10 年</div></div>
+      <div class="hmc"><div class="hmk">CRV 估值</div><div class="hmv">保守 80 萬</div></div>
+      <div class="hmc"><div class="hmk">電費基準</div><div class="hmv">離峰 $2.44/度</div></div>
+    </div>
+  </div>
+  <div class="hero-r">
+    <span class="hero-tag te" style="display:inline-block;margin-bottom:8px">換購目標</span>
+    <div class="hero-name">Foxtron Cavira Emerge</div>
+    <div class="hero-sub">2026年式 · 純電 578km WLTC · 82.74kWh LFP · 2,165kg（官方）</div>
+    <div class="hero-kpis">
+      <div class="hk"><div class="hkl">預售價</div><div class="hkv" style="color:#60A5FA">123.9萬</div></div>
+      <div class="hk"><div class="hkl">換車缺口</div><div class="hkv" style="color:#FCD34D">47.4萬</div></div>
+      <div class="hk"><div class="hkl">10年省下</div><div class="hkv" style="color:#4ADE80">59.3萬</div></div>
+      <div class="hk"><div class="hkl">損益平衡</div><div class="hkv" style="color:#93C5FD">3.9年</div></div>
+    </div>
+    <div style="font-size:19px;color:#3B5276;line-height:1.9;margin-top:4px">
+      共 14 個章節 · 規格 · 財務 · 充電樁 · 輪胎 · 投資建議<br>
+      上方導覽列點擊即可跳至各章節
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 01 規格 -->
+<div class="wrap" id="s01">
+  <div class="ph"><div class="ph-num">01</div><div class="ph-title">車款規格對比</div><div class="ph-sub">官方規格資料 · Foxtron 原廠規格表確認</div></div>
+  <div class="sg">
+    <div class="scol">
+      <div class="shd hc">HONDA CR-V 6th Gen Prestige<small>持有中 · 保守估值 80 萬</small></div>
+      <div class="sr"><div class="sk">年份</div><div class="sv">2024年式（持有中）</div></div>
+      <div class="sr"><div class="sk">動力</div><div class="sv">1.5T 直四渦輪 194 hp / 243 Nm</div></div>
+      <div class="sr"><div class="sk">能源/油耗</div><div class="sv">汽油 · 市區實測 8.5L/100km</div></div>
+      <div class="sr"><div class="sk">車身尺碼</div><div class="sv">4,690×1,865×1,680 mm</div></div>
+      <div class="sr"><div class="sk">軸距</div><div class="sv">2,700 mm</div></div>
+      <div class="sr"><div class="sk">車重</div><div class="sv">約 1,580 kg</div></div>
+      <div class="sr"><div class="sk">輪胎</div><div class="sv">18吋 · 235/60R18</div></div>
+      <div class="sr"><div class="sk">特色配備</div><div class="sv">BOSE音響、全景天窗、Honda Sensing、環景</div></div>
+      <div class="sr"><div class="sk">保固</div><div class="sv">原廠保固至 2029/9 <span class="bge bga">賣車最佳時機</span></div></div>
+    </div>
+    <div class="scol">
+      <div class="shd he">FOXTRON CAVIRA Emerge<small>2026/6/17 上市 · 預售 123.9 萬</small></div>
+      <div class="sr"><div class="sk">年份</div><div class="sv ev">2026年式（預售，6/17上市）</div></div>
+      <div class="sr"><div class="sk">動力</div><div class="sv ev">單馬達後驅 RWD · 249 hp / 350 Nm</div></div>
+      <div class="sr"><div class="sk">電池/電耗</div><div class="sv ev">82.74kWh LFP · 15.8 kWh/100km（含充損）</div></div>
+      <div class="sr"><div class="sk">車身尺碼</div><div class="sv ev">4,695×1,905×1,625 mm</div></div>
+      <div class="sr"><div class="sk">軸距</div><div class="sv ev">2,920 mm</div></div>
+      <div class="sr"><div class="sk">車重</div><div class="sv ev">2,165 kg <span class="bge bgb">官方公布</span></div></div>
+      <div class="sr"><div class="sk">輪胎</div><div class="sv ev">18吋標配 225/55R18 · 可選配 19吋</div></div>
+      <div class="sr"><div class="sk">特色配備</div><div class="sv ev">四門隔音玻璃、15.6吋、V2L雙供電、OTA</div></div>
+      <div class="sr"><div class="sk">快充</div><div class="sv ev">CCS2 DC 175 kW <span class="bge bgg">10→80% 約30分</span></div></div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 02 換車成本 -->
+<div class="wrap" id="s02">
+  <div class="ph"><div class="ph-num">02</div><div class="ph-title">換車一次性成本</div><div class="ph-sub">CRV6 出售 → Cavira Emerge 購入，淨支出計算</div></div>
+  <div class="krow">
+    <div class="kc kcrv"><div class="kl">CRV6 出售（保守）</div><div class="kv">80萬</div><div class="ks">白色 Prestige，7萬公里</div></div>
+    <div class="kc kb"><div class="kl">Cavira Emerge 售價</div><div class="kv">123.9萬</div><div class="ks">2026/5/20 預售</div></div>
+    <div class="kc km"><div class="kl">充電樁 + 規費</div><div class="kv">3.5萬</div><div class="ks">7kW 安裝 + 過戶費</div></div>
+    <div class="kc kr"><div class="kl">換車淨支出</div><div class="kv">47.4萬</div><div class="ks">123.9 − 80 + 3.5</div></div>
+  </div>
+  <div class="card" style="overflow:hidden;margin-bottom:14px">
+    <table class="tbl">
+      <thead><tr><th>類別</th><th>項目</th><th>金額（萬）</th><th>說明</th></tr></thead>
+      <tbody>
+        <tr><td><span class="cat cs">賣出</span></td><td>CRV6 Prestige 出售</td><td class="pos">＋80.0</td><td style="font-size:16px;color:var(--muted)">自售可掛 93–96 萬</td></tr>
+        <tr><td><span class="cat cb2">購入</span></td><td>Cavira Emerge 車價</td><td class="neg">−123.9</td><td style="font-size:16px;color:var(--muted)">含免貨物稅（省 6–8 萬）</td></tr>
+        <tr><td><span class="cat cb2">設備</span></td><td>家用 7kW 充電樁安裝</td><td class="neg">−3.0</td><td style="font-size:16px;color:var(--muted)">EVOASIS / Zerova，含拉線</td></tr>
+        <tr><td><span class="cat cm">雜費</span></td><td>過戶規費 + 牌照費</td><td class="neg">−0.5</td><td style="font-size:16px;color:var(--muted)">電動車免燃料稅</td></tr>
+      </tbody>
+      <tfoot><tr class="tot"><td colspan="2">換車淨支出合計</td><td>−47.4 萬</td><td style="font-size:16px">首年一次性缺口</td></tr></tfoot>
+    </table>
+  </div>
+  <div class="ib blue">💡 電動車貨物稅全免（省 6–8 萬）、燃料稅全免（年省 $3,600）。首半年 U-POWER 等 9 家業者免費充電吃到飽。符合舊換新補助另可申請。</div>
+  <div class="g2" style="margin-top:16px">
+    <div style="background:var(--crv-l);border:1px solid var(--crv-bd);border-radius:var(--r);padding:20px 24px">
+      <div style="font-size:17px;font-weight:700;color:var(--crv);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">CRV6 出售後淨得</div>
+      <div style="font-size:43px;font-weight:800;color:var(--crv)">80 萬</div>
+      <div style="font-size:16px;color:var(--crv);opacity:.8;margin-top:4px">保守估值 / 自售試掛 93–96 萬</div>
+    </div>
+    <div style="background:var(--red-l);border:1px solid var(--red-bd);border-radius:var(--r);padding:20px 24px">
+      <div style="font-size:17px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">需籌備資金缺口</div>
+      <div style="font-size:43px;font-weight:800;color:var(--red)">47.4 萬</div>
+      <div style="font-size:16px;color:var(--red);opacity:.8;margin-top:4px">車貸 / 信貸 / 房貸增貸 → 詳見第12頁</div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 03 能源費 -->
+<div class="wrap" id="s03">
+  <div class="ph"><div class="ph-num">03</div><div class="ph-title">能源費用 × 時間電價詳解</div><div class="ph-sub">燃油 vs 電費 · 10年完整對比 · 油價基準 <b>$32/L</b>（2026年均價）· 台電時間電價（2026/4月起）</div></div>
+  <div class="g2" style="margin-bottom:20px">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="background:var(--crv-l);border:1px solid var(--crv-bd);border-radius:var(--r);padding:20px 24px">
+        <div style="font-size:17px;font-weight:700;color:var(--crv);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">CRV6 燃油費 10年</div>
+        <div style="font-size:46px;font-weight:800;color:var(--crv)">114.2萬</div>
+        <div style="font-size:16px;color:var(--crv);opacity:.8;margin-top:4px">每公里 $2.72 · 8.5L/100km × $32/L（10年均價）</div>
+      </div>
+      <div style="background:var(--blue-l);border:1px solid var(--blue-bd);border-radius:var(--r);padding:20px 24px">
+        <div style="font-size:17px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Cavira 充電費 10年（時間電價）</div>
+        <div style="font-size:46px;font-weight:800;color:var(--blue)">19.3萬</div>
+        <div style="font-size:16px;color:var(--blue);opacity:.8;margin-top:4px">每公里 $0.46 · 有效加權 $2.91/度（85%家用離峰＋15%外充）</div>
+      </div>
+      <div style="background:var(--grn-l);border:1px solid var(--grn-bd);border-radius:var(--r);padding:20px 24px">
+        <div style="font-size:17px;font-weight:700;color:var(--grn);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">10年能源費省下</div>
+        <div style="font-size:46px;font-weight:800;color:var(--grn)">94.9萬</div>
+        <div style="font-size:16px;color:var(--grn);opacity:.8;margin-top:4px">★ 最大節省項目</div>
+      </div>
+    </div>
+    <div class="cc">
+      <div class="ccl">台電住宅時間電價費率（2026/4月起）</div>
+      <div class="card" style="overflow:hidden;margin-bottom:16px">
+        <table class="tbl" style="font-size:16px">
+          <thead><tr><th>時段</th><th style="text-align:center">費率</th><th style="text-align:center">建議</th></tr></thead>
+          <tbody>
+            <tr><td>基本費（每月固定）</td><td style="text-align:center">$75.7/月</td><td style="text-align:center;font-size:19px;color:var(--muted)">固定</td></tr>
+            <tr style="background:#FFF5F5"><td>夏月 尖峰 07:00–22:00（6–9月）</td><td style="text-align:center;color:var(--red);font-weight:700">$4.68/度</td><td style="text-align:center;color:var(--red);font-size:19px">避開</td></tr>
+            <tr style="background:var(--grn-l)"><td><b style="color:var(--grn)">夏月 離峰 ★</b> 22:00–07:00＋假日</td><td style="text-align:center;color:var(--grn);font-weight:700">$2.44/度</td><td style="text-align:center;color:var(--grn);font-size:19px">最佳</td></tr>
+            <tr><td>非夏月 尖峰 09:00–22:00（10–5月）</td><td style="text-align:center;color:#D97706;font-weight:700">$3.21/度</td><td style="text-align:center;color:var(--muted);font-size:19px">避開</td></tr>
+            <tr style="background:var(--grn-l)"><td><b style="color:var(--grn)">非夏月 離峰 ★★</b> 22:00–09:00＋假日</td><td style="text-align:center;color:var(--grn);font-weight:700">$1.78/度</td><td style="text-align:center;color:var(--grn);font-size:19px">最省</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="ccl">10年費用對比（萬元）</div>
+      <div style="position:relative;height:200px"><canvas id="eChart" role="img" aria-label="CRV6 114.2萬 vs Cavira 19.3萬"></canvas></div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 04 輪胎保險 -->
+<div class="wrap" id="s04">
+  <div class="ph"><div class="ph-num">04</div><div class="ph-title">輪胎 &amp; 保險成本詳解</div><div class="ph-sub">⚠ 兩項最易被低估的 EV 隱性成本</div></div>
+  <div class="ib warn">⚠ Cavira 車重 2,165 kg（官方公布），比 CRV6 重 585 kg，EV 瞬間扭力大，輪胎磨耗速度快約 25–35%。</div>
+  <div class="g3" style="margin-bottom:20px">
+    <div style="background:var(--crv-l);border:1px solid var(--crv-bd);border-radius:var(--r);padding:16px 18px">
+      <div style="font-size:17px;font-weight:700;color:var(--crv);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">CRV6 · 235/60R18</div>
+      <div style="font-size:12.5px;color:var(--body);display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">壽命/套</span><b>40,000 km</b></div>
+        <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">10年換胎</span><b>10.5 次</b></div>
+        <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">每套費用</span><b>$16,500</b></div>
+      </div>
+      <div style="background:rgba(180,83,9,.1);border-radius:7px;padding:9px;text-align:center;margin-top:12px">
+        <div style="font-size:16px;font-weight:700;color:var(--crv);text-transform:uppercase;letter-spacing:.5px">10年輪胎費</div>
+        <div style="font-size:31px;font-weight:800;color:var(--crv)">17.3萬</div>
+      </div>
+    </div>
+    <div style="background:var(--blue-l);border:2px solid var(--blue);border-radius:var(--r);padding:16px 18px">
+      <div style="font-size:17px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Cavira 18吋 · 225/55R18（官方）</div>
+      <div style="font-size:12.5px;color:var(--body);display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">壽命/套</span><b style="color:var(--red)">30,000 km ↓</b></div>
+        <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">10年換胎</span><b>14.0 次</b></div>
+        <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">每套費用</span><b>$18,000（EV胎）</b></div>
+      </div>
+      <div style="background:rgba(29,78,216,.1);border-radius:7px;padding:9px;text-align:center;margin-top:12px">
+        <div style="font-size:16px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.5px">10年輪胎費</div>
+        <div style="font-size:31px;font-weight:800;color:var(--blue)">25.2萬</div>
+      </div>
+    </div>
+    <div style="background:var(--grn-l);border:1px solid var(--grn-bd);border-radius:var(--r);padding:16px 18px">
+      <div style="font-size:17px;font-weight:700;color:var(--grn);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">19吋選配 + Falken FK520L</div>
+      <div style="font-size:12.5px;color:var(--body);display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">壽命/套</span><b>28,000 km</b></div>
+        <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">10年換胎</span><b>14.9 次</b></div>
+        <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">每套費用</span><b>$16,500（飛隼）</b></div>
+      </div>
+      <div style="background:rgba(21,128,61,.1);border-radius:7px;padding:9px;text-align:center;margin-top:12px">
+        <div style="font-size:16px;font-weight:700;color:var(--grn);text-transform:uppercase;letter-spacing:.5px">10年輪胎費</div>
+        <div style="font-size:31px;font-weight:800;color:var(--grn)">24.6萬</div>
+      </div>
+    </div>
+  </div>
+  <div class="cc">
+    <div class="ccl">保險費逐年比較（萬元）</div>
+    <div style="position:relative;height:220px"><canvas id="iChart" role="img" aria-label="CRV6 vs Cavira 保費比較"></canvas></div>
+    <div class="lgd"><span><span class="lsq" style="background:var(--crv)"></span>CRV6 10年合計 17.4萬</span><span><span class="lsq" style="background:var(--blue)"></span>Cavira 10年合計 26.9萬（差 9.5萬）</span></div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 05 總成本 -->
+<div class="wrap" id="s05">
+  <div class="ph"><div class="ph-num">05</div><div class="ph-title">十年總持有成本 · 全項比較</div><div class="ph-sub">含換車 · 能源 · 保養 · 輪胎 · 保險 · 稅費 · 殘值</div></div>
+  <div class="g2" style="margin-bottom:20px">
+    <div class="cc">
+      <div class="ccl">各項 10 年費用對比（萬元）</div>
+      <div style="position:relative;height:300px"><canvas id="tChart" role="img" aria-label="總成本對比"></canvas></div>
+      <div class="lgd"><span><span class="lsq" style="background:var(--crv)"></span>CRV6 合計 168.1萬</span><span><span class="lsq" style="background:var(--blue)"></span>Cavira 合計 102.9萬</span></div>
+    </div>
+    <div class="card" style="overflow:hidden">
+      <table class="tbl">
+        <thead><tr><th>成本項目</th><th>CRV6</th><th>Cavira</th><th>差異</th></tr></thead>
+        <tbody>
+          <tr><td>換車成本</td><td style="color:var(--muted)">—</td><td class="cbl">47.4</td><td class="neg">多 47.4</td></tr>
+          <tr><td>燃油 / 電費</td><td class="ccr">114.2</td><td class="cbl">19.3</td><td class="pos">省 94.9</td></tr>
+          <tr><td>保養維修</td><td class="ccr">18.2</td><td class="cbl">5.8</td><td class="pos">省 12.4</td></tr>
+          <tr><td>輪胎費 ⚠</td><td class="ccr">17.3</td><td class="cbl">25.2</td><td class="neg">多 7.9</td></tr>
+          <tr><td>保險費 ⚠</td><td class="ccr">17.4</td><td class="cbl">26.9</td><td class="neg">多 9.5</td></tr>
+          <tr><td>稅費</td><td class="ccr">8.9</td><td class="cbl">2.2</td><td class="pos">省 6.7</td></tr>
+          <tr><td>殘值（扣）</td><td class="ccr">−8.0</td><td class="cbl">−18.0</td><td class="pos">省 10.0</td></tr>
+        </tbody>
+        <tfoot>
+          <tr class="sub"><td>10年總計</td><td style="color:var(--crv)">168.1萬</td><td style="color:var(--blue)">108.8萬</td><td></td></tr>
+          <tr class="tot"><td>10年省下</td><td colspan="3" style="text-align:right;color:#4ADE80;font-size:20px">59.3 萬</td></tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 06 損益平衡 -->
+<div class="wrap" id="s06">
+  <div class="ph"><div class="ph-num">06</div><div class="ph-title">損益平衡分析</div><div class="ph-sub">換車缺口 47.4 萬，何時回本？</div></div>
+  <div class="krow" style="margin-bottom:20px">
+    <div class="kc kr"><div class="kl">換車缺口</div><div class="kv">47.4萬</div><div class="ks">一次性支出</div></div>
+    <div class="kc kg"><div class="kl">年均淨節省</div><div class="kv">9.7萬</div><div class="ks">扣輪胎保費後</div></div>
+    <div class="kc km"><div class="kl">年額外支出</div><div class="kv">−1.7萬</div><div class="ks">輪胎多0.79＋保費多0.95</div></div>
+    <div class="kc kb"><div class="kl">損益平衡</div><div class="kv">3.5年</div><div class="ks">約 2030 年初（含殘值差）</div></div>
+  </div>
+  <div class="cc">
+    <div class="ccl">累積節省 vs 換車缺口（萬元）</div>
+    <div style="position:relative;height:280px"><canvas id="bChart" role="img" aria-label="損益平衡折線圖"></canvas></div>
+    <div class="lgd"><span><span class="lsq" style="background:var(--grn)"></span>累積節省</span><span><span class="lsq" style="background:var(--blue)"></span>淨餘額（扣換車缺口）</span></div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 07 輪胎指南 -->
+<div class="wrap" id="s07">
+  <div class="ph"><div class="ph-num">07</div><div class="ph-title">輪胎品牌選擇 × 耐磨係數</div><div class="ph-sub">225/55R18（標配 18吋，官方規格）· UTQG Treadwear 完整對比</div></div>
+  <div class="ib blue" style="margin-bottom:16px">📌 耐磨係數越高越耐磨，500 = 標準胎 5 倍壽命。年跑 42,000km 建議選 400+，EV 車重大建議選靜音棉款。牽引力 / 溫度 / 歐盟濕地均以 A 為最佳。</div>
+  <div style="overflow-x:auto;margin-bottom:12px">
+  <table class="tt">
+    <thead><tr><th>品牌 / 型號</th><th>耐磨</th><th>牽引</th><th>溫度</th><th>濕地</th><th>EV</th><th>適用</th><th>四條含安裝</th><th>推薦</th></tr></thead>
+    <tbody>
+      <tr style="background:var(--blue-l)"><td><b>Michelin e.Primacy</b><br><small style="color:var(--muted)">EV專用·低滾阻·靜音棉</small></td><td><span class="tw twa">500</span></td><td class="ga">A</td><td class="ga">A</td><td class="ga">A</td><td>★★★★★</td><td>EV省電首選</td><td style="font-weight:700;color:var(--blue)">$19,500–22,000</td><td style="color:var(--grn);font-weight:700;white-space:nowrap">🥇 EV首推</td></tr>
+      <tr><td><b>Michelin Primacy 5</b><br><small style="color:var(--muted)">長效耐磨·濕地始終如一</small></td><td><span class="tw twa">500</span></td><td class="ga">A</td><td class="ga">A</td><td class="ga">A</td><td>★★★★</td><td>高里程家庭</td><td style="font-weight:700;color:var(--blue)">$17,000–20,000</td><td style="color:var(--blue);font-weight:700;white-space:nowrap">★★★★ 耐用</td></tr>
+      <tr style="background:var(--blue-l)"><td><b>Hankook ION EVO IK01</b><br><small style="color:var(--muted)">EV專用靜音棉·Tesla原配</small></td><td><span class="tw twb">420</span></td><td class="ga">A</td><td class="ga">A</td><td class="ga">A</td><td>★★★★★</td><td>EV靜音重載</td><td style="font-weight:700;color:var(--blue)">$14,500–17,000</td><td style="color:var(--blue);font-weight:700;white-space:nowrap">★★★★ EV靜音</td></tr>
+      <tr><td><b>Bridgestone Turanza T005</b><br><small style="color:var(--muted)">安全穩定·Costco有售</small></td><td><span class="tw twb">440</span></td><td class="ga">A</td><td class="ga">A</td><td class="gb">B</td><td>★★★★</td><td>安全信賴</td><td style="font-weight:700;color:var(--blue)">$16,000–19,000</td><td style="color:var(--muted);font-weight:700;white-space:nowrap">★★★★ 安全</td></tr>
+      <tr><td><b>Continental UltraContact UC6</b><br><small style="color:var(--muted)">乾濕均衡·歐系精工</small></td><td><span class="tw twc">400</span></td><td class="ga">A</td><td class="ga">A</td><td class="ga">A</td><td>★★★</td><td>日常通勤</td><td style="font-weight:700;color:var(--blue)">$15,000–18,000</td><td style="color:var(--muted);font-weight:700;white-space:nowrap">★★★ 均衡</td></tr>
+      <tr style="background:var(--grn-l)"><td><b>Falken AZENIS FK520L</b><br><small style="color:var(--muted)">A級濕地·天然矽配方·2024旗艦</small></td><td><span class="tw twc">380</span></td><td class="ga">A</td><td class="ga">A</td><td class="ga">A</td><td>★★★★</td><td>性價比首選</td><td style="font-weight:700;color:var(--grn)">$12,500–15,500</td><td style="color:var(--grn);font-weight:700;white-space:nowrap">🏅 CP值冠軍</td></tr>
+      <tr><td><b>Falken AZENIS FK510 SUV</b><br><small style="color:var(--muted)">前代旗艦·操控舒適</small></td><td><span class="tw twc">360</span></td><td class="ga">A</td><td class="ga">A</td><td class="gb">B</td><td>★★★★</td><td>操控運動</td><td style="font-weight:700;color:var(--grn)">$11,000–14,000</td><td style="color:var(--grn);font-weight:700;white-space:nowrap">★★★ 操控</td></tr>
+      <tr><td><b>Nankang AS-2+</b><br><small style="color:var(--muted)">台灣本土·平價代步</small></td><td><span class="tw twd">300</span></td><td class="ga">A</td><td class="gb">B</td><td class="gb">B</td><td>★★★</td><td>短途代步</td><td style="font-weight:700;color:var(--muted)">$9,000–11,000</td><td style="color:var(--muted);font-weight:700;white-space:nowrap">★★ 代步</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;font-size:19px;color:var(--muted)">
+    <span style="display:flex;align-items:center;gap:5px"><span style="background:var(--grn);color:#fff;padding:2px 8px;border-radius:3px;font-weight:700;font-size:18px">500+</span>極耐磨</span>
+    <span style="display:flex;align-items:center;gap:5px"><span style="background:var(--blue);color:#fff;padding:2px 8px;border-radius:3px;font-weight:700;font-size:18px">420–499</span>耐磨佳</span>
+    <span style="display:flex;align-items:center;gap:5px"><span style="background:#D97706;color:#fff;padding:2px 8px;border-radius:3px;font-weight:700;font-size:18px">360–419</span>一般</span>
+    <span style="display:flex;align-items:center;gap:5px"><span style="background:var(--red);color:#fff;padding:2px 8px;border-radius:3px;font-weight:700;font-size:18px">&lt;360</span>偏低</span>
+    <span style="margin-left:auto">★ 42,000km/年 → 優先 400+，EV 車重建議靜音棉款</span>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 08 綜合評估 -->
+<div class="wrap" id="s08">
+  <div class="ph"><div class="ph-num">08</div><div class="ph-title">綜合評估與風險提示</div></div>
+  <div class="g2" style="margin-bottom:16px">
+    <div class="vc">
+      <div class="vt" style="color:var(--crv)">方案 A　持續使用 CRV6</div>
+      <div class="vlbl" style="color:var(--grn)">優勢</div>
+      <div class="vi"><div class="dot" style="background:var(--grn)"></div>無換車缺口，資金零壓力</div>
+      <div class="vi"><div class="dot" style="background:var(--grn)"></div>Honda 成熟體系，全台服務據點多</div>
+      <div class="vi"><div class="dot" style="background:var(--grn)"></div>原廠保固至 2029，近期修繕風險低</div>
+      <div class="vi"><div class="dot" style="background:var(--grn)"></div>輪胎費較低（17.3 萬）</div>
+      <div class="vi"><div class="dot" style="background:var(--grn)"></div>保費較低（17.4 萬，車齡遞減）</div>
+      <div class="vlbl" style="color:var(--red)">注意</div>
+      <div class="vi"><div class="dot" style="background:var(--red)"></div>10年燃油費 114.2 萬，長期偏高（以$32/L計）</div>
+      <div class="vi"><div class="dot" style="background:var(--red)"></div>油價上漲風險完全承擔</div>
+      <div class="vi"><div class="dot" style="background:var(--red)"></div>14年車齡後殘值歸零，須再次換車</div>
+    </div>
+    <div class="vc" style="border-color:var(--blue);border-width:2px">
+      <div class="vt" style="color:var(--blue)">方案 B　換購 Cavira Emerge</div>
+      <div class="vlbl" style="color:var(--grn)">優勢</div>
+      <div class="vi"><div class="dot" style="background:var(--grn)"></div>10年省下約 59.3 萬（完整計算）</div>
+      <div class="vi"><div class="dot" style="background:var(--grn)"></div>能源費每年僅 2 萬（vs CRV 12.5 萬）</div>
+      <div class="vi"><div class="dot" style="background:var(--grn)"></div>保養大幅簡化，無換油無皮帶</div>
+      <div class="vi"><div class="dot" style="background:var(--grn)"></div>578km WLTC 長續航，無里程焦慮</div>
+      <div class="vi"><div class="dot" style="background:var(--grn)"></div>V2L 雙供電、OTA 持續更新</div>
+      <div class="vlbl" style="color:var(--red)">注意</div>
+      <div class="vi"><div class="dot" style="background:var(--red)"></div>輪胎費較高（25.2 萬），高里程需注意</div>
+      <div class="vi"><div class="dot" style="background:var(--red)"></div>保費較高（26.9 萬），新車車價高</div>
+      <div class="vi"><div class="dot" style="background:var(--red)"></div>換車缺口 47.4 萬需一次性資金</div>
+      <div class="vi"><div class="dot" style="background:var(--red)"></div>Foxtron 品牌新，服務體系仍建立中</div>
+    </div>
+  </div>
+  <div class="ib warn">⚠ 三大風險：① 輪胎年多 $7,900　② 保費差距 15–20%（建議多比產險）　③ Foxtron 成熟度（6/17 上市後觀察 1–2 月再下訂）</div>
+</div>
+<div class="divider"></div>
+
+<!-- 09 充電樁 -->
+<div class="wrap" id="s09">
+  <div class="ph"><div class="ph-num">09</div><div class="ph-title">台灣本土充電樁品牌比較</div><div class="ph-sub">移除國外品牌 · 專注在地廠商 · 2026年最新市場資料</div></div>
+  <div class="krow" style="margin-bottom:20px">
+    <div class="kc kb"><div class="kl">設備費（7kW）</div><div class="kv" style="font-size:22px">$8,000–22,000</div><div class="ks">依品牌型號</div></div>
+    <div class="kc km"><div class="kl">安裝施工費</div><div class="kv" style="font-size:22px">$8,000–20,000</div><div class="ks">10m內標準安裝</div></div>
+    <div class="kc kg"><div class="kl">EVOASIS 安心裝</div><div class="kv" style="font-size:22px">$32,500起</div><div class="ks">7kW 10m內全包</div></div>
+    <div class="kc km"><div class="kl">台電增容費</div><div class="kv" style="font-size:22px">$0–50,000</div><div class="ks">現有容量足夠則免</div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px">
+    <div class="bc"><div class="bch" style="background:#1A2540"><div><div class="bcn">EVOASIS 源點科技</div><div class="bcb">台泥集團 · 全台環島充電網</div></div><span class="rbg" style="color:var(--grn);border-color:var(--grn)">安裝最推 ★★★★★</span></div><div class="bcbody"><div class="bcrow"><span class="bck">型號/功率</span><span class="bcv">Lite/Pro 7kW · Max 11kW</span></div><div class="bcrow"><span class="bck">設備+安裝</span><span class="bcv" style="color:var(--grn)">安心裝 $32,500起</span></div><div class="pros"><p class="pro">✓ 一條龍透明報價，CNS認證+3年保固</p><p class="pro">✓ 1.5億產責險，OCPP 1.6J相容各家EMS</p><p class="con">△ Pro以上才有螢幕，Lite版功能基本</p></div></div></div>
+    <div class="bc"><div class="bch" style="background:var(--blue)"><div><div class="bcn">好友電 Sonice EMS</div><div class="bcb">台灣新創 · 智慧能源管理</div></div><span class="rbg" style="color:var(--blue);border-color:var(--blue)">社區必備 ★★★★</span></div><div class="bcbody"><div class="bcrow"><span class="bck">型號/功率</span><span class="bcv">EMS平台（搭任意充電樁）</span></div><div class="bcrow"><span class="bck">EMS費用</span><span class="bcv" style="color:var(--blue)">$15,000–50,000</span></div><div class="pros"><p class="pro">✓ 智慧負載防跳電，離峰自動排程省30%</p><p class="pro">✓ 社區分帳管理，3,000+車主</p><p class="con">△ 以EMS為主，充電樁需另採購</p></div></div></div>
+    <div class="bc"><div class="bch" style="background:#186A3B"><div><div class="bcn">MSI 微星 Eco / EV Life+</div><div class="bcb">台灣上市科技大廠</div></div><span class="rbg" style="color:var(--grn);border-color:var(--grn)">科技首選 ★★★★</span></div><div class="bcbody"><div class="bcrow"><span class="bck">型號/功率</span><span class="bcv">7/11kW · EZgo可攜式</span></div><div class="bcrow"><span class="bck">設備+安裝</span><span class="bcv">$25,000–40,000</span></div><div class="pros"><p class="pro">✓ 2026台灣精品獎，AI車牌辨識</p><p class="pro">✓ NXP工業MCU，1.5億產責險</p><p class="con">△ EV Life設備費偏高</p></div></div></div>
+    <div class="bc"><div class="bch" style="background:#4A2D6E"><div><div class="bcn">台達電 Delta EVSE</div><div class="bcb">台達電 · 台灣上市大廠</div></div><span class="rbg" style="color:#7C3AED;border-color:#7C3AED">企業穩定 ★★★★</span></div><div class="bcbody"><div class="bcrow"><span class="bck">型號/功率</span><span class="bcv">7/11kW 家用/商用</span></div><div class="bcrow"><span class="bck">設備+安裝</span><span class="bcv">$28,000–45,000</span></div><div class="pros"><p class="pro">✓ 台灣上市，售後最完善</p><p class="pro">✓ 台電智慧電網整合</p><p class="con">△ 外觀工業風，App體驗一般</p></div></div></div>
+    <div class="bc"><div class="bch" style="background:var(--crv)"><div><div class="bcn">Zerova AX 馳諾瓦</div><div class="bcb">台泥集團 · 台灣技術研發</div></div><span class="rbg" style="color:var(--crv);border-color:var(--crv)">Cavira相容 ★★★</span></div><div class="bcbody"><div class="bcrow"><span class="bck">型號/功率</span><span class="bcv">7/11kW · IP55戶外型</span></div><div class="bcrow"><span class="bck">設備+安裝</span><span class="bcv">$22,000–38,000</span></div><div class="pros"><p class="pro">✓ CCS2原生相容Cavira，IP55防水</p><p class="pro">✓ OCPP 1.6J遠端管理</p><p class="con">△ App功能較陽春，知名度偏低</p></div></div></div>
+    <div class="bc"><div class="bch" style="background:#4B5563"><div><div class="bcn">充馭科技 EV Charging Fun</div><div class="bcb">台灣新創 · EMS整合商</div></div><span class="rbg" style="color:var(--muted);border-color:var(--muted)">商用多點 ★★★</span></div><div class="bcbody"><div class="bcrow"><span class="bck">型號/功率</span><span class="bcv">EMS平台 基礎/進階/商用</span></div><div class="bcrow"><span class="bck">費用</span><span class="bcv">按需報價</span></div><div class="pros"><p class="pro">✓ 多元支付整合，API串接各充電平台</p><p class="con">△ 商用需客製化，費用較高</p></div></div></div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 10 社區安裝 -->
+<div class="wrap" id="s10">
+  <div class="ph"><div class="ph-num">10</div><div class="ph-title">社區 / 公寓　個人充電樁安裝評估</div><div class="ph-sub">法規 · 兩種供電方案 · 費用試算</div></div>
+  <div class="ib warn" style="margin-bottom:18px">⚖️ 《公寓大廈管理條例》第6、10條 — 走線須取得管委會書面同意；屬重大修繕則需區分所有權人會議決議。</div>
+  <div class="g2" style="margin-bottom:20px">
+    <div class="card" style="overflow:hidden">
+      <div style="background:var(--crv);color:#FFF7ED;padding:12px 18px;font-weight:700;font-size:16px">方案 A　錶後拉電（自家電錶）</div>
+      <table class="tbl"><tbody>
+        <tr><td style="color:var(--muted);width:100px">電力來源</td><td>從自家電錶後端直接拉線至停車位</td></tr>
+        <tr><td style="color:var(--muted)">安裝費用</td><td><b>約 $15,000–35,000</b>（依拉線距離）</td></tr>
+        <tr><td style="color:var(--muted)">計費方式</td><td><span style="color:var(--red);font-weight:700">無法使用電動車專用電價</span></td></tr>
+        <tr><td style="color:var(--muted)">適合對象</td><td>社區 1–3 戶，快速解決</td></tr>
+      </tbody></table>
+    </div>
+    <div style="background:var(--card);border:2px solid var(--blue);border-radius:var(--r);overflow:hidden">
+      <div style="background:var(--blue);color:var(--blue-l);padding:12px 18px;font-weight:700;font-size:16px">方案 B　專設一戶（獨立電錶）★ 推薦</div>
+      <table class="tbl"><tbody>
+        <tr><td style="color:var(--muted);width:100px">電力來源</td><td>B1新增獨立電錶，與住宅完全分離</td></tr>
+        <tr><td style="color:var(--muted)">設備費用</td><td><b>EMS+分電盤+充電樁 約 $8–14 萬</b></td></tr>
+        <tr><td style="color:var(--muted)">計費方式</td><td><span style="color:var(--grn);font-weight:700">可使用電動車專用電價（$1.95–2.05/度）</span></td></tr>
+        <tr><td style="color:var(--muted)">適合對象</td><td>社區 2 戶以上，長期最省錢方案</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+  <div style="font-weight:700;font-size:17px;margin-bottom:12px;color:var(--ink)">社區個人申請流程（方案 B · 專設一戶）</div>
+  <div class="steps">
+    <div class="step"><div class="sn" style="background:var(--red)">①</div><div class="st">確認車位產權</div><div class="ss">使用同意書</div></div>
+    <div class="step"><div class="sn" style="background:#D97706">②</div><div class="st">管委會提案</div><div class="ss">取得書面同意</div></div>
+    <div class="step"><div class="sn" style="background:var(--blue)">③</div><div class="st">區分所有人會議</div><div class="ss">表決通過</div></div>
+    <div class="step"><div class="sn" style="background:#4A2D6E">④</div><div class="st">電機技師設計</div><div class="ss">設計圖+簽證</div></div>
+    <div class="step"><div class="sn" style="background:var(--grn)">⑤</div><div class="st">台電申請容量</div><div class="ss">獨立電錶</div></div>
+    <div class="step"><div class="sn" style="background:var(--crv)">⑥</div><div class="st">廠商施工安裝</div><div class="ss">EMS+充電樁</div></div>
+    <div class="step"><div class="sn" style="background:var(--grn)">⑦</div><div class="st">台電驗收啟用</div><div class="ss">完成！</div></div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 11 您的方案 -->
+<div class="wrap" id="s11">
+  <div class="ph"><div class="ph-num">11</div><div class="ph-title">您的方案：錶後拉電 + 住宅時間電價</div><div class="ph-sub">基於台電帳單 20 個月實際數據 · 月均 381 度 · 年均 1.48 萬</div></div>
+  <div class="g2">
+    <div>
+      <div class="cc" style="margin-bottom:14px">
+        <div class="ccl">台電帳單實際紀錄（113/09–115/05）</div>
+        <div class="card" style="overflow:hidden;margin-bottom:12px">
+        <table class="tbl" style="font-size:12.5px"><thead><tr><th>帳單月份</th><th>用電度數</th><th>電費</th><th>備註</th></tr></thead>
+        <tbody>
+          <tr><td>115/05</td><td>699 度</td><td>$2,183</td><td></td></tr>
+          <tr><td>115/03</td><td>644 度</td><td>$1,989</td><td></td></tr>
+          <tr><td>115/01</td><td>607 度</td><td>$1,839</td><td></td></tr>
+          <tr style="background:var(--amber-l)"><td>114/11</td><td>967 度</td><td style="color:var(--crv);font-weight:700">$3,257</td><td style="font-size:19px;color:var(--amber)">夏月跨期</td></tr>
+          <tr style="background:var(--amber-l)"><td>114/09</td><td>1,046 度</td><td style="color:var(--crv);font-weight:700">$3,843</td><td style="font-size:19px;color:var(--amber)">夏月</td></tr>
+          <tr style="background:var(--amber-l)"><td>114/07</td><td>984 度</td><td style="color:var(--crv);font-weight:700">$3,394</td><td style="font-size:19px;color:var(--amber)">夏月</td></tr>
+          <tr><td>114/05</td><td>697 度</td><td>$2,119</td><td></td></tr>
+          <tr><td>114/03</td><td>618 度</td><td>$1,869</td><td></td></tr>
+          <tr><td>114/01</td><td>610 度</td><td>$1,889</td><td></td></tr>
+          <tr style="background:var(--amber-l)"><td>113/11</td><td>750 度</td><td style="color:var(--crv);font-weight:700">$2,344</td><td style="font-size:19px;color:var(--amber)">夏月跨期</td></tr>
+        </tbody>
+        <tfoot><tr class="tot"><td>20個月合計</td><td>7,622 度</td><td>$24,726</td><td></td></tr></tfoot></table>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div style="background:var(--blue-l);border:1px solid var(--blue-bd);border-radius:8px;padding:12px 15px"><div style="font-size:17px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px">月均用電</div><div style="font-size:24px;font-weight:800;color:var(--blue)">381 度/月</div></div>
+          <div style="background:var(--blue-l);border:1px solid var(--blue-bd);border-radius:8px;padding:12px 15px"><div style="font-size:17px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px">月均電費</div><div style="font-size:24px;font-weight:800;color:var(--blue)">$1,236/月</div></div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="sc"><div class="sch" style="background:var(--muted)">現況基準 · 目前累進電價（無EV）</div><div class="scb"><div style="font-size:19px;color:var(--muted)">年電費</div><div class="scbig" style="color:var(--muted)">1.48<span style="font-size:17px;font-weight:700"> 萬/年</span></div><div class="scsub">月均 $1,236</div></div></div>
+      <div class="sc" style="border:2px solid var(--blue)"><div class="sch" style="background:var(--blue)">★ 您的選擇 · 時間電價 + 錶後拉電 + EV充電</div><div class="scb"><div style="font-size:19px;color:var(--blue)">年總電費（家用+EV）</div><div class="scbig" style="color:var(--blue)">2.89<span style="font-size:17px;font-weight:700"> 萬/年</span></div><div class="scsub">月均 $2,412 · 月增僅 $1,176（$39/天）</div></div></div>
+      <div class="sc"><div class="sch" style="background:var(--red)">最貴 · 全外出快充（不裝充電樁）</div><div class="scb"><div style="font-size:19px;color:var(--red)">年總電費（家用+外充）</div><div class="scbig" style="color:var(--red)">6.13<span style="font-size:17px;font-weight:700"> 萬/年</span></div><div class="scsub">月均 $5,108</div></div></div>
+      <div class="ib grn" style="margin:0">EV均攤 $2.08/度 · 裝樁費 $25,000 → 約 9.2 個月回本 · 時間電價 ✅ 月均 934度 &gt; 700度門檻，符合申請資格</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 電費影響分析 -->
+<div class="wrap" id="s11b">
+  <div class="ph">
+    <div class="ph-num">11-A</div>
+    <div class="ph-title">申請時間電價後　家用電費有何影響？</div>
+    <div class="ph-sub">費率依據：台電 114年10月1日起最新費率表・月均用電 381度・分二段式 vs 三段式完整比較</div>
+  </div>
+
+  <div class="ib warn" style="margin-bottom:20px">
+    ⚠ <b>重要警告</b>：申請時間電價不等於一定省錢。夏月尖峰高達 <b>$5.16/度</b>（二段式），若白天用電習慣不改，電費反而比累進多 $3,036–7,314/年！<b>只有積極把用電移往離峰，才能省錢。</b><br>
+    ✅ 台電規定：<b>月均用電 700度以上</b> 才可申請時間電價（您月均 381度，需加上 EV 後達 934度，才符合申請資格）。
+  </div>
+
+  <!-- 費率對照 -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px">
+
+    <!-- 二段式 -->
+    <div class="card" style="overflow:hidden">
+      <div style="background:var(--blue);color:#fff;padding:12px 18px;font-size:16px;font-weight:700">二段式時間電價（簡易型）</div>
+      <div style="padding:4px 0">
+        <table class="tbl" style="margin:0">
+          <thead><tr><th>時段</th><th style="text-align:center">費率</th><th>適用時間</th></tr></thead>
+          <tbody>
+            <tr style="background:var(--red-l)"><td style="color:var(--red);font-weight:700">夏月 尖峰</td><td style="text-align:center;color:var(--red);font-weight:700">$5.16/度</td><td style="font-size:14px">週一~五 09:00–24:00</td></tr>
+            <tr style="background:var(--grn-l)"><td style="color:var(--grn);font-weight:700">夏月 離峰 ★</td><td style="text-align:center;color:var(--grn);font-weight:700">$2.06/度</td><td style="font-size:14px">週一~五 00:00–09:00</td></tr>
+            <tr style="background:var(--grn-l)"><td style="color:var(--grn);font-weight:700">週六日＆離峰日</td><td style="text-align:center;color:var(--grn);font-weight:700">$2.06/度</td><td style="font-size:14px">全日</td></tr>
+            <tr><td style="color:#D97706;font-weight:700">非夏月 尖峰</td><td style="text-align:center;color:#D97706;font-weight:700">$4.93/度</td><td style="font-size:14px">週一~五 06:00–11:00, 14:00–24:00</td></tr>
+            <tr style="background:var(--grn-l)"><td style="color:var(--grn);font-weight:700">非夏月 離峰 ★★</td><td style="text-align:center;color:var(--grn);font-weight:700">$1.99/度</td><td style="font-size:14px">週一~五 00:00–06:00, 11:00–14:00</td></tr>
+            <tr><td colspan="3" style="font-size:13px;color:var(--muted)">基本費 $75.00/月・超過2,000度加收 $1.04/度</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="background:var(--blue-l);padding:12px 18px;font-size:14px;color:#1E3A8A">
+        <b>特點：</b>結構簡單，只分尖峰/離峰兩段。夏月白天（09:00起）全算尖峰，管控重點是避免白天用電。
+      </div>
+    </div>
+
+    <!-- 三段式 -->
+    <div class="card" style="overflow:hidden">
+      <div style="background:#7C3AED;color:#fff;padding:12px 18px;font-size:16px;font-weight:700">三段式時間電價（簡易型）</div>
+      <div style="padding:4px 0">
+        <table class="tbl" style="margin:0">
+          <thead><tr><th>時段</th><th style="text-align:center">費率</th><th>適用時間</th></tr></thead>
+          <tbody>
+            <tr style="background:var(--red-l)"><td style="color:var(--red);font-weight:700">夏月 尖峰</td><td style="text-align:center;color:var(--red);font-weight:700">$7.13/度</td><td style="font-size:14px">週一~五 16:00–22:00</td></tr>
+            <tr style="background:#FFF8E6"><td style="color:#D97706;font-weight:700">夏月 半尖峰</td><td style="text-align:center;color:#D97706;font-weight:700">$4.69/度</td><td style="font-size:14px">週一~五 09:00–16:00, 22:00–24:00</td></tr>
+            <tr style="background:var(--grn-l)"><td style="color:var(--grn);font-weight:700">夏月 離峰 ★</td><td style="text-align:center;color:var(--grn);font-weight:700">$2.06/度</td><td style="font-size:14px">週一~五 00:00–09:00</td></tr>
+            <tr style="background:var(--grn-l)"><td style="color:var(--grn);font-weight:700">週六日＆離峰日</td><td style="text-align:center;color:var(--grn);font-weight:700">$2.06/度</td><td style="font-size:14px">全日</td></tr>
+            <tr><td style="color:#D97706;font-weight:700">非夏月 半尖峰</td><td style="text-align:center;color:#D97706;font-weight:700">$4.48/度</td><td style="font-size:14px">週一~五 06:00–11:00, 14:00–24:00</td></tr>
+            <tr style="background:var(--grn-l)"><td style="color:var(--grn);font-weight:700">非夏月 離峰 ★★</td><td style="text-align:center;color:var(--grn);font-weight:700">$1.99/度</td><td style="font-size:14px">週一~五 00:00–06:00, 11:00–14:00</td></tr>
+            <tr><td colspan="3" style="font-size:13px;color:var(--muted)">基本費 $75.00/月・超過2,000度加收 $1.04/度</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="background:#F5F3FF;padding:12px 18px;font-size:14px;color:#4C1D95">
+        <b>特點：</b>夏月尖峰僅下午4–10點（6小時），若能避開這段，16:00前用電只算「半尖峰」$4.69，彈性較大。
+      </div>
+    </div>
+  </div>
+
+  <!-- 四情境年費比較 -->
+  <div style="font-size:18px;font-weight:800;color:var(--ink);margin-bottom:14px">三種用電習慣下的年費試算（月均 381度）</div>
+  <div class="card" style="overflow:hidden;margin-bottom:20px">
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>計費方式 × 用電習慣</th>
+          <th style="text-align:right">年費估算</th>
+          <th style="text-align:right">月均費用</th>
+          <th style="text-align:right">vs 現況累進</th>
+          <th>結論</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:#F8FAFC"><td colspan="5" style="font-size:13px;color:var(--muted);padding:8px 13px;font-weight:700">▌ 基準</td></tr>
+        <tr style="background:#F1F5F9">
+          <td style="font-weight:700">累進電價（現況，無EV）</td>
+          <td style="font-weight:800;font-size:16px">$14,832</td>
+          <td>$1,236</td>
+          <td style="color:var(--muted)">基準</td>
+          <td style="font-size:13px;color:var(--muted)">無需申請，維持現況</td>
+        </tr>
+        <tr style="background:#F8FAFC"><td colspan="5" style="font-size:13px;color:var(--muted);padding:8px 13px;font-weight:700">▌ 習慣不改（約60%用電在尖峰時段）</td></tr>
+        <tr style="background:var(--red-l)">
+          <td>⚠ 二段式 + 習慣不改</td>
+          <td style="color:var(--red);font-weight:800;font-size:16px">$17,868</td>
+          <td style="color:var(--red)">$1,489</td>
+          <td class="neg">多 $3,036</td>
+          <td style="font-size:13px;color:var(--red)">❌ 反而貴，不划算</td>
+        </tr>
+        <tr style="background:var(--red-l)">
+          <td>⚠ 三段式 + 習慣不改</td>
+          <td style="color:var(--red);font-weight:800;font-size:16px">$17,353</td>
+          <td style="color:var(--red)">$1,446</td>
+          <td class="neg">多 $2,521</td>
+          <td style="font-size:13px;color:var(--red)">❌ 反而貴，不划算</td>
+        </tr>
+        <tr style="background:#F8FAFC"><td colspan="5" style="font-size:13px;color:var(--muted);padding:8px 13px;font-weight:700">▌ 適度調整（約50%用電移往離峰）</td></tr>
+        <tr>
+          <td>△ 二段式 + 適度調整</td>
+          <td style="font-weight:800;font-size:16px">$15,815</td>
+          <td>$1,318</td>
+          <td class="neg">多 $983</td>
+          <td style="font-size:13px;color:var(--muted)">△ 接近但稍貴</td>
+        </tr>
+        <tr>
+          <td>△ 三段式 + 適度調整</td>
+          <td style="font-weight:800;font-size:16px">$15,471</td>
+          <td>$1,289</td>
+          <td class="neg">多 $639</td>
+          <td style="font-size:13px;color:var(--muted)">△ 三段式略優</td>
+        </tr>
+        <tr style="background:#F8FAFC"><td colspan="5" style="font-size:13px;color:var(--muted);padding:8px 13px;font-weight:700">▌ 積極離峰（75%以上用電移往離峰）</td></tr>
+        <tr style="background:var(--grn-l)">
+          <td style="font-weight:700">✅ 二段式 + 積極移轉離峰</td>
+          <td style="color:var(--grn);font-weight:800;font-size:16px">$13,078</td>
+          <td style="color:var(--grn)">$1,090</td>
+          <td class="pos">省 $1,754</td>
+          <td style="font-size:13px;color:var(--grn)">✅ 划算，省 12%</td>
+        </tr>
+        <tr style="background:var(--grn-l)">
+          <td style="font-weight:700">✅ 三段式 + 積極移轉離峰</td>
+          <td style="color:var(--grn);font-weight:800;font-size:16px">$13,123</td>
+          <td style="color:var(--grn)">$1,094</td>
+          <td class="pos">省 $1,709</td>
+          <td style="font-size:13px;color:var(--grn)">✅ 划算，省 12%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 加上EV的比較 -->
+  <div style="font-size:18px;font-weight:800;color:var(--ink);margin-bottom:14px">加上 EV 離峰充電後（家用＋Cavira充電）</div>
+  <div class="card" style="overflow:hidden;margin-bottom:20px">
+    <table class="tbl">
+      <thead><tr><th>方案</th><th style="text-align:right">家用年費</th><th style="text-align:right">EV充電年費</th><th style="text-align:right">合計年費</th><th style="text-align:right">省燃油費</th><th>淨效益</th></tr></thead>
+      <tbody>
+        <tr style="background:#F1F5F9">
+          <td style="font-weight:700">CRV6繼續用（累進電價）</td>
+          <td style="color:var(--muted)">$14,832</td>
+          <td style="color:var(--muted)">—</td>
+          <td style="font-weight:800">$14,832</td>
+          <td style="color:var(--muted)">—</td>
+          <td style="font-size:14px;color:var(--muted)">基準</td>
+        </tr>
+        <tr style="background:var(--blue-l)">
+          <td style="font-weight:700">✅ 二段式 + 積極離峰 + EV</td>
+          <td>$13,078</td>
+          <td style="color:var(--blue);font-weight:700">$13,360</td>
+          <td style="color:var(--blue);font-weight:800;font-size:16px">$26,438</td>
+          <td style="color:var(--grn);font-weight:700">省 $100,880/年</td>
+          <td style="font-size:14px;color:var(--grn);font-weight:700">淨省 88,274/年 ★★★</td>
+        </tr>
+        <tr style="background:var(--blue-l)">
+          <td style="font-weight:700">✅ 三段式 + 積極離峰 + EV</td>
+          <td>$13,123</td>
+          <td style="color:var(--blue);font-weight:700">$13,360</td>
+          <td style="color:var(--blue);font-weight:800;font-size:16px">$26,483</td>
+          <td style="color:var(--grn);font-weight:700">省 $100,880/年</td>
+          <td style="font-size:14px;color:var(--grn);font-weight:700">淨省 88,229/年 ★★★</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="background:var(--blue-l);padding:14px 18px;font-size:15px;color:#1E3A8A">
+      EV 100%離峰充電年費：$13,360（夏月$2.06×553度×4＋非夏月$1.99×553度×8）·  $0.32/km · 省燃油費 10.1萬/年
+    </div>
+  </div>
+
+  <!-- 結論建議 -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+    <div style="background:#EFF6FF;border:2px solid var(--blue);border-radius:10px;padding:18px 20px">
+      <div style="font-size:16px;font-weight:800;color:var(--blue);margin-bottom:10px">選二段式的情況</div>
+      <div style="font-size:15px;color:var(--body);line-height:1.8">
+        <div>✅ 生活作息規律，能固定晚上 22:00 前結束大用電</div>
+        <div>✅ 不介意嚴格管控白天家電使用</div>
+        <div>✅ 週末在家時間多（全日離峰）</div>
+        <div>✅ 操作概念簡單，只要記「早上9點前和週末最便宜」</div>
+      </div>
+    </div>
+    <div style="background:#F5F3FF;border:2px solid #7C3AED;border-radius:10px;padding:18px 20px">
+      <div style="font-size:16px;font-weight:800;color:#7C3AED;margin-bottom:10px">選三段式的情況</div>
+      <div style="font-size:15px;color:var(--body);line-height:1.8">
+        <div>✅ 夏月下午 4–10點（尖峰）能確實避開</div>
+        <div>✅ 白天 9:00–16:00 仍有用電需求（半尖峰$4.69，比二段式尖峰$5.16低）</div>
+        <div>✅ 習慣彈性，難完全避開白天用電</div>
+        <div>✅ 非夏月半尖峰$4.48，與二段式非夏月尖峰$4.93相比更便宜</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 給您的建議 -->
+  <div class="ib blue">
+    📌 <b>您的個人化建議（月均 381度）：</b><br>
+    1. 兩種方案年費差距極小（積極離峰時：二段 $13,078 vs 三段 $13,123，僅差 $45），<b>選哪種都可以</b>。<br>
+    2. 若您夏天白天冷氣開很多（09:00後），選<b>三段式</b>較有餘裕（白天為半尖峰而非尖峰）。<br>
+    3. 若您生活規律、白天外出上班，選<b>二段式</b>概念最簡單。<br>
+    4. <b>最關鍵：EV 務必設定定時充電，固定在夏月 00:00–09:00、非夏月 00:00–06:00 或 11:00–14:00（離峰）充電，成本最低 $1.99–2.06/度。</b><br>
+    5. 申請資格：需月均用電 700度以上，加上 EV 充電後您約達 934度，<b>符合申請資格</b>。
+  </div>
+
+  <!-- 如何移轉離峰 -->
+  <div class="card" style="padding:20px;margin-top:14px">
+    <div style="font-size:18px;font-weight:800;color:var(--ink);margin-bottom:14px">具體行動：如何移轉到離峰時段？</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      <div>
+        <div style="font-size:13px;font-weight:700;color:var(--grn);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">✅ 移往離峰（深夜/週末）</div>
+        <div style="font-size:15px;color:var(--body);line-height:1.9">
+          🔌 EV 充電：設定定時，夏月 00:00 / 非夏月 00:00 自動開始<br>
+          🧺 洗衣、烘乾：睡前設定定時啟動<br>
+          🍽️ 洗碗機：餐後延遲，晚上9點後再啟動<br>
+          🌡️ 熱水器：改為夜間或中午加熱（非夏月 11:00–14:00 為離峰）<br>
+          📱 手機、電腦：睡覺時充電
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">⚠ 夏月尖峰盡量避免（09:00–24:00）</div>
+        <div style="font-size:15px;color:var(--body);line-height:1.9">
+          🌬️ 冷氣設 26–27°C，搭配電風扇降低壓縮機使用<br>
+          ☀️ 白天善用自然光、拔掉待機插頭<br>
+          ♨️ 避免白天使用烤箱、電磁爐等高耗電設備<br>
+          🔄 三段式使用者：下午 4–10點（真正尖峰）最嚴格管控<br>
+          <span style="color:var(--muted);font-size:14px">※ 非夏月管控可放寬，中午11:00–14:00反而是離峰</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="divider"></div>
+
+<!-- 12 資金規劃 -->
+<div class="wrap" id="s12">
+  <div class="ph"><div class="ph-num">12</div><div class="ph-title">購車資金規劃分析</div><div class="ph-sub">換車缺口 47.4 萬 · 車貸 × 信貸 × 房屋增貸 三方案完整比較</div></div>
+  <div class="g3" style="margin-bottom:16px">
+    <div class="loan"><div class="loanhd" style="background:var(--blue)">方案 A　車貸<span class="lrate">年利率 1.68%–3.5%</span></div><table class="lt"><thead><tr><th>期數</th><th>月繳(2.5%)</th><th>總利息</th></tr></thead><tbody><tr><td>36期（3年）</td><td class="lh" style="color:var(--blue)">$13,680</td><td>$18,491</td></tr><tr><td>48期（4年）</td><td class="lh" style="color:var(--blue)">$10,387</td><td>$24,588</td></tr><tr><td>60期（5年）</td><td class="lh" style="color:var(--blue)">$8,412</td><td>$30,735</td></tr></tbody></table><div style="padding:11px 14px;font-size:16px;color:var(--muted);border-top:1px solid var(--border)">✓ 原廠可能有促銷利率<br>✓ 核貸快（1–3天）<br>△ 利率高於房貸</div></div>
+    <div class="loan"><div class="loanhd" style="background:#D97706">方案 B　信貸<span class="lrate">年利率 3.5%–7.0%</span></div><table class="lt"><thead><tr><th>期數</th><th>月繳(5%)</th><th>總利息</th></tr></thead><tbody><tr><td>36期（3年）</td><td class="lh" style="color:#D97706">$14,206</td><td style="color:var(--red)">$37,423</td></tr><tr><td>60期（5年）</td><td class="lh" style="color:#D97706">$8,945</td><td style="color:var(--red)">$62,698</td></tr></tbody></table><div style="padding:11px 14px;font-size:16px;color:var(--muted);border-top:1px solid var(--border)">✓ 無需擔保品，申辦最快<br>△ 利率最高（3.5–7%）<br>△ 總利息最多達 8 萬</div></div>
+    <div class="loan" style="border:2px solid var(--grn)"><div class="loanhd" style="background:var(--grn)">方案 C　房屋增貸 ★<span class="lrate">年利率 2.0%–3.0%</span></div><table class="lt"><thead><tr><th>期數</th><th>月繳(2.2%)</th><th>總利息</th></tr></thead><tbody><tr><td>60期（5年）</td><td class="lh" style="color:var(--grn)">$8,350</td><td>$26,982</td></tr><tr><td>84期（7年）</td><td class="lh" style="color:var(--grn)">$6,157</td><td>$43,176</td></tr><tr><td>120期（10年）</td><td class="lh" style="color:var(--grn)">$4,468</td><td>$62,207</td></tr></tbody></table><div style="padding:11px 14px;font-size:16px;color:var(--muted);border-top:1px solid var(--border)">✓ 利率最低（2–3%）<br>✓ 月繳最小，保留現金投資<br>△ 需有增貸空間</div></div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- 13 理財建議 -->
+<div class="wrap" id="s13">
+  <div class="ph"><div class="ph-num">13</div><div class="ph-title">機會成本 × 資金理財建議</div><div class="ph-sub">借錢買車 + 保留現金投資，長期是否更划算？</div></div>
+  <div class="ib blue" style="margin-bottom:20px">💡 核心邏輯：若投資年化報酬率 > 借款利率，「借低利貸款買車、保留現金繼續投資」在數學上更划算。以房屋增貸 2.2% 為例，只需年化超過 2.2% 即可打平。台灣 0050 歷史年化約 10%，空間極大。</div>
+  <div class="card" style="overflow:hidden;margin-bottom:20px">
+    <table class="tbl">
+      <thead><tr><th>投資情境</th><th>標的方向</th><th>47.4萬 10年後</th><th>借款利息（增貸2.2%/5年）</th><th>淨賺（vs全現金）</th></tr></thead>
+      <tbody>
+        <tr><td>保守（4%/年）</td><td style="font-size:16px;color:var(--muted)">台灣公債ETF、高評等公司債</td><td style="font-weight:700">$701,636</td><td style="color:var(--muted)">$26,982</td><td class="pos">淨增 $200,654</td></tr>
+        <tr><td style="color:var(--blue);font-weight:700">穩健成長（6%/年）</td><td style="font-size:16px;color:var(--muted)">台灣0050、006208 ETF</td><td style="font-weight:700;color:var(--blue)">$848,862</td><td style="color:var(--muted)">$26,982</td><td class="pos" style="font-size:18px">淨增 $347,880</td></tr>
+        <tr><td style="color:var(--grn);font-weight:700">積極成長（8%/年）</td><td style="font-size:16px;color:var(--muted)">台美ETF組合、科技股</td><td style="font-weight:700;color:var(--grn)">$1,023,330</td><td style="color:var(--muted)">$26,982</td><td class="pos" style="font-size:18px">淨增 $522,349</td></tr>
+        <tr><td style="color:var(--muted)">全現金買車（0%）</td><td style="font-size:16px;color:var(--muted)">不保留、不投資</td><td style="color:var(--muted)">$474,000</td><td style="color:var(--muted)">$0</td><td style="text-align:right;color:var(--muted)">機會成本 $0</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="font-weight:700;font-size:17px;margin-bottom:14px;color:var(--ink)">建議投資配置（僅供參考，非投資建議）</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:16px">
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px"><div style="width:30px;height:30px;border-radius:50%;background:#F1F5F9;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;color:var(--muted);margin-bottom:10px">1</div><div style="font-weight:700;margin-bottom:4px">緊急備用金</div><div style="font-size:16px;font-weight:700;color:var(--muted);margin-bottom:6px">6個月支出</div><div style="font-size:16px;color:var(--muted)">活存/定存/貨幣基金，不可動用</div><div style="font-size:16px;font-weight:700;color:var(--muted);margin-top:8px">年化 1.5–2%</div></div>
+    <div style="background:var(--card);border:2px solid var(--blue);border-radius:var(--r);padding:16px"><div style="width:30px;height:30px;border-radius:50%;background:var(--blue-l);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;color:var(--blue);margin-bottom:10px">2</div><div style="font-weight:700;margin-bottom:4px">核心 ETF（台美）</div><div style="font-size:16px;font-weight:700;color:var(--blue);margin-bottom:6px">40–50%</div><div style="font-size:16px;color:var(--muted)">0050、006208、VOO、QQQ，長期持有</div><div style="font-size:16px;font-weight:700;color:var(--blue);margin-top:8px">年化 6–10%（歷史）</div></div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px"><div style="width:30px;height:30px;border-radius:50%;background:#F5F3FF;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;color:#6D28D9;margin-bottom:10px">3</div><div style="font-weight:700;margin-bottom:4px">固定收益</div><div style="font-size:16px;font-weight:700;color:#6D28D9;margin-bottom:6px">20–30%</div><div style="font-size:16px;color:var(--muted)">高評等公司債ETF、美國國債</div><div style="font-size:16px;font-weight:700;color:#6D28D9;margin-top:8px">年化 3–5%</div></div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px"><div style="width:30px;height:30px;border-radius:50%;background:var(--amber-l);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;color:var(--amber);margin-bottom:10px">4</div><div style="font-weight:700;margin-bottom:4px">機動靈活</div><div style="font-size:16px;font-weight:700;color:var(--amber);margin-bottom:6px">10–20%</div><div style="font-size:16px;color:var(--muted)">個股、主題ETF、REITs</div><div style="font-size:16px;font-weight:700;color:var(--amber);margin-top:8px">年化 視機會</div></div>
+  </div>
+  <div class="ib grn">★ 最優策略：以房屋增貸（2.2% / 60–84期）支付換車缺口，保留現金投資台美ETF，長期預期收益遠高於利息成本。此為財務邏輯參考，實際決策請諮詢專業理財顧問。</div>
+</div>
+<div class="divider"></div>
+
+<!-- 14 最終結論 -->
+<div class="wrap" id="s14">
+  <div class="ph"><div class="ph-num">14</div><div class="ph-title">最終結論</div></div>
+  <div class="final">
+    <div class="fkpis">
+      <div><div class="fkl">換車淨支出</div><div class="fkv" style="color:#FCA5A5">47.4<span style="font-size:22px"> 萬</span></div><div style="font-size:19px;color:#3B5276;margin-top:5px">一次性缺口</div></div>
+      <div><div class="fkl">10年總省下</div><div class="fkv" style="color:#4ADE80">59.3<span style="font-size:22px"> 萬</span></div><div style="font-size:19px;color:#3B5276;margin-top:5px">含輪胎保險完整計算</div></div>
+      <div><div class="fkl">損益平衡點</div><div class="fkv" style="color:#60A5FA">3.9<span style="font-size:22px"> 年</span></div><div style="font-size:19px;color:#3B5276;margin-top:5px">約 2030 年初回本</div></div>
+    </div>
+    <div class="frecs">
+      <div class="frt">行動建議</div>
+      <div class="fr"><div class="frdot"></div>建議 2026 年底前出售 CRV6，保固優勢仍在，市場需求旺盛。自售可嘗試掛 93–96 萬。</div>
+      <div class="fr"><div class="frdot"></div>等 6/17 Cavira 正式上市後，觀察 1–2 個月服務口碑與交車速度再確認下訂。</div>
+      <div class="fr"><div class="frdot"></div>年均 42,000 km 高里程，能源節省效益最顯著，是換 EV 財務最合適的族群。</div>
+      <div class="fr"><div class="frdot"></div>選配 19 吋後建議換 Falken FK520L，10 年輪胎總費省 6 萬以上。</div>
+      <div class="fr"><div class="frdot"></div>下訂前務必確認電池保固里程上限（高里程用戶關鍵條款）。</div>
+    </div>
+  </div>
+</div>
+
+
+<div class="divider"></div>
+
+<div class="wrap" id="s15">
+  <div class="ph">
+    <div class="ph-num">15</div>
+    <div class="ph-title">互動試算機 — 自訂參數即時計算</div>
+    <div class="ph-sub">調整所有關鍵參數，10年總持有成本即時重新計算 · 台電114/10/1最新費率</div>
+  </div>
+
+  <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:28px;margin-bottom:0">
+
+    <!-- 參數區 -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px">
+
+      <div>
+        <div style="font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">您的車輛與使用情況</div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+
+          <div style="background:var(--bg);border-radius:8px;padding:14px 16px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+              <span style="font-size:15px;color:var(--body)">CRV6 出售估值</span>
+              <span style="font-size:18px;font-weight:800;color:var(--crv)" id="wv-crv-sell">80 萬</span>
+            </div>
+            <input type="range" id="wr-crv-sell" min="70" max="100" step="1" value="80" style="width:100%;accent-color:#B45309">
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:3px"><span>保守 70萬</span><span>樂觀自售 100萬</span></div>
+          </div>
+
+          <div style="background:var(--bg);border-radius:8px;padding:14px 16px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+              <span style="font-size:15px;color:var(--body)">年均行駛里程</span>
+              <span style="font-size:18px;font-weight:800;color:var(--ink)" id="wv-km">42,000 km</span>
+            </div>
+            <input type="range" id="wr-km" min="15000" max="80000" step="1000" value="42000" style="width:100%;accent-color:#1D4ED8">
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:3px"><span>15,000 km</span><span>80,000 km</span></div>
+          </div>
+
+          <div style="background:var(--bg);border-radius:8px;padding:14px 16px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+              <span style="font-size:15px;color:var(--body)">汽油均價</span>
+              <span style="font-size:18px;font-weight:800;color:var(--crv)" id="wv-fuel">$32/L</span>
+            </div>
+            <input type="range" id="wr-fuel" min="25" max="45" step="1" value="32" style="width:100%;accent-color:#B45309">
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:3px"><span>$25 低油價</span><span>$45 高油價</span></div>
+          </div>
+
+          <div style="background:var(--bg);border-radius:8px;padding:14px 16px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+              <span style="font-size:15px;color:var(--body)">CRV6 油耗</span>
+              <span style="font-size:18px;font-weight:800;color:var(--ink)" id="wv-cons">8.5 L/100km</span>
+            </div>
+            <input type="range" id="wr-cons" min="7" max="12" step="0.5" value="8.5" style="width:100%;accent-color:#B45309">
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:3px"><span>7.0 L（省油）</span><span>12.0 L（耗油）</span></div>
+          </div>
+
+          <div style="background:var(--bg);border-radius:8px;padding:14px 16px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+              <span style="font-size:15px;color:var(--body)">CRV6 保養費</span>
+              <span style="font-size:18px;font-weight:800;color:var(--ink)" id="wv-cmaint">1.82 萬/年</span>
+            </div>
+            <input type="range" id="wr-cmaint" min="1" max="4" step="0.1" value="1.82" style="width:100%;accent-color:#B45309">
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:3px"><span>1萬/年</span><span>4萬/年</span></div>
+          </div>
+
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Cavira EV 設定</div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+
+          <div style="background:var(--bg);border-radius:8px;padding:14px 16px">
+            <div style="font-size:15px;color:var(--body);margin-bottom:8px">時間電價方案</div>
+            <div style="display:flex;gap:8px;margin-bottom:4px">
+              <button id="wb-tou2" onclick="wSetTOU('2段')" style="flex:1;padding:8px;border-radius:7px;border:1.5px solid var(--blue);background:var(--blue);color:#fff;font-size:14px;font-weight:700;cursor:pointer">二段式</button>
+              <button id="wb-tou3" onclick="wSetTOU('3段')" style="flex:1;padding:8px;border-radius:7px;border:1.5px solid var(--border);background:#fff;color:var(--muted);font-size:14px;font-weight:700;cursor:pointer">三段式</button>
+            </div>
+            <div style="font-size:12px;color:var(--muted);margin-top:4px" id="wv-tou-note">離峰 $2.06（夏）/$1.99（非夏）・尖峰 $5.16/$4.93</div>
+          </div>
+
+          <div style="background:var(--bg);border-radius:8px;padding:14px 16px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+              <span style="font-size:15px;color:var(--body)">離峰充電比例</span>
+              <span style="font-size:18px;font-weight:800;color:var(--blue)" id="wv-offpeak">85%</span>
+            </div>
+            <input type="range" id="wr-offpeak" min="40" max="100" step="5" value="85" style="width:100%;accent-color:#1D4ED8">
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:3px"><span>40%（習慣不改）</span><span>100%（全離峰）</span></div>
+          </div>
+
+          <div style="background:var(--bg);border-radius:8px;padding:14px 16px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+              <span style="font-size:15px;color:var(--body)">Cavira 電耗</span>
+              <span style="font-size:18px;font-weight:800;color:var(--ink)" id="wv-evcons">15.8 kWh/100km</span>
+            </div>
+            <input type="range" id="wr-evcons" min="13" max="20" step="0.5" value="15.8" style="width:100%;accent-color:#1D4ED8">
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:3px"><span>13 kWh（省電）</span><span>20 kWh（耗電）</span></div>
+          </div>
+
+          <div style="background:var(--bg);border-radius:8px;padding:14px 16px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+              <span style="font-size:15px;color:var(--body)">Cavira 售價</span>
+              <span style="font-size:18px;font-weight:800;color:var(--blue)" id="wv-evprice">123.9 萬</span>
+            </div>
+            <input type="range" id="wr-evprice" min="115" max="135" step="0.5" value="123.9" style="width:100%;accent-color:#1D4ED8">
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:3px"><span>115萬</span><span>135萬</span></div>
+          </div>
+
+          <div style="background:var(--bg);border-radius:8px;padding:14px 16px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+              <span style="font-size:15px;color:var(--body)">充電樁安裝費</span>
+              <span style="font-size:18px;font-weight:800;color:var(--ink)" id="wv-charger">3 萬</span>
+            </div>
+            <input type="range" id="wr-charger" min="1.5" max="14" step="0.5" value="3" style="width:100%;accent-color:#1D4ED8">
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:3px"><span>1.5萬（錶後拉電）</span><span>14萬（獨立電錶）</span></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- 結果 KPI -->
+    <div style="background:var(--navy,#0F1E35);border-radius:12px;padding:24px;margin-bottom:20px">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px">
+        <div style="text-align:center">
+          <div style="font-size:11px;font-weight:700;color:#4B6082;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">換車缺口</div>
+          <div style="font-size:32px;font-weight:800;color:#FCA5A5" id="wr-gap">—</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:11px;font-weight:700;color:#4B6082;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">CRV6 10年總計</div>
+          <div style="font-size:32px;font-weight:800;color:#FED7AA" id="wr-crvtot">—</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:11px;font-weight:700;color:#4B6082;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Cavira 10年總計</div>
+          <div style="font-size:32px;font-weight:800;color:#93C5FD" id="wr-evtot">—</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:11px;font-weight:700;color:#4B6082;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">10年省下</div>
+          <div style="font-size:32px;font-weight:800;color:#4ADE80" id="wr-saving">—</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px">
+        <div style="text-align:center">
+          <div style="font-size:11px;font-weight:700;color:#4B6082;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">損益平衡</div>
+          <div style="font-size:28px;font-weight:800;color:#60A5FA" id="wr-be">—</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:11px;font-weight:700;color:#4B6082;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">CRV6 燃油/年</div>
+          <div style="font-size:28px;font-weight:800;color:#FED7AA" id="wr-fuelyr">—</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:11px;font-weight:700;color:#4B6082;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">EV 電費/年</div>
+          <div style="font-size:28px;font-weight:800;color:#93C5FD" id="wr-eveyr">—</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:11px;font-weight:700;color:#4B6082;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">每公里節省</div>
+          <div style="font-size:28px;font-weight:800;color:#4ADE80" id="wr-perkm">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 明細表 -->
+    <div style="overflow:hidden;border:1px solid var(--border);border-radius:10px;margin-bottom:16px">
+      <table style="width:100%;border-collapse:collapse;font-size:15px">
+        <thead>
+          <tr>
+            <th style="background:var(--navy,#0F1E35);color:#fff;padding:11px 14px;text-align:left;font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">項目</th>
+            <th style="background:var(--navy,#0F1E35);color:#FED7AA;padding:11px 14px;text-align:right;font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">CRV6（萬）</th>
+            <th style="background:var(--navy,#0F1E35);color:#93C5FD;padding:11px 14px;text-align:right;font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Cavira（萬）</th>
+            <th style="background:var(--navy,#0F1E35);color:#fff;padding:11px 14px;text-align:right;font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">差異</th>
+          </tr>
+        </thead>
+        <tbody id="wr-tbody">
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 橫條圖 -->
+    <div style="font-size:14px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">各項費用視覺比較（10年，萬元）</div>
+    <div id="wr-bars"></div>
+
+    <div style="font-size:13px;color:var(--muted);margin-top:14px;line-height:1.7;background:var(--bg);border-radius:8px;padding:12px 14px">
+      固定參數（不可調整）：輪胎費 CRV6 17.3萬 / Cavira 25.2萬 · 保險費 CRV6 17.4萬 / Cavira 26.9萬 · 稅費 CRV6 8.9萬 / EV 2.2萬 · EV殘值 18萬 · 費率依台電 114年10月1日起最新公告
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+const wTOU = {
+  '2段': { sp:5.16, so:2.06, nsp:4.93, nso:1.99, note:'離峰 $2.06（夏）/ $1.99（非夏）・尖峰 $5.16/$4.93' },
+  '3段': { sp:7.13, shp:4.69, so:2.06, nshp:4.48, nso:1.99, note:'離峰 $2.06（夏）/ $1.99（非夏）・尖峰 $7.13（夏16–22時）' }
+};
+let wTouMode = '2段';
+
+window.wSetTOU = function(m){
+  wTouMode = m;
+  const a = '#1D4ED8', b = 'var(--border)';
+  document.getElementById('wb-tou2').style.background = m==='2段'?'#1D4ED8':'#fff';
+  document.getElementById('wb-tou2').style.color = m==='2段'?'#fff':'var(--muted)';
+  document.getElementById('wb-tou2').style.borderColor = m==='2段'?'#1D4ED8':'var(--border)';
+  document.getElementById('wb-tou3').style.background = m==='3段'?'#1D4ED8':'#fff';
+  document.getElementById('wb-tou3').style.color = m==='3段'?'#fff':'var(--muted)';
+  document.getElementById('wb-tou3').style.borderColor = m==='3段'?'#1D4ED8':'var(--border)';
+  document.getElementById('wv-tou-note').textContent = wTOU[m].note;
+  wCalc();
+};
+
+function wV(id){ return parseFloat(document.getElementById(id).value); }
+function wFmt(n,d=1){ return n.toFixed(d); }
+function wFmtW(n){ return wFmt(n)+'萬'; }
+
+function wCalcEV(km, ec, op, mode){
+  const kwh_yr = km*ec/100, kwh_mo = kwh_yr/12;
+  const sm=4,nm=8, onr=1-op, t=wTOU[mode];
+  let yr;
+  if(mode==='2段'){
+    yr=(kwh_mo*(onr*t.sp+op*t.so)*sm + kwh_mo*(onr*t.nsp+op*t.nso)*nm)/10000;
+  } else {
+    const hpr=onr*0.6, pkr=onr*0.4;
+    yr=(kwh_mo*(pkr*t.sp+hpr*t.shp+op*t.so)*sm + kwh_mo*(onr*t.nshp+op*t.nso)*nm)/10000;
+  }
+  return yr;
+}
+
+function wCalc(){
+  const sell=wV('wr-crv-sell'), km=wV('wr-km'), fuel=wV('wr-fuel'),
+        cons=wV('wr-cons'), evp=wV('wr-evprice'), chg=wV('wr-charger'),
+        op=wV('wr-offpeak')/100, evc=wV('wr-evcons'), cmaint=wV('wr-cmaint'),
+        emaint=0.58;
+
+  const TIRE_C=17.3,TIRE_E=25.2,INS_C=17.4,INS_E=26.9,TAX_C=8.9,TAX_E=2.2;
+  const EV_RES=18, CRV_RES=8;
+
+  const gap = evp - sell + chg + 0.5;
+  const fuel_yr = km*cons/100*fuel/10000;
+  const fuel10 = fuel_yr*10;
+  const ev_yr = wCalcEV(km,evc,op,wTouMode);
+  const ev10 = ev_yr*10;
+  const cm10 = cmaint*10, em10 = emaint*10;
+
+  const crv_tot = fuel10+cm10+TIRE_C+INS_C+TAX_C-CRV_RES;
+  const ev_tot  = gap+ev10+em10+TIRE_E+INS_E+TAX_E-EV_RES;
+  const saving  = crv_tot-ev_tot;
+
+  const ann_net = (fuel_yr+cmaint) - (ev_yr+emaint) - (TIRE_E-TIRE_C)/10 - (INS_E-INS_C)/10;
+  const be = ann_net>0 ? (gap-(EV_RES-CRV_RES))/ann_net : 99;
+
+  const crv_perkm = fuel*cons/100;
+  const ev_perkm  = ev_yr*10000/km;
+  const save_km   = crv_perkm - ev_perkm;
+
+  // KPI
+  document.getElementById('wr-gap').textContent = wFmtW(gap);
+  document.getElementById('wr-crvtot').textContent = wFmtW(crv_tot);
+  document.getElementById('wr-evtot').textContent = wFmtW(ev_tot);
+  document.getElementById('wr-saving').textContent = (saving>0?'省':'多')+wFmtW(Math.abs(saving));
+  document.getElementById('wr-be').textContent = be<20?wFmt(be)+'年':'—';
+  document.getElementById('wr-fuelyr').textContent = wFmtW(fuel_yr);
+  document.getElementById('wr-eveyr').textContent = wFmtW(ev_yr);
+  document.getElementById('wr-perkm').textContent = '$'+save_km.toFixed(2);
+
+  // 明細
+  const rows = [
+    {n:'換車成本', c:0, e:gap, pos:false},
+    {n:'燃油 / 電費', c:fuel10, e:ev10, pos:true},
+    {n:'保養維修', c:cm10, e:em10, pos:true},
+    {n:'輪胎費', c:TIRE_C, e:TIRE_E, pos:false},
+    {n:'保險費', c:INS_C, e:INS_E, pos:false},
+    {n:'稅費', c:TAX_C, e:TAX_E, pos:true},
+    {n:'殘值（扣）', c:-CRV_RES, e:-EV_RES, pos:true},
+  ];
+  const grn='color:#15803D;font-weight:700', red='color:#B91C1C;font-weight:700';
+  document.getElementById('wr-tbody').innerHTML = rows.map((r,i)=>{
+    const diff = r.c - r.e;
+    const isLast = i===rows.length-1;
+    const bd = isLast?'':'border-bottom:1px solid var(--border)';
+    const bg = i%2===0?'background:#FAFBFD':'';
+    const dc = r.pos ? (diff>0?grn:red) : (diff<0?grn:red);
+    const dtext = Math.abs(diff)<0.05 ? '持平' : (r.pos?(diff>0?'省':'多'):(diff<0?'多回':'多')) + wFmtW(Math.abs(diff));
+    return `<tr style="${bg}">
+      <td style="padding:11px 14px;${bd};font-size:15px">${r.n}</td>
+      <td style="padding:11px 14px;${bd};text-align:right;color:#B45309;font-weight:700;font-size:15px">${r.c===0?'—':wFmtW(r.c)}</td>
+      <td style="padding:11px 14px;${bd};text-align:right;color:#1D4ED8;font-weight:700;font-size:15px">${wFmtW(r.e)}</td>
+      <td style="padding:11px 14px;${bd};text-align:right;font-size:15px;${dc}">${dtext}</td>
+    </tr>`;
+  }).join('') + `<tr style="background:#F1F5F9">
+    <td style="padding:11px 14px;font-weight:700;font-size:16px">10年總計</td>
+    <td style="padding:11px 14px;text-align:right;color:#B45309;font-weight:800;font-size:16px">${wFmtW(crv_tot)}</td>
+    <td style="padding:11px 14px;text-align:right;color:#1D4ED8;font-weight:800;font-size:16px">${wFmtW(ev_tot)}</td>
+    <td style="padding:11px 14px;text-align:right;font-size:17px;${saving>0?grn:red}">${saving>0?'省':'多'}${wFmtW(Math.abs(saving))}</td>
+  </tr>`;
+
+  // 橫條圖
+  const bars = [
+    {n:'燃油／電費', c:fuel10, e:ev10},
+    {n:'保養維修', c:cm10, e:em10},
+    {n:'輪胎費', c:TIRE_C, e:TIRE_E},
+    {n:'保險費', c:INS_C, e:INS_E},
+    {n:'稅費', c:TAX_C, e:TAX_E},
+  ];
+  const mx = Math.max(...bars.map(b=>Math.max(b.c,b.e)));
+  document.getElementById('wr-bars').innerHTML = bars.map(b=>`
+    <div style="margin-bottom:14px">
+      <div style="font-size:14px;color:var(--body);margin-bottom:6px;font-weight:600">${b.n}</div>
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <div style="height:32px;background:var(--bg);border-radius:6px;overflow:hidden;position:relative">
+          <div style="position:absolute;left:0;top:0;bottom:0;width:${Math.min(100,b.c/mx*100)}%;background:#B45309;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;transition:width .3s ease">
+            <span style="color:#fff;font-size:13px;font-weight:700;white-space:nowrap">CRV6 ${wFmtW(b.c)}</span>
+          </div>
+        </div>
+        <div style="height:32px;background:var(--bg);border-radius:6px;overflow:hidden;position:relative">
+          <div style="position:absolute;left:0;top:0;bottom:0;width:${Math.min(100,b.e/mx*100)}%;background:#1D4ED8;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;transition:width .3s ease">
+            <span style="color:#fff;font-size:13px;font-weight:700;white-space:nowrap">Cavira ${wFmtW(b.e)}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// 綁定
+const wMap = {
+  'wr-crv-sell': {out:'wv-crv-sell', fmt:v=>v+'萬'},
+  'wr-km':       {out:'wv-km',       fmt:v=>parseInt(v).toLocaleString()+' km'},
+  'wr-fuel':     {out:'wv-fuel',     fmt:v=>'$'+v+'/L'},
+  'wr-cons':     {out:'wv-cons',     fmt:v=>v+' L/100km'},
+  'wr-evprice':  {out:'wv-evprice',  fmt:v=>parseFloat(v).toFixed(1)+'萬'},
+  'wr-charger':  {out:'wv-charger',  fmt:v=>parseFloat(v).toFixed(1)+'萬'},
+  'wr-offpeak':  {out:'wv-offpeak',  fmt:v=>v+'%'},
+  'wr-evcons':   {out:'wv-evcons',   fmt:v=>v+' kWh/100km'},
+  'wr-cmaint':   {out:'wv-cmaint',   fmt:v=>parseFloat(v).toFixed(2)+'萬/年'},
+};
+Object.entries(wMap).forEach(([rid,{out,fmt}])=>{
+  document.getElementById(rid).addEventListener('input', function(){
+    document.getElementById(out).textContent = fmt(this.value);
+    wCalc();
+  });
+});
+wCalc();
+})();
+</script>
+
+<footer>
+  資料來源：Foxtron 官方規格表 · CarStuff · U-CAR · 台電電費（2026/4月）· 明台產險試算 · 車麗屋報價 · 7Car養護紀錄<br>
+  製作日期：2026.05.20　·　本報告僅供財務參考，實際決策請諮詢專業顧問
+</footer>
+
+<script>
+const C='#B45309',E='#1D4ED8',G='#15803D',R='#B91C1C';
+const base={responsive:true,maintainAspectRatio:false};
+const ax={grid:{color:'#F1F5F9'},ticks:{color:'#94A3B8',font:{size:12,family:"Inter"}}};
+const leg={display:true,position:'top',labels:{color:'#64748B',font:{size:13,family:"Inter"},usePointStyle:true,pointStyleWidth:10}};
+
+new Chart(document.getElementById('eChart'),{type:'bar',data:{
+  labels:['燃油/電費','保養維修','輪胎費','保險費','稅費'],
+  datasets:[{label:'CRV6',data:[114.2,18.2,17.3,17.4,8.9],backgroundColor:C,borderRadius:4},{label:'Cavira',data:[13.4,5.8,25.2,26.9,2.2],backgroundColor:E,borderRadius:4}]
+},options:{...base,plugins:{legend:leg},scales:{y:{...ax},x:{...ax,grid:{display:false}}}}});
+
+new Chart(document.getElementById('iChart'),{type:'bar',data:{
+  labels:['2026','2027','2028','2029','2030','2031','2032','2033','2034','2035'],
+  datasets:[{label:'CRV6',data:[2.50,2.20,2.00,1.85,1.70,1.60,1.50,1.40,1.35,1.30],backgroundColor:C,borderRadius:3},{label:'Cavira',data:[3.80,3.50,3.20,2.90,2.70,2.50,2.30,2.10,2.00,1.90],backgroundColor:E,borderRadius:3}]
+},options:{...base,plugins:{legend:{display:false}},scales:{y:{...ax},x:{...ax,grid:{display:false}}}}});
+
+new Chart(document.getElementById('tChart'),{type:'bar',data:{
+  labels:['換車','燃油/電','保養','輪胎','保險','稅費','殘值'],
+  datasets:[{label:'CRV6',data:[0,114.2,18.2,17.3,17.4,8.9,-8.0],backgroundColor:C,borderRadius:4},{label:'Cavira',data:[47.4,13.4,5.8,25.2,26.9,2.2,-18.0],backgroundColor:E,borderRadius:4}]
+},options:{...base,plugins:{legend:{display:false}},scales:{y:{...ax},x:{...ax,grid:{display:false},ticks:{...ax.ticks,maxRotation:0}}}}});
+
+const yrs=['2026','2027','2028','2029','2030','2031','2032','2033','2034','2035'];
+const cum=yrs.map((_,i)=>+((i+1)*10.5).toFixed(1));
+const net=yrs.map((_,i)=>+((i+1)*10.5-47.4).toFixed(1));
+new Chart(document.getElementById('bChart'),{type:'line',data:{labels:yrs,datasets:[
+  {label:'累積節省',data:cum,borderColor:G,backgroundColor:'rgba(21,128,61,.07)',borderWidth:2.5,pointRadius:4,fill:true,tension:.35},
+  {label:'淨餘額（扣缺口）',data:net,borderColor:E,backgroundColor:'rgba(29,78,216,.06)',borderWidth:2.5,pointRadius:4,fill:true,tension:.35,borderDash:[6,3]},
+  {label:'回本線',data:yrs.map(()=>0),borderColor:'#CBD5E1',borderWidth:1.5,pointRadius:0,borderDash:[4,4]}
+]},options:{...base,plugins:{legend:leg},scales:{y:{...ax},x:{...ax,grid:{display:false}}}}});
+
+const links=document.querySelectorAll('a.nl');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){
+    links.forEach(l=>l.classList.remove('on'));
+    const a=document.querySelector('a.nl[href="#'+e.target.id+'"]');
+    if(a){a.classList.add('on');a.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});}
+  }});
+},{threshold:.25});
+document.querySelectorAll('[id]').forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>
