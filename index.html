@@ -1236,6 +1236,76 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
     <div style="font-size:13px;color:var(--muted);margin-top:14px;line-height:1.7;background:var(--bg);border-radius:8px;padding:12px 14px">
       固定參數（不可調整）：輪胎費 CRV6 17.3萬 / Cavira 25.2萬 · 保險費 CRV6 17.4萬 / Cavira 26.9萬 · 稅費 CRV6 8.9萬 / EV 2.2萬 · EV殘值 18萬 · 費率依台電 114年10月1日起最新公告
     </div>
+
+    <!-- 三方案對比 -->
+    <div style="margin-top:24px">
+      <div style="font-size:18px;font-weight:800;color:var(--ink);margin-bottom:6px">三方案完整成本對比</div>
+      <div style="font-size:14px;color:var(--muted);margin-bottom:14px">同一里程、同一油耗基準，三種選擇的完整 10 年財務比較</div>
+
+      <!-- 方案說明卡片 -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px">
+        <div style="background:var(--crv-l);border:1px solid var(--crv-bd);border-radius:8px;padding:12px 14px;text-align:center">
+          <div style="font-size:13px;font-weight:700;color:var(--crv);margin-bottom:4px">方案 A</div>
+          <div style="font-size:15px;font-weight:800;color:var(--ink)">持續使用 CRV6</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:3px">燃油車，維持現況</div>
+        </div>
+        <div style="background:var(--blue-l);border:2px solid var(--blue);border-radius:8px;padding:12px 14px;text-align:center">
+          <div style="font-size:13px;font-weight:700;color:var(--blue);margin-bottom:4px">方案 B ★ 推薦</div>
+          <div style="font-size:15px;font-weight:800;color:var(--ink)">換 Cavira + 裝家充</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:3px">時間電價離峰充電，成本最低</div>
+        </div>
+        <div style="background:#F5F3FF;border:1px solid #DDD6FE;border-radius:8px;padding:12px 14px;text-align:center">
+          <div style="font-size:13px;font-weight:700;color:#7C3AED;margin-bottom:4px">方案 C</div>
+          <div style="font-size:15px;font-weight:800;color:var(--ink)">換 Cavira + 全快充</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:3px">不裝家充，外部快充 $7/度</div>
+        </div>
+      </div>
+
+      <!-- 快充方案 KPI -->
+      <div style="background:#F5F3FF;border:1px solid #DDD6FE;border-radius:10px;padding:16px 20px;margin-bottom:16px">
+        <div style="font-size:14px;font-weight:700;color:#7C3AED;margin-bottom:12px">方案 C 試算（換車缺口省去充電樁費，但電費大幅增加）</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+          <div style="text-align:center">
+            <div style="font-size:11px;color:#7C3AED;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">換車缺口</div>
+            <div style="font-size:22px;font-weight:800;color:#7C3AED" id="wr-fast-gap">—</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px">無充電樁費</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-size:11px;color:#7C3AED;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">快充費/年</div>
+            <div style="font-size:22px;font-weight:800;color:#B91C1C" id="wr-fast-evyr">—</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px">$7/度均價</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-size:11px;color:#7C3AED;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">vs CRV6 省下</div>
+            <div style="font-size:22px;font-weight:800" id="wr-fast-saving">—</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px">10年</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-size:11px;color:#7C3AED;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">損益平衡</div>
+            <div style="font-size:22px;font-weight:800;color:#7C3AED" id="wr-fast-be">—</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px" id="wr-fast-perkm">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 三方案完整對比表 -->
+      <div style="overflow:hidden;border:1px solid var(--border);border-radius:10px">
+        <table style="width:100%;border-collapse:collapse;font-size:15px">
+          <thead>
+            <tr>
+              <th style="background:var(--navy,#0F1E35);color:#fff;padding:11px 14px;text-align:left;font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">項目</th>
+              <th style="background:#B45309;color:#FFF7ED;padding:11px 14px;text-align:right;font-size:12px;font-weight:700;letter-spacing:.4px">方案 B<br><span style="font-weight:400;font-size:10px">家充＋離峰</span></th>
+              <th style="background:#7C3AED;color:#F5F3FF;padding:11px 14px;text-align:right;font-size:12px;font-weight:700;letter-spacing:.4px">方案 C<br><span style="font-weight:400;font-size:10px">全快充 $7/度</span></th>
+            </tr>
+          </thead>
+          <tbody id="wr-tbody3"></tbody>
+        </table>
+      </div>
+
+      <div class="ib warn" style="margin:12px 0 0">
+        ⚡ 快充均價 $7/度（U-POWER、Ionex 等主要業者現行費率），10年快充費遠高於家充。若社區無法裝設充電樁，建議評估方案 B 的獨立電錶方案，長期成本差異顯著。
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1425,6 +1495,57 @@ function calc(){
   upd('wr-fuelyr', fw(fuelYr));
   upd('wr-eveyr',  fw(evYr));
   upd('wr-perkm',  '$'+saveKm.toFixed(2)+'/km');
+
+  /* ── 快充情境計算（不裝家充，全用外部快充）── */
+  const fastRate = 7.0;  /* 外部快充均價 $7/度（U-POWER/Ionex等） */
+  const kwh_yr = km / 100 * evc;
+  const fastEVyr  = kwh_yr * fastRate / 10000;  /* EV快充年費 */
+  const fastEV10  = fastEVyr * 10;
+  /* 快充方案不用充電樁費（chg=0，但過戶費 0.5 還是有） */
+  const gapFast   = evp - sell + 0.5;           /* 換車缺口（無充電樁費） */
+  const evTotFast = gapFast + fastEV10 + em10 + TIRE_E + INS_E + TAX_E - EV_RES;
+  const savingFast= crvTot - evTotFast;
+  const fastPerKm = fastEVyr * 10000 / km;
+  const fastSaveKm= fPerKm - fastPerKm;
+  const annNetFast= (fuelYr + cm) - (fastEVyr + em) - (TIRE_E-TIRE_C)/10 - (INS_E-INS_C)/10;
+  const beFast    = annNetFast > 0 ? (gapFast - (EV_RES-CRV_RES)) / annNetFast : 99;
+
+  upd('wr-fast-evyr',    fw(fastEVyr));
+  upd('wr-fast-ev10',    fw(fastEV10));
+  upd('wr-fast-gap',     fw(gapFast));
+  upd('wr-fast-evtot',   fw(evTotFast));
+  upd('wr-fast-saving',  (savingFast>0?'省':'多')+fw(Math.abs(savingFast)));
+  upd('wr-fast-be',      beFast<20 ? beFast.toFixed(1)+'年' : '—');
+  upd('wr-fast-perkm',   '$'+fastPerKm.toFixed(2)+'/km');
+  upd('wr-fast-savekm',  '$'+fastSaveKm.toFixed(2)+'/km');
+
+  /* 三方案對比表 */
+  const rows3=[
+    {n:'換車缺口（一次性）',   c:gap.toFixed(1),      f:gapFast.toFixed(1)},
+    {n:'EV能源費 10年',       c:fw(ev10),             f:fw(fastEV10)},
+    {n:'保養維修 10年',        c:fw(em10),             f:fw(em10)},
+    {n:'輪胎費 10年',         c:fw(TIRE_E),           f:fw(TIRE_E)},
+    {n:'保險費 10年',         c:fw(INS_E),            f:fw(INS_E)},
+    {n:'稅費 10年',           c:fw(TAX_E),            f:fw(TAX_E)},
+    {n:'殘值（扣）',          c:fw(-EV_RES),          f:fw(-EV_RES)},
+    {n:'10年總計',            c:fw(evTot),            f:fw(evTotFast), bold:true},
+    {n:'vs CRV6 省下',        c:(saving>0?'省':'多')+fw(Math.abs(saving)), f:(savingFast>0?'省':'多')+fw(Math.abs(savingFast)), diff:true},
+    {n:'每公里節省',          c:'$'+saveKm.toFixed(2), f:'$'+fastSaveKm.toFixed(2)},
+    {n:'損益平衡',            c:beYrs<20?beYrs.toFixed(1)+'年':'—', f:beFast<20?beFast.toFixed(1)+'年':'—'},
+  ];
+  const tb3=document.getElementById('wr-tbody3');
+  if(tb3){
+    tb3.innerHTML=rows3.map((r,i)=>{
+      const isLast=i===rows3.length-1;
+      const bg=r.bold?'background:#F1F5F9;font-weight:700':i%2===0?'background:#FAFBFD':'';
+      const bd=isLast?'':'border-bottom:1px solid var(--border)';
+      const cStyle = r.diff?(saving>0?'color:#15803D;font-weight:800':'color:#B91C1C;font-weight:800'):(r.bold?'color:#1D4ED8;font-weight:700':'color:#1D4ED8');
+      const fStyle = r.diff?(savingFast>0?'color:#15803D;font-weight:800':'color:#B91C1C;font-weight:800'):(r.bold?'color:#7C3AED;font-weight:700':'color:#7C3AED');
+      return `<tr style="${bg}"><td style="padding:9px 12px;${bd};font-size:15px;color:var(--body)">${r.n}</td>`+
+             `<td style="padding:9px 12px;${bd};text-align:right;font-size:15px;${cStyle}">${r.c}</td>`+
+             `<td style="padding:9px 12px;${bd};text-align:right;font-size:15px;${fStyle}">${r.f}</td></tr>`;
+    }).join('');
+  }
 
   /* s15 明細 tbody */
   const rows=[
