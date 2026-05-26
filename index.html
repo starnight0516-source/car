@@ -23,8 +23,8 @@ html{scroll-behavior:smooth}
 body{font-family:var(--f);color:var(--body);background:var(--bg);font-size:20px;line-height:1.9}
 
 /* NAV */
-nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--border);
-  display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:none}
+nav{display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:none;cursor:grab;user-select:none;-webkit-user-select:none;flex:1}
+nav.dragging{cursor:grabbing}
 nav::-webkit-scrollbar{display:none}
 .nav-logo{display:flex;align-items:center;padding:0 20px 0 16px;font-size:17px;font-weight:800;
   color:var(--blue);white-space:nowrap;border-right:1px solid var(--border);flex-shrink:0;letter-spacing:.3px}
@@ -252,7 +252,9 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
 </head>
 <body>
 
-<nav>
+<div style="position:sticky;top:0;z-index:50;display:flex;align-items:stretch;background:#fff;border-bottom:1px solid var(--border)">
+<button id="nav-left" aria-label="向左" style="flex-shrink:0;width:36px;border:none;border-right:1px solid var(--border);background:#fff;cursor:pointer;font-size:16px;color:var(--muted);padding:0;transition:opacity .2s">‹</button>
+<nav style="position:relative;top:auto;z-index:auto;background:transparent;border-bottom:none;flex:1;cursor:grab;user-select:none;-webkit-user-select:none">
   <div class="nav-logo">CRV6 × CAVIRA</div>
   <a class="nl" href="#hero">封面</a>
   <a class="nl" href="#s01">規格對比</a>
@@ -270,6 +272,63 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
   <a class="nl" href="#s13">理財建議</a>
   <a class="nl" href="#s14">最終結論</a><a class="nl" href="#s15">互動試算</a>
 </nav>
+<button id="nav-right" aria-label="向右" style="flex-shrink:0;width:36px;border:none;border-left:1px solid var(--border);background:#fff;cursor:pointer;font-size:16px;color:var(--muted);padding:0;transition:opacity .2s">›</button>
+</div>
+<script>
+(function(){
+  const nav = document.querySelector('nav');
+  if(!nav) return;
+  let isDown=false, startX=0, scrollLeft=0;
+
+  nav.addEventListener('mousedown', e=>{
+    // 點連結時不啟動拖曳
+    if(e.target.tagName==='A'||e.target.closest('a')) return;
+    isDown=true;
+    nav.classList.add('dragging');
+    startX = e.pageX - nav.offsetLeft;
+    scrollLeft = nav.scrollLeft;
+    e.preventDefault();
+  });
+
+  document.addEventListener('mouseup', ()=>{
+    isDown=false;
+    nav.classList.remove('dragging');
+  });
+
+  document.addEventListener('mousemove', e=>{
+    if(!isDown) return;
+    const x = e.pageX - nav.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    nav.scrollLeft = scrollLeft - walk;
+  });
+
+  /* 觸控支援 */
+  let touchStartX=0, touchScrollLeft=0;
+  nav.addEventListener('touchstart', e=>{
+    touchStartX = e.touches[0].pageX - nav.offsetLeft;
+    touchScrollLeft = nav.scrollLeft;
+  },{passive:true});
+  nav.addEventListener('touchmove', e=>{
+    const x = e.touches[0].pageX - nav.offsetLeft;
+    nav.scrollLeft = touchScrollLeft - (x - touchStartX)*1.5;
+  },{passive:true});
+
+  /* 左右箭頭按鈕 */
+  const lbtn = document.getElementById('nav-left');
+  const rbtn = document.getElementById('nav-right');
+  if(lbtn) lbtn.addEventListener('click', ()=>{ nav.scrollBy({left:-160,behavior:'smooth'}); });
+  if(rbtn) rbtn.addEventListener('click', ()=>{ nav.scrollBy({left:160,behavior:'smooth'}); });
+
+  /* 箭頭顯示/隱藏 */
+  function updateArrows(){
+    if(!lbtn||!rbtn) return;
+    lbtn.style.opacity = nav.scrollLeft>10 ? '1':'0.3';
+    rbtn.style.opacity = nav.scrollLeft < nav.scrollWidth-nav.clientWidth-10 ? '1':'0.3';
+  }
+  nav.addEventListener('scroll', updateArrows);
+  updateArrows();
+})();
+</script>
 
 <!-- HERO -->
 <div class="hero" id="hero">
@@ -1401,20 +1460,53 @@ function calc(){
   ];
   const mx=Math.max(...bars.map(b=>Math.max(b.c,b.e)));
   const bd=document.getElementById('wr-bars');
-  if(bd) bd.innerHTML=bars.map(b=>`
-    <div style="margin-bottom:14px">
-      <div style="font-size:14px;color:var(--body);margin-bottom:5px;font-weight:600">${b.n}</div>
-      <div style="height:30px;background:var(--bg);border-radius:6px;overflow:hidden;margin-bottom:3px;position:relative">
-        <div style="position:absolute;left:0;top:0;bottom:0;width:${Math.min(100,b.c/mx*100).toFixed(1)}%;background:#B45309;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:10px">
-          <span style="color:#fff;font-size:13px;font-weight:700;white-space:nowrap">CRV6 ${fw(b.c)}</span>
-        </div>
+  if(bd){
+    /* 數字標籤固定顯示在條外右側，確保永遠看得到 */
+    bd.innerHTML=`
+      <div style="display:grid;grid-template-columns:90px 1fr 12px 1fr 90px;align-items:center;gap:6px;margin-bottom:8px;padding:0 4px">
+        <div style="text-align:right;font-size:12px;font-weight:700;color:#B45309">CRV6</div>
+        <div style="text-align:center;font-size:11px;color:var(--muted)">← 較高</div>
+        <div></div>
+        <div style="text-align:center;font-size:11px;color:var(--muted)">較低 →</div>
+        <div style="text-align:left;font-size:12px;font-weight:700;color:#1D4ED8">Cavira</div>
       </div>
-      <div style="height:30px;background:var(--bg);border-radius:6px;overflow:hidden;position:relative">
-        <div style="position:absolute;left:0;top:0;bottom:0;width:${Math.min(100,b.e/mx*100).toFixed(1)}%;background:#1D4ED8;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:10px">
-          <span style="color:#fff;font-size:13px;font-weight:700;white-space:nowrap">Cavira ${fw(b.e)}</span>
+    `+bars.map(b=>{
+      const pct_c=Math.min(100,b.c/mx*100);
+      const pct_e=Math.min(100,b.e/mx*100);
+      const diff=b.c-b.e;
+      const diffTxt=Math.abs(diff)<0.5?'持平':(diff>0?'EV省'+fw(diff):'EV多'+fw(-diff));
+      const diffCol=diff>0?'#15803D':(diff<0?'#B91C1C':'#64748B');
+      return `
+      <div style="margin-bottom:16px">
+        <div style="display:grid;grid-template-columns:90px 1fr 12px 1fr 90px;align-items:center;gap:6px">
+          <!-- 項目名稱 + CRV6數字 -->
+          <div style="text-align:right">
+            <div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:2px">${b.n}</div>
+            <div style="font-size:16px;font-weight:800;color:#B45309">${fw(b.c)}</div>
+          </div>
+          <!-- CRV6 橫條（從右往左長） -->
+          <div style="height:36px;background:#F1F5F9;border-radius:6px 0 0 6px;overflow:hidden;position:relative">
+            <div style="position:absolute;right:0;top:0;bottom:0;width:${pct_c.toFixed(1)}%;background:#B45309;border-radius:6px 0 0 6px;min-width:4px">
+            </div>
+          </div>
+          <!-- 中間分隔線 -->
+          <div style="width:2px;height:36px;background:var(--border);margin:0 auto"></div>
+          <!-- Cavira 橫條（從左往右長） -->
+          <div style="height:36px;background:#F1F5F9;border-radius:0 6px 6px 0;overflow:hidden;position:relative">
+            <div style="position:absolute;left:0;top:0;bottom:0;width:${pct_e.toFixed(1)}%;background:#1D4ED8;border-radius:0 6px 6px 0;min-width:4px">
+            </div>
+          </div>
+          <!-- Cavira數字 -->
+          <div style="text-align:left">
+            <div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:2px">&nbsp;</div>
+            <div style="font-size:16px;font-weight:800;color:#1D4ED8">${fw(b.e)}</div>
+          </div>
         </div>
-      </div>
-    </div>`).join('');
+        <!-- 差異標籤 -->
+        <div style="text-align:center;font-size:13px;font-weight:700;color:${diffCol};margin-top:4px">${diffTxt}</div>
+      </div>`;
+    }).join('');
+  }
 
   /* 圖表重繪 */
   const yrs=['2026','2027','2028','2029','2030','2031','2032','2033','2034','2035'];
