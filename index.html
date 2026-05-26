@@ -278,55 +278,66 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
 (function(){
   const nav = document.querySelector('nav');
   if(!nav) return;
-  let isDown=false, startX=0, scrollLeft=0;
 
-  nav.addEventListener('mousedown', e=>{
-    // 點連結時不啟動拖曳
-    if(e.target.tagName==='A'||e.target.closest('a')) return;
-    isDown=true;
-    nav.classList.add('dragging');
-    startX = e.pageX - nav.offsetLeft;
-    scrollLeft = nav.scrollLeft;
+  let dragging = false;
+  let startX   = 0;
+  let scrollL  = 0;
+
+  /* 用 clientX 比 pageX 更準確，不受頁面捲動影響 */
+  nav.addEventListener('mousedown', function(e){
+    dragging  = true;
+    startX    = e.clientX;
+    scrollL   = nav.scrollLeft;
+    nav.style.cursor = 'grabbing';
+    /* 防止文字選取 */
     e.preventDefault();
   });
 
-  document.addEventListener('mouseup', ()=>{
-    isDown=false;
-    nav.classList.remove('dragging');
+  window.addEventListener('mouseup', function(){
+    if(!dragging) return;
+    dragging = false;
+    nav.style.cursor = 'grab';
   });
 
-  document.addEventListener('mousemove', e=>{
-    if(!isDown) return;
-    const x = e.pageX - nav.offsetLeft;
-    const walk = (x - startX) * 1.5;
-    nav.scrollLeft = scrollLeft - walk;
+  window.addEventListener('mousemove', function(e){
+    if(!dragging) return;
+    const dx = e.clientX - startX;
+    nav.scrollLeft = scrollL - dx;
   });
 
-  /* 觸控支援 */
-  let touchStartX=0, touchScrollLeft=0;
-  nav.addEventListener('touchstart', e=>{
-    touchStartX = e.touches[0].pageX - nav.offsetLeft;
-    touchScrollLeft = nav.scrollLeft;
-  },{passive:true});
-  nav.addEventListener('touchmove', e=>{
-    const x = e.touches[0].pageX - nav.offsetLeft;
-    nav.scrollLeft = touchScrollLeft - (x - touchStartX)*1.5;
-  },{passive:true});
+  /* 連結點擊：沒有拖動才跳頁 */
+  nav.querySelectorAll('a.nl').forEach(function(a){
+    let downX = 0;
+    a.addEventListener('mousedown', function(e){
+      downX = e.clientX;
+    });
+    a.addEventListener('click', function(e){
+      if(Math.abs(e.clientX - downX) > 5) e.preventDefault();
+    });
+  });
 
-  /* 左右箭頭按鈕 */
-  const lbtn = document.getElementById('nav-left');
-  const rbtn = document.getElementById('nav-right');
-  if(lbtn) lbtn.addEventListener('click', ()=>{ nav.scrollBy({left:-160,behavior:'smooth'}); });
-  if(rbtn) rbtn.addEventListener('click', ()=>{ nav.scrollBy({left:160,behavior:'smooth'}); });
-
-  /* 箭頭顯示/隱藏 */
+  /* 箭頭按鈕 */
+  const lb = document.getElementById('nav-left');
+  const rb = document.getElementById('nav-right');
   function updateArrows(){
-    if(!lbtn||!rbtn) return;
-    lbtn.style.opacity = nav.scrollLeft>10 ? '1':'0.3';
-    rbtn.style.opacity = nav.scrollLeft < nav.scrollWidth-nav.clientWidth-10 ? '1':'0.3';
+    if(lb) lb.style.opacity = nav.scrollLeft > 5 ? '1' : '0.3';
+    if(rb) rb.style.opacity = nav.scrollLeft < nav.scrollWidth - nav.clientWidth - 5 ? '1' : '0.3';
   }
+  if(lb) lb.addEventListener('click', function(){ nav.scrollBy({left:-180, behavior:'smooth'}); });
+  if(rb) rb.addEventListener('click', function(){ nav.scrollBy({left:180,  behavior:'smooth'}); });
   nav.addEventListener('scroll', updateArrows);
   updateArrows();
+
+  /* 觸控 */
+  let tStartX = 0, tScrollL = 0;
+  nav.addEventListener('touchstart', function(e){
+    tStartX  = e.touches[0].clientX;
+    tScrollL = nav.scrollLeft;
+  }, {passive:true});
+  nav.addEventListener('touchmove', function(e){
+    nav.scrollLeft = tScrollL - (e.touches[0].clientX - tStartX);
+  }, {passive:true});
+
 })();
 </script>
 
