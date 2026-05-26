@@ -294,9 +294,9 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
     <div class="hero-sub">2026年式 · 純電 578km WLTC · 82.74kWh LFP · 2,165kg（官方）</div>
     <div class="hero-kpis">
       <div class="hk"><div class="hkl">預售價</div><div class="hkv" style="color:#60A5FA">123.9萬</div></div>
-      <div class="hk"><div class="hkl">換車缺口</div><div class="hkv" style="color:#FCD34D">47.4萬</div></div>
-      <div class="hk"><div class="hkl">10年省下</div><div class="hkv" style="color:#4ADE80">59.3萬</div></div>
-      <div class="hk"><div class="hkl">損益平衡</div><div class="hkv" style="color:#93C5FD">3.9年</div></div>
+      <div class="hk"><div class="hkl">換車缺口</div><div class="hkv" style="color:#FCD34D" id="h-gap">47.4萬</div></div>
+      <div class="hk"><div class="hkl">10年省下</div><div class="hkv" style="color:#4ADE80" id="h-saving">59.3萬</div></div>
+      <div class="hk"><div class="hkl">損益平衡</div><div class="hkv" style="color:#93C5FD" id="h-be">3.9年</div></div>
     </div>
     <div style="font-size:19px;color:#3B5276;line-height:1.9;margin-top:4px">
       共 14 個章節 · 規格 · 財務 · 充電樁 · 輪胎 · 投資建議<br>
@@ -360,7 +360,7 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
             <span style="font-size:15px;color:var(--body)">出售估值</span>
             <span style="font-size:19px;font-weight:800;color:var(--crv)" id="wv-crv-sell">80 萬</span>
           </div>
-          <input type="range" id="wr-crv-sell" min="70" max="100" step="1" value="80" style="width:100%;accent-color:#B45309">
+          <input type="range" id="wr-crv-sell" min="70" max="100" step="1" value="80" oninput="var v=this.value;document.getElementById('wv-crv-sell').textContent=v+'萬'" style="width:100%;accent-color:#B45309">
           <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:2px"><span>70萬（保守）</span><span>100萬（樂觀自售）</span></div>
         </div>
 
@@ -369,7 +369,7 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
             <span style="font-size:15px;color:var(--body)">年均行駛里程</span>
             <span style="font-size:19px;font-weight:800;color:var(--ink)" id="wv-km">42,000 km</span>
           </div>
-          <input type="range" id="wr-km" min="15000" max="80000" step="1000" value="42000" style="width:100%;accent-color:#475569">
+          <input type="range" id="wr-km" min="15000" max="80000" step="1000" value="42000" oninput="var v=this.value;document.getElementById('wv-km').textContent=parseInt(v).toLocaleString()+' km'" style="width:100%;accent-color:#475569">
           <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:2px"><span>15,000 km</span><span>80,000 km</span></div>
         </div>
 
@@ -378,7 +378,7 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
             <span style="font-size:15px;color:var(--body)">汽油均價</span>
             <span style="font-size:19px;font-weight:800;color:var(--crv)" id="wv-fuel">$32/L</span>
           </div>
-          <input type="range" id="wr-fuel" min="25" max="45" step="1" value="32" style="width:100%;accent-color:#B45309">
+          <input type="range" id="wr-fuel" min="25" max="45" step="1" value="32" oninput="var v=this.value;document.getElementById('wv-fuel').textContent='$'+v+'/L'" style="width:100%;accent-color:#B45309">
           <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:2px"><span>$25/L 低油價</span><span>$45/L 高油價</span></div>
         </div>
 
@@ -387,7 +387,7 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
             <span style="font-size:15px;color:var(--body)">油耗（每公升跑幾公里）</span>
             <span style="font-size:19px;font-weight:800;color:var(--crv)" id="wv-cons">11.8 km/L</span>
           </div>
-          <input type="range" id="wr-cons" min="8" max="16" step="0.5" value="11.8" style="width:100%;accent-color:#B45309">
+          <input type="range" id="wr-cons" min="8" max="16" step="0.5" value="11.8" oninput="var v=this.value;document.getElementById('wv-cons').textContent=parseFloat(v).toFixed(1)+' km/L'" style="width:100%;accent-color:#B45309">
           <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:2px"><span>8 km/L（耗油）</span><span>16 km/L（省油）</span></div>
         </div>
 
@@ -396,7 +396,7 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
             <span style="font-size:15px;color:var(--body)">保養費</span>
             <span style="font-size:19px;font-weight:800;color:var(--ink)" id="wv-cmaint">1.82 萬/年</span>
           </div>
-          <input type="range" id="wr-cmaint" min="1" max="4" step="0.1" value="1.82" style="width:100%;accent-color:#475569">
+          <input type="range" id="wr-cmaint" min="1" max="4" step="0.1" value="1.82" oninput="var v=this.value;document.getElementById('wv-cmaint').textContent=parseFloat(v).toFixed(2)+'萬/年'" style="width:100%;accent-color:#475569">
           <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:2px"><span>1萬/年（簡單保養）</span><span>4萬/年（積極維護）</span></div>
         </div>
       </div>
@@ -410,7 +410,7 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
             <span style="font-size:15px;color:var(--body)">Cavira 售價</span>
             <span style="font-size:19px;font-weight:800;color:var(--blue)" id="wv-evprice">123.9 萬</span>
           </div>
-          <input type="range" id="wr-evprice" min="115" max="135" step="0.5" value="123.9" style="width:100%;accent-color:#1D4ED8">
+          <input type="range" id="wr-evprice" min="115" max="135" step="0.5" value="123.9" oninput="var v=this.value;document.getElementById('wv-evprice').textContent=parseFloat(v).toFixed(1)+'萬'" style="width:100%;accent-color:#1D4ED8">
           <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:2px"><span>115萬</span><span>135萬</span></div>
         </div>
 
@@ -419,7 +419,7 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
             <span style="font-size:15px;color:var(--body)">充電樁安裝費</span>
             <span style="font-size:19px;font-weight:800;color:var(--blue)" id="wv-charger">3.0 萬</span>
           </div>
-          <input type="range" id="wr-charger" min="1.5" max="14" step="0.5" value="3" style="width:100%;accent-color:#1D4ED8">
+          <input type="range" id="wr-charger" min="1.5" max="14" step="0.5" value="3" oninput="var v=this.value;document.getElementById('wv-charger').textContent=parseFloat(v).toFixed(1)+'萬'" style="width:100%;accent-color:#1D4ED8">
           <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:2px"><span>1.5萬（錶後拉電）</span><span>14萬（獨立電錶）</span></div>
         </div>
 
@@ -437,7 +437,7 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
             <span style="font-size:15px;color:var(--body)">離峰充電比例</span>
             <span style="font-size:19px;font-weight:800;color:var(--blue)" id="wv-offpeak">85%</span>
           </div>
-          <input type="range" id="wr-offpeak" min="40" max="100" step="5" value="85" style="width:100%;accent-color:#1D4ED8">
+          <input type="range" id="wr-offpeak" min="40" max="100" step="5" value="85" oninput="var v=this.value;document.getElementById('wv-offpeak').textContent=v+'%'" style="width:100%;accent-color:#1D4ED8">
           <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:2px"><span>40%（習慣不改）</span><span>100%（全離峰）</span></div>
         </div>
 
@@ -446,7 +446,7 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
             <span style="font-size:15px;color:var(--body)">Cavira 電耗</span>
             <span style="font-size:19px;font-weight:800;color:var(--blue)" id="wv-evcons">15.8 kWh/100km</span>
           </div>
-          <input type="range" id="wr-evcons" min="13" max="20" step="0.5" value="15.8" style="width:100%;accent-color:#1D4ED8">
+          <input type="range" id="wr-evcons" min="13" max="20" step="0.5" value="15.8" oninput="var v=this.value;document.getElementById('wv-evcons').textContent=v+' kWh/100km'" style="width:100%;accent-color:#1D4ED8">
           <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:2px"><span>13 kWh（省電）</span><span>20 kWh（耗電）</span></div>
         </div>
 
@@ -504,17 +504,17 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
     <div style="display:flex;flex-direction:column;gap:12px">
       <div style="background:var(--crv-l);border:1px solid var(--crv-bd);border-radius:var(--r);padding:20px 24px">
         <div style="font-size:17px;font-weight:700;color:var(--crv);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">CRV6 燃油費 10年</div>
-        <div style="font-size:46px;font-weight:800;color:var(--crv)">114.2萬</div>
-        <div style="font-size:16px;color:var(--crv);opacity:.8;margin-top:4px">每公里 $2.72 · 11.8km/L（≈8.5L/100km） × $32/L（10年均價）</div>
+        <div style="font-size:46px;font-weight:800;color:var(--crv)" id="e-crv-fuel">114.2萬</div>
+        <div style="font-size:16px;color:var(--crv);opacity:.8;margin-top:4px"><span id="e-crv-desc">每公里 $2.72 · 11.8km/L × $32/L（10年均價）</span></div>
       </div>
       <div style="background:var(--blue-l);border:1px solid var(--blue-bd);border-radius:var(--r);padding:20px 24px">
         <div style="font-size:17px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Cavira 充電費 10年（時間電價）</div>
-        <div style="font-size:46px;font-weight:800;color:var(--blue)">19.3萬</div>
-        <div style="font-size:16px;color:var(--blue);opacity:.8;margin-top:4px">每公里 $0.46 · 有效加權 $2.91/度（85%家用離峰＋15%外充）</div>
+        <div style="font-size:46px;font-weight:800;color:var(--blue)" id="e-ev-fuel">19.3萬</div>
+        <div style="font-size:16px;color:var(--blue);opacity:.8;margin-top:4px"><span id="e-ev-desc">每公里 <span id="e-ev-perkm">$0.46</span> · 有效加權 $2.91/度（85%家用離峰＋15%外充）</div>
       </div>
       <div style="background:var(--grn-l);border:1px solid var(--grn-bd);border-radius:var(--r);padding:20px 24px">
         <div style="font-size:17px;font-weight:700;color:var(--grn);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">10年能源費省下</div>
-        <div style="font-size:46px;font-weight:800;color:var(--grn)">94.9萬</div>
+        <div style="font-size:46px;font-weight:800;color:var(--grn)" id="e-energy-save">94.9萬</div>
         <div style="font-size:16px;color:var(--grn);opacity:.8;margin-top:4px">★ 最大節省項目</div>
       </div>
     </div>
@@ -596,23 +596,23 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
     <div class="cc">
       <div class="ccl">各項 10 年費用對比（萬元）</div>
       <div style="position:relative;height:300px"><canvas id="tChart" role="img" aria-label="總成本對比"></canvas></div>
-      <div class="lgd"><span><span class="lsq" style="background:var(--crv)"></span>CRV6 合計 168.1萬</span><span><span class="lsq" style="background:var(--blue)"></span>Cavira 合計 102.9萬</span></div>
+      <div class="lgd"><span><span class="lsq" style="background:var(--crv)"></span>CRV6 合計 <span id="t-lgd-crv">168.1</span>萬</span><span><span class="lsq" style="background:var(--blue)"></span>Cavira 合計 <span id="t-lgd-ev">102.9</span>萬</span></div>
     </div>
     <div class="card" style="overflow:hidden">
       <table class="tbl">
         <thead><tr><th>成本項目</th><th>CRV6</th><th>Cavira</th><th>差異</th></tr></thead>
         <tbody>
-          <tr><td>換車成本</td><td style="color:var(--muted)">—</td><td class="cbl">47.4</td><td class="neg">多 47.4</td></tr>
-          <tr><td>燃油 / 電費</td><td class="ccr">114.2</td><td class="cbl">19.3</td><td class="pos">省 94.9</td></tr>
-          <tr><td>保養維修</td><td class="ccr">18.2</td><td class="cbl">5.8</td><td class="pos">省 12.4</td></tr>
+          <tr><td>換車成本</td><td style="color:var(--muted)">—</td><td class="cbl" id="t-gap">47.4</td><td class="neg" id="t-gap-d">多 47.4</td></tr>
+          <tr><td>燃油 / 電費</td><td class="ccr" id="t-fuel-c">114.2</td><td class="cbl" id="t-fuel-e">19.3</td><td class="pos" id="t-fuel-d">省 94.9</td></tr>
+          <tr><td>保養維修</td><td class="ccr" id="t-maint-c">18.2</td><td class="cbl" id="t-maint-e">5.8</td><td class="pos" id="t-maint-d">省 12.4</td></tr>
           <tr><td>輪胎費 ⚠</td><td class="ccr">17.3</td><td class="cbl">25.2</td><td class="neg">多 7.9</td></tr>
           <tr><td>保險費 ⚠</td><td class="ccr">17.4</td><td class="cbl">26.9</td><td class="neg">多 9.5</td></tr>
           <tr><td>稅費</td><td class="ccr">8.9</td><td class="cbl">2.2</td><td class="pos">省 6.7</td></tr>
           <tr><td>殘值（扣）</td><td class="ccr">−8.0</td><td class="cbl">−18.0</td><td class="pos">省 10.0</td></tr>
         </tbody>
         <tfoot>
-          <tr class="sub"><td>10年總計</td><td style="color:var(--crv)">168.1萬</td><td style="color:var(--blue)">108.8萬</td><td></td></tr>
-          <tr class="tot"><td>10年省下</td><td colspan="3" style="text-align:right;color:#4ADE80;font-size:20px">59.3 萬</td></tr>
+          <tr class="sub"><td>10年總計</td><td style="color:var(--crv)" id="t-crv-tot">168.1萬</td><td style="color:var(--blue)" id="t-ev-tot">108.8萬</td><td></td></tr>
+          <tr class="tot"><td>10年省下</td><td colspan="3" style="text-align:right;color:#4ADE80;font-size:20px" id="t-saving">59.3 萬</td></tr>
         </tfoot>
       </table>
     </div>
@@ -624,10 +624,10 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
 <div class="wrap" id="s06">
   <div class="ph"><div class="ph-num">06</div><div class="ph-title">損益平衡分析</div><div class="ph-sub">換車缺口 47.4 萬，何時回本？</div></div>
   <div class="krow" style="margin-bottom:20px">
-    <div class="kc kr"><div class="kl">換車缺口</div><div class="kv">47.4萬</div><div class="ks">一次性支出</div></div>
-    <div class="kc kg"><div class="kl">年均淨節省</div><div class="kv">9.7萬</div><div class="ks">扣輪胎保費後</div></div>
-    <div class="kc km"><div class="kl">年額外支出</div><div class="kv">−1.7萬</div><div class="ks">輪胎多0.79＋保費多0.95</div></div>
-    <div class="kc kb"><div class="kl">損益平衡</div><div class="kv">3.5年</div><div class="ks">約 2030 年初（含殘值差）</div></div>
+    <div class="kc kr"><div class="kl">換車缺口</div><div class="kv" id="be-gap">47.4萬</div><div class="ks">一次性支出</div></div>
+    <div class="kc kg"><div class="kl">年均淨節省</div><div class="kv" id="be-annual">9.7萬</div><div class="ks">扣輪胎保費後</div></div>
+    <div class="kc km"><div class="kl">年額外支出</div><div class="kv" id="be-extra">−1.7萬</div><div class="ks">輪胎＋保費差額</div></div>
+    <div class="kc kb"><div class="kl">損益平衡</div><div class="kv" id="be-years">3.5年</div><div class="ks" id="be-note">約 2030 年初（含殘值差）</div></div>
   </div>
   <div class="cc">
     <div class="ccl">累積節省 vs 換車缺口（萬元）</div>
@@ -679,14 +679,14 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
       <div class="vi"><div class="dot" style="background:var(--grn)"></div>輪胎費較低（17.3 萬）</div>
       <div class="vi"><div class="dot" style="background:var(--grn)"></div>保費較低（17.4 萬，車齡遞減）</div>
       <div class="vlbl" style="color:var(--red)">注意</div>
-      <div class="vi"><div class="dot" style="background:var(--red)"></div>10年燃油費 114.2 萬，長期偏高（以$32/L計）</div>
+      <div class="vi"><div class="dot" style="background:var(--red)"></div>10年燃油費 <span id="ev-vi-fuel">114.2</span> 萬，長期偏高（依油價設定）</div>
       <div class="vi"><div class="dot" style="background:var(--red)"></div>油價上漲風險完全承擔</div>
       <div class="vi"><div class="dot" style="background:var(--red)"></div>14年車齡後殘值歸零，須再次換車</div>
     </div>
     <div class="vc" style="border-color:var(--blue);border-width:2px">
       <div class="vt" style="color:var(--blue)">方案 B　換購 Cavira Emerge</div>
       <div class="vlbl" style="color:var(--grn)">優勢</div>
-      <div class="vi"><div class="dot" style="background:var(--grn)"></div>10年省下約 59.3 萬（完整計算）</div>
+      <div class="vi"><div class="dot" style="background:var(--grn)"></div>10年省下約 <span id="ev-vi-saving">59.3</span> 萬（完整計算）</div>
       <div class="vi"><div class="dot" style="background:var(--grn)"></div>能源費每年僅 2 萬（vs CRV 12.5 萬）</div>
       <div class="vi"><div class="dot" style="background:var(--grn)"></div>保養大幅簡化，無換油無皮帶</div>
       <div class="vi"><div class="dot" style="background:var(--grn)"></div>578km WLTC 長續航，無里程焦慮</div>
@@ -694,7 +694,7 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
       <div class="vlbl" style="color:var(--red)">注意</div>
       <div class="vi"><div class="dot" style="background:var(--red)"></div>輪胎費較高（25.2 萬），高里程需注意</div>
       <div class="vi"><div class="dot" style="background:var(--red)"></div>保費較高（26.9 萬），新車車價高</div>
-      <div class="vi"><div class="dot" style="background:var(--red)"></div>換車缺口 47.4 萬需一次性資金</div>
+      <div class="vi"><div class="dot" style="background:var(--red)"></div>換車缺口 <span id="ev-vi-gap">47.4</span> 萬需一次性資金</div>
       <div class="vi"><div class="dot" style="background:var(--red)"></div>Foxtron 品牌新，服務體系仍建立中</div>
     </div>
   </div>
@@ -1071,9 +1071,9 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
   <div class="ph"><div class="ph-num">14</div><div class="ph-title">最終結論</div></div>
   <div class="final">
     <div class="fkpis">
-      <div><div class="fkl">換車淨支出</div><div class="fkv" style="color:#FCA5A5">47.4<span style="font-size:22px"> 萬</span></div><div style="font-size:19px;color:#3B5276;margin-top:5px">一次性缺口</div></div>
-      <div><div class="fkl">10年總省下</div><div class="fkv" style="color:#4ADE80">59.3<span style="font-size:22px"> 萬</span></div><div style="font-size:19px;color:#3B5276;margin-top:5px">含輪胎保險完整計算</div></div>
-      <div><div class="fkl">損益平衡點</div><div class="fkv" style="color:#60A5FA">3.9<span style="font-size:22px"> 年</span></div><div style="font-size:19px;color:#3B5276;margin-top:5px">約 2030 年初回本</div></div>
+      <div><div class="fkl">換車淨支出</div><div class="fkv" style="color:#FCA5A5" id="fin-gap">47.4<span style="font-size:22px"> 萬</span></div><div style="font-size:19px;color:#3B5276;margin-top:5px">一次性缺口</div></div>
+      <div><div class="fkl">10年總省下</div><div class="fkv" style="color:#4ADE80" id="fin-saving">59.3<span style="font-size:22px"> 萬</span></div><div style="font-size:19px;color:#3B5276;margin-top:5px">含輪胎保險完整計算</div></div>
+      <div><div class="fkl">損益平衡點</div><div class="fkv" style="color:#60A5FA" id="fin-be">3.9<span style="font-size:22px"> 年</span></div><div style="font-size:19px;color:#3B5276;margin-top:5px" id="fin-be-note">約 2030 年初回本</div></div>
     </div>
     <div class="frecs">
       <div class="frt">行動建議</div>
@@ -1171,173 +1171,322 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
 
 <script>
 (function(){
-const wTOU = {
-  '2段': { sp:5.16, so:2.06, nsp:4.93, nso:1.99, note:'離峰 $2.06（夏）/ $1.99（非夏）・尖峰 $5.16/$4.93' },
-  '3段': { sp:7.13, shp:4.69, so:2.06, nshp:4.48, nso:1.99, note:'離峰 $2.06（夏）/ $1.99（非夏）・尖峰 $7.13（夏16–22時）' }
+'use strict';
+
+/* ═══ 費率常數 ═══ */
+const TOU={
+  '2段':{sp:5.16,so:2.06,nsp:4.93,nso:1.99,note:'離峰 $2.06（夏）/ $1.99（非夏）· 尖峰 $5.16/$4.93'},
+  '3段':{sp:7.13,shp:4.69,so:2.06,nshp:4.48,nso:1.99,note:'離峰 $2.06（夏）/ $1.99（非夏）· 尖峰 $7.13（夏16–22時）'}
 };
-let wTouMode = '2段';
+const TIRE_C=17.3,TIRE_E=25.2,INS_C=17.4,INS_E=26.9,TAX_C=8.9,TAX_E=2.2,EV_RES=18,CRV_RES=8;
+const SM=4,NM=8; /* 夏月4個月，非夏月8個月 */
 
-window.wSetTOU = function(m){
-  wTouMode = m;
-  const a = '#1D4ED8', b = 'var(--border)';
-  document.getElementById('wb-tou2').style.background = m==='2段'?'#1D4ED8':'#fff';
-  document.getElementById('wb-tou2').style.color = m==='2段'?'#fff':'var(--muted)';
-  document.getElementById('wb-tou2').style.borderColor = m==='2段'?'#1D4ED8':'var(--border)';
-  document.getElementById('wb-tou3').style.background = m==='3段'?'#1D4ED8':'#fff';
-  document.getElementById('wb-tou3').style.color = m==='3段'?'#fff':'var(--muted)';
-  document.getElementById('wb-tou3').style.borderColor = m==='3段'?'#1D4ED8':'var(--border)';
-  document.getElementById('wv-tou-note').textContent = wTOU[m].note;
-  wCalc();
-};
+let touMode='2段';
 
-function wV(id){ return parseFloat(document.getElementById(id).value); }
-function wFmt(n,d=1){ return n.toFixed(d); }
-function wFmtW(n){ return wFmt(n)+'萬'; }
+/* ═══ localStorage 參數持久化 ═══ */
+const STORE_KEY='crv_cavira_params_v2';
+const PARAMS=['wr-crv-sell','wr-km','wr-fuel','wr-cons','wr-evprice','wr-charger','wr-offpeak','wr-evcons','wr-cmaint'];
 
-function wCalcEV(km, ec, op, mode){
-  const kwh_yr = km*ec/100, kwh_mo = kwh_yr/12;
-  const sm=4,nm=8, onr=1-op, t=wTOU[mode];
-  let yr;
-  if(mode==='2段'){
-    yr=(kwh_mo*(onr*t.sp+op*t.so)*sm + kwh_mo*(onr*t.nsp+op*t.nso)*nm)/10000;
-  } else {
-    const hpr=onr*0.6, pkr=onr*0.4;
-    yr=(kwh_mo*(pkr*t.sp+hpr*t.shp+op*t.so)*sm + kwh_mo*(onr*t.nshp+op*t.nso)*nm)/10000;
-  }
-  return yr;
+function saveParams(){
+  const data={tou:touMode};
+  PARAMS.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) data[id]=el.value;
+  });
+  try{ localStorage.setItem(STORE_KEY,JSON.stringify(data)); }catch(e){}
 }
 
-function wCalc(){
-  const sell=wV('wr-crv-sell'), km=wV('wr-km'), fuel=wV('wr-fuel'),
-        cons=wV('wr-cons'), evp=wV('wr-evprice'), chg=wV('wr-charger'),
-        op=wV('wr-offpeak')/100, evc=wV('wr-evcons'), cmaint=wV('wr-cmaint'),
-        emaint=0.58;
+function loadParams(){
+  try{
+    const raw=localStorage.getItem(STORE_KEY);
+    if(!raw) return;
+    const data=JSON.parse(raw);
+    PARAMS.forEach(id=>{
+      if(data[id]!==undefined){
+        const el=document.getElementById(id);
+        if(el) el.value=data[id];
+      }
+    });
+    if(data.tou) touMode=data.tou;
+  }catch(e){}
+}
 
-  const TIRE_C=17.3,TIRE_E=25.2,INS_C=17.4,INS_E=26.9,TAX_C=8.9,TAX_E=2.2;
-  const EV_RES=18, CRV_RES=8;
+/* ═══ 工具函數 ═══ */
+function gv(id){ const e=document.getElementById(id); return e?parseFloat(e.value):0; }
+function upd(id,val){ const e=document.getElementById(id); if(e) e.textContent=val; }
+function fw(n,d=1){ return isNaN(n)?'—':n.toFixed(d)+'萬'; }
+function fwn(n,d=1){ return isNaN(n)?'—':n.toFixed(d); }
 
-  const gap = evp - sell + chg + 0.5;
-  const fuel_yr = km/cons*fuel/10000;
-  const fuel10 = fuel_yr*10;
-  const ev_yr = wCalcEV(km,evc,op,wTouMode);
-  const ev10 = ev_yr*10;
-  const cm10 = cmaint*10, em10 = emaint*10;
+/* ═══ 計算 EV 年電費 ═══ */
+function calcEV(km,ec,op,mode){
+  const kwh_mo=km*ec/100/12, onr=1-op, t=TOU[mode];
+  let s,ns;
+  if(mode==='2段'){
+    s =kwh_mo*(onr*t.sp +op*t.so )*SM;
+    ns=kwh_mo*(onr*t.nsp+op*t.nso)*NM;
+  } else {
+    s =kwh_mo*(onr*0.4*t.sp+onr*0.6*t.shp+op*t.so)*SM;
+    ns=kwh_mo*(onr*t.nshp+op*t.nso)*NM;
+  }
+  return (s+ns)/10000;
+}
 
-  const crv_tot = fuel10+cm10+TIRE_C+INS_C+TAX_C-CRV_RES;
-  const ev_tot  = gap+ev10+em10+TIRE_E+INS_E+TAX_E-EV_RES;
-  const saving  = crv_tot-ev_tot;
+/* ═══ 主計算函數 ═══ */
+function calc(){
+  /* 讀參數 */
+  const sell =gv('wr-crv-sell');
+  const km   =gv('wr-km');
+  const fuel =gv('wr-fuel');
+  const cons =gv('wr-cons');
+  const evp  =gv('wr-evprice');
+  const chg  =gv('wr-charger');
+  const op   =gv('wr-offpeak')/100;
+  const evc  =gv('wr-evcons');
+  const cm   =gv('wr-cmaint');
+  const em   =0.58;
 
-  const ann_net = (fuel_yr+cmaint) - (ev_yr+emaint) - (TIRE_E-TIRE_C)/10 - (INS_E-INS_C)/10;
-  const be = ann_net>0 ? (gap-(EV_RES-CRV_RES))/ann_net : 99;
+  /* 換車缺口 */
+  const gap=evp-sell+chg+0.5;
 
-  const crv_perkm = fuel/cons;
-  const ev_perkm  = ev_yr*10000/km;
-  const save_km   = crv_perkm - ev_perkm;
+  /* 能源費 */
+  const fuelYr =km/cons*fuel/10000;
+  const fuel10 =fuelYr*10;
+  const evYr   =calcEV(km,evc,op,touMode);
+  const ev10   =evYr*10;
+  const eSave10=fuel10-ev10;
+  const fPerKm =fuel/cons;
+  const ePerKm =evYr*10000/km;
+  const saveKm =fPerKm-ePerKm;
 
-  // KPI
-  document.getElementById('wr-gap').textContent = wFmtW(gap);
+  /* 保養 */
+  const cm10=cm*10, em10=em*10;
 
-  // s02 聯動元素
-  const _sell = parseFloat(document.getElementById('wr-crv-sell').value);
-  const _evp  = parseFloat(document.getElementById('wr-evprice').value);
-  const _chg  = parseFloat(document.getElementById('wr-charger').value);
-  const _gap  = _evp - _sell + _chg + 0.5;
-  if(document.getElementById('d-crv-sell')) document.getElementById('d-crv-sell').textContent = _sell.toFixed(0)+'萬';
-  if(document.getElementById('d-ev-price')) document.getElementById('d-ev-price').textContent = _evp.toFixed(1)+'萬';
-  if(document.getElementById('d-charger'))  document.getElementById('d-charger').textContent  = (_chg+0.5).toFixed(1)+'萬';
-  if(document.getElementById('d-gap'))      document.getElementById('d-gap').textContent      = _gap.toFixed(1)+'萬';
-  if(document.getElementById('dt-sell'))    document.getElementById('dt-sell').textContent    = '＋'+_sell.toFixed(1)+'萬';
-  if(document.getElementById('dt-evp'))     document.getElementById('dt-evp').textContent     = '−'+_evp.toFixed(1)+'萬';
-  if(document.getElementById('dt-chg'))     document.getElementById('dt-chg').textContent     = '−'+_chg.toFixed(1)+'萬';
-  if(document.getElementById('dt-gap'))     document.getElementById('dt-gap').textContent     = '−'+_gap.toFixed(1)+' 萬';
-  if(document.getElementById('dv-sell'))    document.getElementById('dv-sell').textContent    = _sell.toFixed(0)+' 萬';
-  if(document.getElementById('dv-gap'))     document.getElementById('dv-gap').textContent     = _gap.toFixed(1)+' 萬';
-  document.getElementById('wr-crvtot').textContent = wFmtW(crv_tot);
-  document.getElementById('wr-evtot').textContent = wFmtW(ev_tot);
-  document.getElementById('wr-saving').textContent = (saving>0?'省':'多')+wFmtW(Math.abs(saving));
-  document.getElementById('wr-be').textContent = be<20?wFmt(be)+'年':'—';
-  document.getElementById('wr-fuelyr').textContent = wFmtW(fuel_yr);
-  document.getElementById('wr-eveyr').textContent = wFmtW(ev_yr);
-  document.getElementById('wr-perkm').textContent = '$'+save_km.toFixed(2);
+  /* 10年總計 */
+  const crvTot=fuel10+cm10+TIRE_C+INS_C+TAX_C-CRV_RES;
+  const evTot =gap+ev10+em10+TIRE_E+INS_E+TAX_E-EV_RES;
+  const saving=crvTot-evTot;
 
-  // 明細
-  const rows = [
-    {n:'換車成本', c:0, e:gap, pos:false},
-    {n:'燃油 / 電費', c:fuel10, e:ev10, pos:true},
-    {n:'保養維修', c:cm10, e:em10, pos:true},
-    {n:'輪胎費', c:TIRE_C, e:TIRE_E, pos:false},
-    {n:'保險費', c:INS_C, e:INS_E, pos:false},
-    {n:'稅費', c:TAX_C, e:TAX_E, pos:true},
-    {n:'殘值（扣）', c:-CRV_RES, e:-EV_RES, pos:true},
+  /* 損益平衡 */
+  const annSave =(fuelYr+cm)-(evYr+em);
+  const annExtra=(TIRE_E-TIRE_C)/10+(INS_E-INS_C)/10;
+  const annNet  =annSave-annExtra;
+  const beYrs   =annNet>0?(gap-(EV_RES-CRV_RES))/annNet:99;
+  const beCalYr =beYrs<20?String(new Date().getFullYear()+Math.ceil(beYrs)):'—';
+
+  /* ── 更新顯示值 ── */
+
+  /* s02 換車成本 */
+  upd('wv-crv-sell', sell.toFixed(0)+'萬');
+  upd('wv-evprice',  evp.toFixed(1)+'萬');
+  upd('wv-charger',  chg.toFixed(1)+'萬');
+  upd('wv-offpeak',  (op*100).toFixed(0)+'%');
+  upd('wv-evcons',   evc.toFixed(1)+' kWh/100km');
+  upd('wv-km',       parseInt(km).toLocaleString()+' km');
+  upd('wv-fuel',     '$'+fuel+'/L');
+  upd('wv-cons',     cons.toFixed(1)+' km/L');
+  upd('wv-cmaint',   cm.toFixed(2)+'萬/年');
+
+  upd('d-crv-sell', sell.toFixed(0)+'萬');
+  upd('d-ev-price', evp.toFixed(1)+'萬');
+  upd('d-charger',  (chg+0.5).toFixed(1)+'萬');
+  upd('d-gap',      gap.toFixed(1)+'萬');
+  upd('dt-sell',    '＋'+sell.toFixed(1)+'萬');
+  upd('dt-evp',     '−'+evp.toFixed(1)+'萬');
+  upd('dt-chg',     '−'+chg.toFixed(1)+'萬');
+  upd('dt-gap',     '−'+gap.toFixed(1)+' 萬');
+  upd('dv-sell',    sell.toFixed(0)+' 萬');
+  upd('dv-gap',     gap.toFixed(1)+' 萬');
+
+  /* 封面 hero */
+  upd('h-gap',    gap.toFixed(1)+'萬');
+  upd('h-saving', (saving>0?fw(saving):'多'+fw(-saving)));
+  upd('h-be',     beYrs<20?beYrs.toFixed(1)+'年':'—');
+
+  /* s03 能源費 */
+  upd('e-crv-fuel',    fw(fuel10));
+  upd('e-ev-fuel',     fw(ev10));
+  upd('e-energy-save', fw(eSave10));
+  upd('e-crv-desc',    '每公里 $'+fPerKm.toFixed(2)+' · '+cons.toFixed(1)+'km/L × $'+fuel+'/L');
+  upd('e-ev-perkm',    '$'+ePerKm.toFixed(2));
+
+  /* s05 總成本表 */
+  upd('t-gap',     gap.toFixed(1));
+  upd('t-gap-d',   '多 '+gap.toFixed(1));
+  upd('t-fuel-c',  fwn(fuel10));
+  upd('t-fuel-e',  fwn(ev10));
+  upd('t-fuel-d',  fuel10>ev10?'省 '+fwn(eSave10):'多 '+fwn(-eSave10));
+  upd('t-maint-c', fwn(cm10));
+  upd('t-maint-e', fwn(em10));
+  upd('t-maint-d', cm10>=em10?'省 '+fwn(cm10-em10):'多 '+fwn(em10-cm10));
+  upd('t-crv-tot', fw(crvTot));
+  upd('t-ev-tot',  fw(evTot));
+  upd('t-saving',  (saving>0?'省 ':'多 ')+Math.abs(saving).toFixed(1)+' 萬');
+  upd('t-lgd-crv', crvTot.toFixed(1));
+  upd('t-lgd-ev',  evTot.toFixed(1));
+
+  /* s06 損益平衡 */
+  upd('be-gap',       fw(gap));
+  upd('be-annual',    fw(annNet));
+  upd('be-extra',     '−'+annExtra.toFixed(2)+'萬');
+  upd('be-years',     beYrs<20?beYrs.toFixed(1)+'年':'—');
+  upd('be-note',      beYrs<20?'約 '+beCalYr+' 年初（含殘值差）':'里程不足，難回本');
+  upd('be-ib-year',   beYrs<20?beYrs.toFixed(1)+' 年':'—');
+  upd('be-ib-yr2030', beCalYr);
+  upd('be-ib-annual', annNet.toFixed(1));
+
+  /* s08 綜合評估 */
+  upd('ev-vi-saving', saving.toFixed(1));
+  upd('ev-vi-fuel',   fuel10.toFixed(1));
+  upd('ev-vi-gap',    gap.toFixed(1));
+
+  /* s14 最終結論 */
+  upd('fin-gap',    gap.toFixed(1));
+  upd('fin-saving', saving.toFixed(1));
+  const fb=document.getElementById('fin-be');
+  if(fb) fb.innerHTML=(beYrs<20?beYrs.toFixed(1):'—')+'<span style="font-size:22px"> 年</span>';
+  upd('fin-be-note', beYrs<20?'約 '+beCalYr+' 年初回本':'—');
+
+  /* s15 試算機結果 */
+  upd('wr-gap',    fw(gap));
+  upd('wr-crvtot', fw(crvTot));
+  upd('wr-evtot',  fw(evTot));
+  upd('wr-saving', (saving>0?'省':'多')+fw(Math.abs(saving)));
+  upd('wr-be',     beYrs<20?beYrs.toFixed(1)+'年':'—');
+  upd('wr-fuelyr', fw(fuelYr));
+  upd('wr-eveyr',  fw(evYr));
+  upd('wr-perkm',  '$'+saveKm.toFixed(2)+'/km');
+
+  /* s15 明細 tbody */
+  const rows=[
+    {n:'換車成本', c:0,      e:gap,    neg:true},
+    {n:'燃油 / 電費', c:fuel10, e:ev10,   neg:false},
+    {n:'保養維修', c:cm10,   e:em10,   neg:false},
+    {n:'輪胎費 ⚠', c:TIRE_C, e:TIRE_E, neg:true},
+    {n:'保險費 ⚠', c:INS_C,  e:INS_E,  neg:true},
+    {n:'稅費',    c:TAX_C,  e:TAX_E,  neg:false},
+    {n:'殘值（扣）',c:-CRV_RES,e:-EV_RES,neg:false},
   ];
-  const grn='color:#15803D;font-weight:700', red='color:#B91C1C;font-weight:700';
-  document.getElementById('wr-tbody').innerHTML = rows.map((r,i)=>{
-    const diff = r.c - r.e;
-    const isLast = i===rows.length-1;
-    const bd = isLast?'':'border-bottom:1px solid var(--border)';
-    const bg = i%2===0?'background:#FAFBFD':'';
-    const dc = r.pos ? (diff>0?grn:red) : (diff<0?grn:red);
-    const dtext = Math.abs(diff)<0.05 ? '持平' : (r.pos?(diff>0?'省':'多'):(diff<0?'多回':'多')) + wFmtW(Math.abs(diff));
-    return `<tr style="${bg}">
-      <td style="padding:11px 14px;${bd};font-size:15px">${r.n}</td>
-      <td style="padding:11px 14px;${bd};text-align:right;color:#B45309;font-weight:700;font-size:15px">${r.c===0?'—':wFmtW(r.c)}</td>
-      <td style="padding:11px 14px;${bd};text-align:right;color:#1D4ED8;font-weight:700;font-size:15px">${wFmtW(r.e)}</td>
-      <td style="padding:11px 14px;${bd};text-align:right;font-size:15px;${dc}">${dtext}</td>
-    </tr>`;
-  }).join('') + `<tr style="background:#F1F5F9">
-    <td style="padding:11px 14px;font-weight:700;font-size:16px">10年總計</td>
-    <td style="padding:11px 14px;text-align:right;color:#B45309;font-weight:800;font-size:16px">${wFmtW(crv_tot)}</td>
-    <td style="padding:11px 14px;text-align:right;color:#1D4ED8;font-weight:800;font-size:16px">${wFmtW(ev_tot)}</td>
-    <td style="padding:11px 14px;text-align:right;font-size:17px;${saving>0?grn:red}">${saving>0?'省':'多'}${wFmtW(Math.abs(saving))}</td>
-  </tr>`;
+  const grn='color:#15803D;font-weight:700',red='color:#B91C1C;font-weight:700';
+  const tb=document.getElementById('wr-tbody');
+  if(tb){
+    tb.innerHTML=rows.map((r,i)=>{
+      const diff=r.c-r.e;
+      const isLast=i===rows.length-1;
+      const bd=isLast?'':'border-bottom:1px solid var(--border)';
+      const bg=i%2===0?'background:#FAFBFD':'';
+      const dc=r.neg?(diff<0?grn:red):(diff>0?grn:red);
+      const sign=r.neg?(diff<0?'EV多':'EV省'):(diff>0?'省':'多');
+      const dtext=Math.abs(diff)<0.05?'持平':
+        (r.n==='換車成本'?'多'+fw(gap):
+         r.n==='殘值（扣）'?'多回'+fw(Math.abs(diff)):
+         (diff>0?'省':'多')+fw(Math.abs(diff)));
+      return `<tr style="${bg}"><td style="padding:11px 14px;${bd};font-size:15px">${r.n}</td>`+
+        `<td style="padding:11px 14px;${bd};text-align:right;color:#B45309;font-weight:700;font-size:15px">${r.c===0?'—':fw(r.c)}</td>`+
+        `<td style="padding:11px 14px;${bd};text-align:right;color:#1D4ED8;font-weight:700;font-size:15px">${fw(r.e)}</td>`+
+        `<td style="padding:11px 14px;${bd};text-align:right;font-size:15px;${dc}">${dtext}</td></tr>`;
+    }).join('')+
+    `<tr style="background:#F1F5F9"><td style="padding:11px 14px;font-weight:700;font-size:16px">10年總計</td>`+
+    `<td style="padding:11px 14px;text-align:right;color:#B45309;font-weight:800;font-size:16px">${fw(crvTot)}</td>`+
+    `<td style="padding:11px 14px;text-align:right;color:#1D4ED8;font-weight:800;font-size:16px">${fw(evTot)}</td>`+
+    `<td style="padding:11px 14px;text-align:right;font-size:17px;${saving>0?grn:red}">${saving>0?'省':'多'}${fw(Math.abs(saving))}</td></tr>`;
+  }
 
-  // 橫條圖
-  const bars = [
-    {n:'燃油／電費', c:fuel10, e:ev10},
-    {n:'保養維修', c:cm10, e:em10},
-    {n:'輪胎費', c:TIRE_C, e:TIRE_E},
-    {n:'保險費', c:INS_C, e:INS_E},
-    {n:'稅費', c:TAX_C, e:TAX_E},
+  /* s15 橫條圖 */
+  const bars=[
+    {n:'燃油／電費',c:fuel10,e:ev10},
+    {n:'保養維修',  c:cm10,  e:em10},
+    {n:'輪胎費',   c:TIRE_C,e:TIRE_E},
+    {n:'保險費',   c:INS_C, e:INS_E},
+    {n:'稅費',    c:TAX_C, e:TAX_E},
   ];
-  const mx = Math.max(...bars.map(b=>Math.max(b.c,b.e)));
-  document.getElementById('wr-bars').innerHTML = bars.map(b=>`
+  const mx=Math.max(...bars.map(b=>Math.max(b.c,b.e)));
+  const bd=document.getElementById('wr-bars');
+  if(bd) bd.innerHTML=bars.map(b=>`
     <div style="margin-bottom:14px">
-      <div style="font-size:14px;color:var(--body);margin-bottom:6px;font-weight:600">${b.n}</div>
-      <div style="display:flex;flex-direction:column;gap:4px">
-        <div style="height:32px;background:var(--bg);border-radius:6px;overflow:hidden;position:relative">
-          <div style="position:absolute;left:0;top:0;bottom:0;width:${Math.min(100,b.c/mx*100)}%;background:#B45309;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;transition:width .3s ease">
-            <span style="color:#fff;font-size:13px;font-weight:700;white-space:nowrap">CRV6 ${wFmtW(b.c)}</span>
-          </div>
-        </div>
-        <div style="height:32px;background:var(--bg);border-radius:6px;overflow:hidden;position:relative">
-          <div style="position:absolute;left:0;top:0;bottom:0;width:${Math.min(100,b.e/mx*100)}%;background:#1D4ED8;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;transition:width .3s ease">
-            <span style="color:#fff;font-size:13px;font-weight:700;white-space:nowrap">Cavira ${wFmtW(b.e)}</span>
-          </div>
+      <div style="font-size:14px;color:var(--body);margin-bottom:5px;font-weight:600">${b.n}</div>
+      <div style="height:30px;background:var(--bg);border-radius:6px;overflow:hidden;margin-bottom:3px;position:relative">
+        <div style="position:absolute;left:0;top:0;bottom:0;width:${Math.min(100,b.c/mx*100).toFixed(1)}%;background:#B45309;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:10px">
+          <span style="color:#fff;font-size:13px;font-weight:700;white-space:nowrap">CRV6 ${fw(b.c)}</span>
         </div>
       </div>
-    </div>
-  `).join('');
+      <div style="height:30px;background:var(--bg);border-radius:6px;overflow:hidden;position:relative">
+        <div style="position:absolute;left:0;top:0;bottom:0;width:${Math.min(100,b.e/mx*100).toFixed(1)}%;background:#1D4ED8;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:10px">
+          <span style="color:#fff;font-size:13px;font-weight:700;white-space:nowrap">Cavira ${fw(b.e)}</span>
+        </div>
+      </div>
+    </div>`).join('');
+
+  /* 圖表重繪 */
+  const yrs=['2026','2027','2028','2029','2030','2031','2032','2033','2034','2035'];
+  if(window._eChart){
+    window._eChart.data.datasets[0].data=[fuel10,cm10,TIRE_C,INS_C,TAX_C];
+    window._eChart.data.datasets[1].data=[ev10,em10,TIRE_E,INS_E,TAX_E];
+    window._eChart.update('none');
+  }
+  if(window._tChart){
+    window._tChart.data.datasets[0].data=[0,fuel10,cm10,TIRE_C,INS_C,TAX_C,-CRV_RES];
+    window._tChart.data.datasets[1].data=[gap,ev10,em10,TIRE_E,INS_E,TAX_E,-EV_RES];
+    window._tChart.update('none');
+  }
+  if(window._beChart){
+    window._beChart.data.datasets[0].data=yrs.map((_,i)=>+((i+1)*annNet).toFixed(1));
+    window._beChart.data.datasets[1].data=yrs.map((_,i)=>+((i+1)*annNet-gap).toFixed(1));
+    window._beChart.update('none');
+  }
+
+  saveParams();
 }
 
-// 綁定
-const wMap = {
-  'wr-crv-sell': {out:'wv-crv-sell', fmt:v=>v+'萬'},
-  'wr-km':       {out:'wv-km',       fmt:v=>parseInt(v).toLocaleString()+' km'},
-  'wr-fuel':     {out:'wv-fuel',     fmt:v=>'$'+v+'/L'},
-  'wr-cons':     {out:'wv-cons',     fmt:v=>parseFloat(v).toFixed(1)+' km/L'},
-  'wr-evprice':  {out:'wv-evprice',  fmt:v=>parseFloat(v).toFixed(1)+'萬'},
-  'wr-charger':  {out:'wv-charger',  fmt:v=>parseFloat(v).toFixed(1)+'萬'},
-  'wr-offpeak':  {out:'wv-offpeak',  fmt:v=>v+'%'},
-  'wr-evcons':   {out:'wv-evcons',   fmt:v=>v+' kWh/100km'},
-  'wr-cmaint':   {out:'wv-cmaint',   fmt:v=>parseFloat(v).toFixed(2)+'萬/年'},
-};
-Object.entries(wMap).forEach(([rid,{out,fmt}])=>{
-  document.getElementById(rid).addEventListener('input', function(){
-    document.getElementById(out).textContent = fmt(this.value);
-    wCalc();
+/* ═══ TOU 切換 ═══ */
+window.wSetTOU=function(m){
+  touMode=m;
+  const bl='#1D4ED8', gr='var(--border)';
+  ['2段','3段'].forEach(k=>{
+    const btn=document.getElementById('wb-tou'+k[0]);
+    if(!btn) return;
+    const on=(k===m);
+    btn.style.background=on?bl:'#fff';
+    btn.style.color=on?'#fff':'var(--muted)';
+    btn.style.borderColor=on?bl:gr;
   });
-});
-wCalc();
+  upd('wv-tou-note', TOU[m].note);
+  calc();
+};
+
+/* ═══ 事件綁定 ═══ */
+window.wCalc=calc;
+
+function bind(){
+  PARAMS.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.addEventListener('input', calc);
+  });
+}
+
+/* ═══ 初始化 ═══ */
+function init(){
+  loadParams();
+  /* 還原 TOU 按鈕狀態 */
+  ['2段','3段'].forEach(k=>{
+    const btn=document.getElementById('wb-tou'+k[0]);
+    if(!btn) return;
+    const on=(k===touMode);
+    btn.style.background=on?'#1D4ED8':'#fff';
+    btn.style.color=on?'#fff':'var(--muted)';
+    btn.style.borderColor=on?'#1D4ED8':'var(--border)';
+  });
+  upd('wv-tou-note', TOU[touMode].note);
+  bind();
+  calc();
+}
+
+/* 等 Charts 初始化完再跑 */
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  setTimeout(init, 100);
+}
+
 })();
 </script>
 
@@ -1352,7 +1501,7 @@ const base={responsive:true,maintainAspectRatio:false};
 const ax={grid:{color:'#F1F5F9'},ticks:{color:'#94A3B8',font:{size:12,family:"Inter"}}};
 const leg={display:true,position:'top',labels:{color:'#64748B',font:{size:13,family:"Inter"},usePointStyle:true,pointStyleWidth:10}};
 
-new Chart(document.getElementById('eChart'),{type:'bar',data:{
+window._eChart=new Chart(document.getElementById('eChart'),{type:'bar',data:{
   labels:['燃油/電費','保養維修','輪胎費','保險費','稅費'],
   datasets:[{label:'CRV6',data:[114.2,18.2,17.3,17.4,8.9],backgroundColor:C,borderRadius:4},{label:'Cavira',data:[13.4,5.8,25.2,26.9,2.2],backgroundColor:E,borderRadius:4}]
 },options:{...base,plugins:{legend:leg},scales:{y:{...ax},x:{...ax,grid:{display:false}}}}});
@@ -1362,7 +1511,7 @@ new Chart(document.getElementById('iChart'),{type:'bar',data:{
   datasets:[{label:'CRV6',data:[2.50,2.20,2.00,1.85,1.70,1.60,1.50,1.40,1.35,1.30],backgroundColor:C,borderRadius:3},{label:'Cavira',data:[3.80,3.50,3.20,2.90,2.70,2.50,2.30,2.10,2.00,1.90],backgroundColor:E,borderRadius:3}]
 },options:{...base,plugins:{legend:{display:false}},scales:{y:{...ax},x:{...ax,grid:{display:false}}}}});
 
-new Chart(document.getElementById('tChart'),{type:'bar',data:{
+window._tChart=new Chart(document.getElementById('tChart'),{type:'bar',data:{
   labels:['換車','燃油/電','保養','輪胎','保險','稅費','殘值'],
   datasets:[{label:'CRV6',data:[0,114.2,18.2,17.3,17.4,8.9,-8.0],backgroundColor:C,borderRadius:4},{label:'Cavira',data:[47.4,13.4,5.8,25.2,26.9,2.2,-18.0],backgroundColor:E,borderRadius:4}]
 },options:{...base,plugins:{legend:{display:false}},scales:{y:{...ax},x:{...ax,grid:{display:false},ticks:{...ax.ticks,maxRotation:0}}}}});
@@ -1370,7 +1519,7 @@ new Chart(document.getElementById('tChart'),{type:'bar',data:{
 const yrs=['2026','2027','2028','2029','2030','2031','2032','2033','2034','2035'];
 const cum=yrs.map((_,i)=>+((i+1)*10.5).toFixed(1));
 const net=yrs.map((_,i)=>+((i+1)*10.5-47.4).toFixed(1));
-new Chart(document.getElementById('bChart'),{type:'line',data:{labels:yrs,datasets:[
+window._beChart=new Chart(document.getElementById('bChart'),{type:'line',data:{labels:yrs,datasets:[
   {label:'累積節省',data:cum,borderColor:G,backgroundColor:'rgba(21,128,61,.07)',borderWidth:2.5,pointRadius:4,fill:true,tension:.35},
   {label:'淨餘額（扣缺口）',data:net,borderColor:E,backgroundColor:'rgba(29,78,216,.06)',borderWidth:2.5,pointRadius:4,fill:true,tension:.35,borderDash:[6,3]},
   {label:'回本線',data:yrs.map(()=>0),borderColor:'#CBD5E1',borderWidth:1.5,pointRadius:0,borderDash:[4,4]}
