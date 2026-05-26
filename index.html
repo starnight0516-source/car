@@ -315,7 +315,7 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
       <div class="shd hc">HONDA CR-V 6th Gen Prestige<small>持有中 · 保守估值 80 萬</small></div>
       <div class="sr"><div class="sk">年份</div><div class="sv">2024年式（持有中）</div></div>
       <div class="sr"><div class="sk">動力</div><div class="sv">1.5T 直四渦輪 194 hp / 243 Nm</div></div>
-      <div class="sr"><div class="sk">能源/油耗</div><div class="sv">汽油 · 市區實測 8.5L/100km</div></div>
+      <div class="sr"><div class="sk">能源/油耗</div><div class="sv">汽油 · 市區實測 11.8km/L（≈8.5L/100km）</div></div>
       <div class="sr"><div class="sk">車身尺碼</div><div class="sv">4,690×1,865×1,680 mm</div></div>
       <div class="sr"><div class="sk">軸距</div><div class="sv">2,700 mm</div></div>
       <div class="sr"><div class="sk">車重</div><div class="sv">約 1,580 kg</div></div>
@@ -341,36 +341,157 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
 
 <!-- 02 換車成本 -->
 <div class="wrap" id="s02">
-  <div class="ph"><div class="ph-num">02</div><div class="ph-title">換車一次性成本</div><div class="ph-sub">CRV6 出售 → Cavira Emerge 購入，淨支出計算</div></div>
-  <div class="krow">
-    <div class="kc kcrv"><div class="kl">CRV6 出售（保守）</div><div class="kv">80萬</div><div class="ks">白色 Prestige，7萬公里</div></div>
-    <div class="kc kb"><div class="kl">Cavira Emerge 售價</div><div class="kv">123.9萬</div><div class="ks">2026/5/20 預售</div></div>
-    <div class="kc km"><div class="kl">充電樁 + 規費</div><div class="kv">3.5萬</div><div class="ks">7kW 安裝 + 過戶費</div></div>
-    <div class="kc kr"><div class="kl">換車淨支出</div><div class="kv">47.4萬</div><div class="ks">123.9 − 80 + 3.5</div></div>
+  <div class="ph"><div class="ph-num">02</div><div class="ph-title">換車一次性成本</div><div class="ph-sub">拖動下方滑桿輸入您的參數，所有數字即時更新</div></div>
+
+  <!-- ★ 參數調整區（最前面，最直覺）-->
+  <div style="background:#fff;border:1.5px solid var(--blue-bd);border-radius:12px;padding:22px 24px;margin-bottom:20px">
+    <div style="font-size:16px;font-weight:800;color:var(--blue);margin-bottom:16px;display:flex;align-items:center;gap:8px">
+      <span>⚙</span> 調整參數 — 全報告即時聯動
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+
+      <!-- 左欄：CRV6 相關 -->
+      <div style="display:flex;flex-direction:column;gap:13px">
+        <div style="font-size:12px;font-weight:700;color:var(--crv);text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid var(--crv-bd);padding-bottom:6px">CRV6 持有條件</div>
+
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
+            <span style="font-size:15px;color:var(--body)">出售估值</span>
+            <span style="font-size:19px;font-weight:800;color:var(--crv)" id="wv-crv-sell">80 萬</span>
+          </div>
+          <input type="range" id="wr-crv-sell" min="70" max="100" step="1" value="80" style="width:100%;accent-color:#B45309">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:2px"><span>70萬（保守）</span><span>100萬（樂觀自售）</span></div>
+        </div>
+
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
+            <span style="font-size:15px;color:var(--body)">年均行駛里程</span>
+            <span style="font-size:19px;font-weight:800;color:var(--ink)" id="wv-km">42,000 km</span>
+          </div>
+          <input type="range" id="wr-km" min="15000" max="80000" step="1000" value="42000" style="width:100%;accent-color:#475569">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:2px"><span>15,000 km</span><span>80,000 km</span></div>
+        </div>
+
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
+            <span style="font-size:15px;color:var(--body)">汽油均價</span>
+            <span style="font-size:19px;font-weight:800;color:var(--crv)" id="wv-fuel">$32/L</span>
+          </div>
+          <input type="range" id="wr-fuel" min="25" max="45" step="1" value="32" style="width:100%;accent-color:#B45309">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:2px"><span>$25/L 低油價</span><span>$45/L 高油價</span></div>
+        </div>
+
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
+            <span style="font-size:15px;color:var(--body)">油耗（每公升跑幾公里）</span>
+            <span style="font-size:19px;font-weight:800;color:var(--crv)" id="wv-cons">11.8 km/L</span>
+          </div>
+          <input type="range" id="wr-cons" min="8" max="16" step="0.5" value="11.8" style="width:100%;accent-color:#B45309">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:2px"><span>8 km/L（耗油）</span><span>16 km/L（省油）</span></div>
+        </div>
+
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
+            <span style="font-size:15px;color:var(--body)">保養費</span>
+            <span style="font-size:19px;font-weight:800;color:var(--ink)" id="wv-cmaint">1.82 萬/年</span>
+          </div>
+          <input type="range" id="wr-cmaint" min="1" max="4" step="0.1" value="1.82" style="width:100%;accent-color:#475569">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:2px"><span>1萬/年（簡單保養）</span><span>4萬/年（積極維護）</span></div>
+        </div>
+      </div>
+
+      <!-- 右欄：Cavira 相關 -->
+      <div style="display:flex;flex-direction:column;gap:13px">
+        <div style="font-size:12px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid var(--blue-bd);padding-bottom:6px">Cavira EV 條件</div>
+
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
+            <span style="font-size:15px;color:var(--body)">Cavira 售價</span>
+            <span style="font-size:19px;font-weight:800;color:var(--blue)" id="wv-evprice">123.9 萬</span>
+          </div>
+          <input type="range" id="wr-evprice" min="115" max="135" step="0.5" value="123.9" style="width:100%;accent-color:#1D4ED8">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:2px"><span>115萬</span><span>135萬</span></div>
+        </div>
+
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
+            <span style="font-size:15px;color:var(--body)">充電樁安裝費</span>
+            <span style="font-size:19px;font-weight:800;color:var(--blue)" id="wv-charger">3.0 萬</span>
+          </div>
+          <input type="range" id="wr-charger" min="1.5" max="14" step="0.5" value="3" style="width:100%;accent-color:#1D4ED8">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:2px"><span>1.5萬（錶後拉電）</span><span>14萬（獨立電錶）</span></div>
+        </div>
+
+        <div>
+          <div style="font-size:15px;color:var(--body);margin-bottom:8px">時間電價方案</div>
+          <div style="display:flex;gap:8px">
+            <button id="wb-tou2" onclick="wSetTOU('2段')" style="flex:1;padding:8px 0;border-radius:7px;border:1.5px solid var(--blue);background:var(--blue);color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--f)">二段式</button>
+            <button id="wb-tou3" onclick="wSetTOU('3段')" style="flex:1;padding:8px 0;border-radius:7px;border:1.5px solid var(--border);background:#fff;color:var(--muted);font-size:15px;font-weight:700;cursor:pointer;font-family:var(--f)">三段式</button>
+          </div>
+          <div style="font-size:12px;color:var(--muted);margin-top:5px" id="wv-tou-note">離峰 $2.06（夏）/$1.99（非夏）・尖峰 $5.16/$4.93</div>
+        </div>
+
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
+            <span style="font-size:15px;color:var(--body)">離峰充電比例</span>
+            <span style="font-size:19px;font-weight:800;color:var(--blue)" id="wv-offpeak">85%</span>
+          </div>
+          <input type="range" id="wr-offpeak" min="40" max="100" step="5" value="85" style="width:100%;accent-color:#1D4ED8">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:2px"><span>40%（習慣不改）</span><span>100%（全離峰）</span></div>
+        </div>
+
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
+            <span style="font-size:15px;color:var(--body)">Cavira 電耗</span>
+            <span style="font-size:19px;font-weight:800;color:var(--blue)" id="wv-evcons">15.8 kWh/100km</span>
+          </div>
+          <input type="range" id="wr-evcons" min="13" max="20" step="0.5" value="15.8" style="width:100%;accent-color:#1D4ED8">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:2px"><span>13 kWh（省電）</span><span>20 kWh（耗電）</span></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);font-size:13px;color:var(--muted)">
+      ↑ 調整以上任一參數，以下所有章節的數字（能源費、10年總成本、損益平衡、互動試算機）皆自動更新
+    </div>
   </div>
+
+  <!-- 即時結果 KPI -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
+    <div class="kc kcrv"><div class="kl">CRV6 出售估值</div><div class="kv" id="d-crv-sell">80萬</div><div class="ks">您輸入的數值</div></div>
+    <div class="kc kb"><div class="kl">Cavira 售價</div><div class="kv" id="d-ev-price">123.9萬</div><div class="ks">預售價</div></div>
+    <div class="kc km"><div class="kl">充電樁 + 規費</div><div class="kv" id="d-charger">3.5萬</div><div class="ks">安裝 + 過戶費</div></div>
+    <div class="kc kr"><div class="kl">換車淨支出</div><div class="kv" id="d-gap">47.4萬</div><div class="ks">即時計算</div></div>
+  </div>
+
+  <!-- 明細表（靜態說明） -->
   <div class="card" style="overflow:hidden;margin-bottom:14px">
     <table class="tbl">
-      <thead><tr><th>類別</th><th>項目</th><th>金額（萬）</th><th>說明</th></tr></thead>
+      <thead><tr><th>類別</th><th>項目</th><th>金額</th><th>說明</th></tr></thead>
       <tbody>
-        <tr><td><span class="cat cs">賣出</span></td><td>CRV6 Prestige 出售</td><td class="pos">＋80.0</td><td style="font-size:16px;color:var(--muted)">自售可掛 93–96 萬</td></tr>
-        <tr><td><span class="cat cb2">購入</span></td><td>Cavira Emerge 車價</td><td class="neg">−123.9</td><td style="font-size:16px;color:var(--muted)">含免貨物稅（省 6–8 萬）</td></tr>
-        <tr><td><span class="cat cb2">設備</span></td><td>家用 7kW 充電樁安裝</td><td class="neg">−3.0</td><td style="font-size:16px;color:var(--muted)">EVOASIS / Zerova，含拉線</td></tr>
-        <tr><td><span class="cat cm">雜費</span></td><td>過戶規費 + 牌照費</td><td class="neg">−0.5</td><td style="font-size:16px;color:var(--muted)">電動車免燃料稅</td></tr>
+        <tr><td><span class="cat cs">賣出</span></td><td>CRV6 Prestige 出售</td><td class="pos" id="dt-sell">＋80.0萬</td><td style="font-size:15px;color:var(--muted)">自售可掛 93–96 萬</td></tr>
+        <tr><td><span class="cat cb2">購入</span></td><td>Cavira Emerge 車價</td><td class="neg" id="dt-evp">−123.9萬</td><td style="font-size:15px;color:var(--muted)">含免貨物稅（省 6–8 萬）</td></tr>
+        <tr><td><span class="cat cb2">設備</span></td><td>家用 7kW 充電樁安裝</td><td class="neg" id="dt-chg">−3.0萬</td><td style="font-size:15px;color:var(--muted)">EVOASIS / Zerova，含拉線</td></tr>
+        <tr><td><span class="cat cm">雜費</span></td><td>過戶規費 + 牌照費</td><td class="neg">−0.5萬</td><td style="font-size:15px;color:var(--muted)">電動車免燃料稅</td></tr>
       </tbody>
-      <tfoot><tr class="tot"><td colspan="2">換車淨支出合計</td><td>−47.4 萬</td><td style="font-size:16px">首年一次性缺口</td></tr></tfoot>
+      <tfoot><tr class="tot"><td colspan="2">換車淨支出合計</td><td id="dt-gap">−47.4 萬</td><td style="font-size:15px">首年一次性缺口</td></tr></tfoot>
     </table>
   </div>
-  <div class="ib blue">💡 電動車貨物稅全免（省 6–8 萬）、燃料稅全免（年省 $3,600）。首半年 U-POWER 等 9 家業者免費充電吃到飽。符合舊換新補助另可申請。</div>
+
+  <div class="ib blue">💡 電動車貨物稅全免（省 6–8 萬）、燃料稅全免（年省 $3,600）。首半年 U-POWER 等 9 家業者免費充電吃到飽。</div>
+
   <div class="g2" style="margin-top:16px">
     <div style="background:var(--crv-l);border:1px solid var(--crv-bd);border-radius:var(--r);padding:20px 24px">
-      <div style="font-size:17px;font-weight:700;color:var(--crv);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">CRV6 出售後淨得</div>
-      <div style="font-size:43px;font-weight:800;color:var(--crv)">80 萬</div>
-      <div style="font-size:16px;color:var(--crv);opacity:.8;margin-top:4px">保守估值 / 自售試掛 93–96 萬</div>
+      <div style="font-size:14px;font-weight:700;color:var(--crv);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">CRV6 出售後淨得</div>
+      <div style="font-size:44px;font-weight:800;color:var(--crv)" id="dv-sell">80 萬</div>
+      <div style="font-size:14px;color:var(--crv);opacity:.8;margin-top:4px">自售可嘗試掛 93–96 萬</div>
     </div>
     <div style="background:var(--red-l);border:1px solid var(--red-bd);border-radius:var(--r);padding:20px 24px">
-      <div style="font-size:17px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">需籌備資金缺口</div>
-      <div style="font-size:43px;font-weight:800;color:var(--red)">47.4 萬</div>
-      <div style="font-size:16px;color:var(--red);opacity:.8;margin-top:4px">車貸 / 信貸 / 房貸增貸 → 詳見第12頁</div>
+      <div style="font-size:14px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">需籌備資金缺口</div>
+      <div style="font-size:44px;font-weight:800;color:var(--red)" id="dv-gap">47.4 萬</div>
+      <div style="font-size:14px;color:var(--red);opacity:.8;margin-top:4px">車貸 / 信貸 / 房貸增貸 → 見第12頁</div>
     </div>
   </div>
 </div>
@@ -384,7 +505,7 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
       <div style="background:var(--crv-l);border:1px solid var(--crv-bd);border-radius:var(--r);padding:20px 24px">
         <div style="font-size:17px;font-weight:700;color:var(--crv);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">CRV6 燃油費 10年</div>
         <div style="font-size:46px;font-weight:800;color:var(--crv)">114.2萬</div>
-        <div style="font-size:16px;color:var(--crv);opacity:.8;margin-top:4px">每公里 $2.72 · 8.5L/100km × $32/L（10年均價）</div>
+        <div style="font-size:16px;color:var(--crv);opacity:.8;margin-top:4px">每公里 $2.72 · 11.8km/L（≈8.5L/100km） × $32/L（10年均價）</div>
       </div>
       <div style="background:var(--blue-l);border:1px solid var(--blue-bd);border-radius:var(--r);padding:20px 24px">
         <div style="font-size:17px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Cavira 充電費 10年（時間電價）</div>
@@ -977,115 +1098,12 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
 
   <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:28px;margin-bottom:0">
 
-    <!-- 參數區 -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px">
-
-      <div>
-        <div style="font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">您的車輛與使用情況</div>
-        <div style="display:flex;flex-direction:column;gap:14px">
-
-          <div style="background:var(--bg);border-radius:8px;padding:14px 16px">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-              <span style="font-size:15px;color:var(--body)">CRV6 出售估值</span>
-              <span style="font-size:18px;font-weight:800;color:var(--crv)" id="wv-crv-sell">80 萬</span>
-            </div>
-            <input type="range" id="wr-crv-sell" min="70" max="100" step="1" value="80" style="width:100%;accent-color:#B45309">
-            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:3px"><span>保守 70萬</span><span>樂觀自售 100萬</span></div>
-          </div>
-
-          <div style="background:var(--bg);border-radius:8px;padding:14px 16px">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-              <span style="font-size:15px;color:var(--body)">年均行駛里程</span>
-              <span style="font-size:18px;font-weight:800;color:var(--ink)" id="wv-km">42,000 km</span>
-            </div>
-            <input type="range" id="wr-km" min="15000" max="80000" step="1000" value="42000" style="width:100%;accent-color:#1D4ED8">
-            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:3px"><span>15,000 km</span><span>80,000 km</span></div>
-          </div>
-
-          <div style="background:var(--bg);border-radius:8px;padding:14px 16px">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-              <span style="font-size:15px;color:var(--body)">汽油均價</span>
-              <span style="font-size:18px;font-weight:800;color:var(--crv)" id="wv-fuel">$32/L</span>
-            </div>
-            <input type="range" id="wr-fuel" min="25" max="45" step="1" value="32" style="width:100%;accent-color:#B45309">
-            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:3px"><span>$25 低油價</span><span>$45 高油價</span></div>
-          </div>
-
-          <div style="background:var(--bg);border-radius:8px;padding:14px 16px">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-              <span style="font-size:15px;color:var(--body)">CRV6 油耗</span>
-              <span style="font-size:18px;font-weight:800;color:var(--ink)" id="wv-cons">8.5 L/100km</span>
-            </div>
-            <input type="range" id="wr-cons" min="7" max="12" step="0.5" value="8.5" style="width:100%;accent-color:#B45309">
-            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:3px"><span>7.0 L（省油）</span><span>12.0 L（耗油）</span></div>
-          </div>
-
-          <div style="background:var(--bg);border-radius:8px;padding:14px 16px">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-              <span style="font-size:15px;color:var(--body)">CRV6 保養費</span>
-              <span style="font-size:18px;font-weight:800;color:var(--ink)" id="wv-cmaint">1.82 萬/年</span>
-            </div>
-            <input type="range" id="wr-cmaint" min="1" max="4" step="0.1" value="1.82" style="width:100%;accent-color:#B45309">
-            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:3px"><span>1萬/年</span><span>4萬/年</span></div>
-          </div>
-
-        </div>
-      </div>
-
-      <div>
-        <div style="font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Cavira EV 設定</div>
-        <div style="display:flex;flex-direction:column;gap:14px">
-
-          <div style="background:var(--bg);border-radius:8px;padding:14px 16px">
-            <div style="font-size:15px;color:var(--body);margin-bottom:8px">時間電價方案</div>
-            <div style="display:flex;gap:8px;margin-bottom:4px">
-              <button id="wb-tou2" onclick="wSetTOU('2段')" style="flex:1;padding:8px;border-radius:7px;border:1.5px solid var(--blue);background:var(--blue);color:#fff;font-size:14px;font-weight:700;cursor:pointer">二段式</button>
-              <button id="wb-tou3" onclick="wSetTOU('3段')" style="flex:1;padding:8px;border-radius:7px;border:1.5px solid var(--border);background:#fff;color:var(--muted);font-size:14px;font-weight:700;cursor:pointer">三段式</button>
-            </div>
-            <div style="font-size:12px;color:var(--muted);margin-top:4px" id="wv-tou-note">離峰 $2.06（夏）/$1.99（非夏）・尖峰 $5.16/$4.93</div>
-          </div>
-
-          <div style="background:var(--bg);border-radius:8px;padding:14px 16px">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-              <span style="font-size:15px;color:var(--body)">離峰充電比例</span>
-              <span style="font-size:18px;font-weight:800;color:var(--blue)" id="wv-offpeak">85%</span>
-            </div>
-            <input type="range" id="wr-offpeak" min="40" max="100" step="5" value="85" style="width:100%;accent-color:#1D4ED8">
-            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:3px"><span>40%（習慣不改）</span><span>100%（全離峰）</span></div>
-          </div>
-
-          <div style="background:var(--bg);border-radius:8px;padding:14px 16px">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-              <span style="font-size:15px;color:var(--body)">Cavira 電耗</span>
-              <span style="font-size:18px;font-weight:800;color:var(--ink)" id="wv-evcons">15.8 kWh/100km</span>
-            </div>
-            <input type="range" id="wr-evcons" min="13" max="20" step="0.5" value="15.8" style="width:100%;accent-color:#1D4ED8">
-            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:3px"><span>13 kWh（省電）</span><span>20 kWh（耗電）</span></div>
-          </div>
-
-          <div style="background:var(--bg);border-radius:8px;padding:14px 16px">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-              <span style="font-size:15px;color:var(--body)">Cavira 售價</span>
-              <span style="font-size:18px;font-weight:800;color:var(--blue)" id="wv-evprice">123.9 萬</span>
-            </div>
-            <input type="range" id="wr-evprice" min="115" max="135" step="0.5" value="123.9" style="width:100%;accent-color:#1D4ED8">
-            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:3px"><span>115萬</span><span>135萬</span></div>
-          </div>
-
-          <div style="background:var(--bg);border-radius:8px;padding:14px 16px">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-              <span style="font-size:15px;color:var(--body)">充電樁安裝費</span>
-              <span style="font-size:18px;font-weight:800;color:var(--ink)" id="wv-charger">3 萬</span>
-            </div>
-            <input type="range" id="wr-charger" min="1.5" max="14" step="0.5" value="3" style="width:100%;accent-color:#1D4ED8">
-            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:3px"><span>1.5萬（錶後拉電）</span><span>14萬（獨立電錶）</span></div>
-          </div>
-
-        </div>
-      </div>
+    <!-- 參數說明 -->
+    <div style="background:var(--blue-l);border:1px solid var(--blue-bd);border-radius:8px;padding:14px 18px;margin-bottom:20px;font-size:15px;color:#1E3A8A">
+      ↑ 請至頂部「<b>換車一次性成本</b>」章節調整滑桿，所有計算即時更新。以下顯示目前參數的完整試算結果。
     </div>
 
-    <!-- 結果 KPI -->
+        <!-- 結果 KPI -->
     <div style="background:var(--navy,#0F1E35);border-radius:12px;padding:24px;margin-bottom:20px">
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px">
         <div style="text-align:center">
@@ -1199,7 +1217,7 @@ function wCalc(){
   const EV_RES=18, CRV_RES=8;
 
   const gap = evp - sell + chg + 0.5;
-  const fuel_yr = km*cons/100*fuel/10000;
+  const fuel_yr = km/cons*fuel/10000;
   const fuel10 = fuel_yr*10;
   const ev_yr = wCalcEV(km,evc,op,wTouMode);
   const ev10 = ev_yr*10;
@@ -1212,12 +1230,28 @@ function wCalc(){
   const ann_net = (fuel_yr+cmaint) - (ev_yr+emaint) - (TIRE_E-TIRE_C)/10 - (INS_E-INS_C)/10;
   const be = ann_net>0 ? (gap-(EV_RES-CRV_RES))/ann_net : 99;
 
-  const crv_perkm = fuel*cons/100;
+  const crv_perkm = fuel/cons;
   const ev_perkm  = ev_yr*10000/km;
   const save_km   = crv_perkm - ev_perkm;
 
   // KPI
   document.getElementById('wr-gap').textContent = wFmtW(gap);
+
+  // s02 聯動元素
+  const _sell = parseFloat(document.getElementById('wr-crv-sell').value);
+  const _evp  = parseFloat(document.getElementById('wr-evprice').value);
+  const _chg  = parseFloat(document.getElementById('wr-charger').value);
+  const _gap  = _evp - _sell + _chg + 0.5;
+  if(document.getElementById('d-crv-sell')) document.getElementById('d-crv-sell').textContent = _sell.toFixed(0)+'萬';
+  if(document.getElementById('d-ev-price')) document.getElementById('d-ev-price').textContent = _evp.toFixed(1)+'萬';
+  if(document.getElementById('d-charger'))  document.getElementById('d-charger').textContent  = (_chg+0.5).toFixed(1)+'萬';
+  if(document.getElementById('d-gap'))      document.getElementById('d-gap').textContent      = _gap.toFixed(1)+'萬';
+  if(document.getElementById('dt-sell'))    document.getElementById('dt-sell').textContent    = '＋'+_sell.toFixed(1)+'萬';
+  if(document.getElementById('dt-evp'))     document.getElementById('dt-evp').textContent     = '−'+_evp.toFixed(1)+'萬';
+  if(document.getElementById('dt-chg'))     document.getElementById('dt-chg').textContent     = '−'+_chg.toFixed(1)+'萬';
+  if(document.getElementById('dt-gap'))     document.getElementById('dt-gap').textContent     = '−'+_gap.toFixed(1)+' 萬';
+  if(document.getElementById('dv-sell'))    document.getElementById('dv-sell').textContent    = _sell.toFixed(0)+' 萬';
+  if(document.getElementById('dv-gap'))     document.getElementById('dv-gap').textContent     = _gap.toFixed(1)+' 萬';
   document.getElementById('wr-crvtot').textContent = wFmtW(crv_tot);
   document.getElementById('wr-evtot').textContent = wFmtW(ev_tot);
   document.getElementById('wr-saving').textContent = (saving>0?'省':'多')+wFmtW(Math.abs(saving));
@@ -1290,7 +1324,7 @@ const wMap = {
   'wr-crv-sell': {out:'wv-crv-sell', fmt:v=>v+'萬'},
   'wr-km':       {out:'wv-km',       fmt:v=>parseInt(v).toLocaleString()+' km'},
   'wr-fuel':     {out:'wv-fuel',     fmt:v=>'$'+v+'/L'},
-  'wr-cons':     {out:'wv-cons',     fmt:v=>v+' L/100km'},
+  'wr-cons':     {out:'wv-cons',     fmt:v=>parseFloat(v).toFixed(1)+' km/L'},
   'wr-evprice':  {out:'wv-evprice',  fmt:v=>parseFloat(v).toFixed(1)+'萬'},
   'wr-charger':  {out:'wv-charger',  fmt:v=>parseFloat(v).toFixed(1)+'萬'},
   'wr-offpeak':  {out:'wv-offpeak',  fmt:v=>v+'%'},
