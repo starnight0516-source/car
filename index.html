@@ -741,10 +741,40 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
     <div class="kc km"><div class="kl">年額外支出</div><div class="kv" id="be-extra">−1.7萬</div><div class="ks">輪胎＋保費差額</div></div>
     <div class="kc kb"><div class="kl">損益平衡</div><div class="kv" id="be-years">3.5年</div><div class="ks" id="be-note">約 2030 年初（含殘值差）</div></div>
   </div>
-  <div class="cc">
+  <div class="cc" style="margin-bottom:20px">
     <div class="ccl">累積節省 vs 換車缺口（萬元）</div>
     <div style="position:relative;height:280px"><canvas id="bChart" role="img" aria-label="損益平衡折線圖"></canvas></div>
     <div class="lgd"><span><span class="lsq" style="background:var(--grn)"></span>累積節省</span><span><span class="lsq" style="background:var(--blue)"></span>淨餘額（扣換車缺口）</span></div>
+  </div>
+
+  <!-- 逐年明細表 -->
+  <div class="card" style="overflow:hidden">
+    <div style="background:var(--ink);color:#fff;padding:13px 18px;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:space-between">
+      <span>📅 逐年損益明細（萬元）</span>
+      <span style="font-size:13px;font-weight:400;color:#94A3B8">參數變動時自動更新</span>
+    </div>
+    <div style="overflow-x:auto">
+    <table class="tbl" id="yr-table" style="font-size:16px;min-width:860px">
+      <thead>
+        <tr>
+          <th style="width:60px">年份</th>
+          <th style="text-align:center">持有第N年</th>
+          <th style="text-align:right;color:#FED7AA">CRV6 年支出</th>
+          <th style="text-align:right;color:#93C5FD">Cavira 年支出</th>
+          <th style="text-align:right;color:#4ADE80">當年淨節省</th>
+          <th style="text-align:right;color:#4ADE80">累積節省</th>
+          <th style="text-align:right;color:#FCA5A5">換車缺口餘額</th>
+          <th style="text-align:center">狀態</th>
+        </tr>
+      </thead>
+      <tbody id="yr-tbody">
+        <!-- 由 JS 動態填入 -->
+      </tbody>
+    </table>
+    </div>
+    <div style="padding:12px 18px;font-size:13px;color:var(--muted);border-top:1px solid var(--border);line-height:1.7">
+      ※ 年支出包含：能源費＋保養＋輪胎（平均）＋保險（平均）＋稅費（平均）。第1年 Cavira 另含換車缺口。殘值差（+10萬）於第10年計入。
+    </div>
   </div>
 </div>
 <div class="divider"></div>
@@ -1515,6 +1545,73 @@ function calc(){
   upd('be-ib-year',   beYrs<20?beYrs.toFixed(1)+' 年':'—');
   upd('be-ib-yr2030', beCalYr);
   upd('be-ib-annual', annNet.toFixed(1));
+
+  /* ── 逐年明細表 ── */
+  (function(){
+    const tbody=document.getElementById('yr-tbody');
+    if(!tbody) return;
+    const startYr=2026;
+    // 各項年均攤（固定）
+    const tireC_yr=TIRE_C/10, tireE_yr=TIRE_E/10;
+    const insC_yr =INS_C/10,  insE_yr =INS_E/10;
+    // 稅費逐年（CRV6全年一樣；EV前5年0，後5年按比例）
+    const taxC_yr =TAX_C/10;  // 1.192萬/年
+    // EV稅：前5年0，後5年=8.7萬/5=1.74萬/年
+    function taxE_yr(n){ return n<=5 ? 0 : 8.7/5; }
+
+    let cumSave=0, gapRemain=gap;
+    let rows='';
+    for(let n=1;n<=10;n++){
+      const yr=startYr+n-1;
+      // CRV6 年支出
+      const crvYr= fuelYr + cm + tireC_yr + insC_yr + taxC_yr;
+      // Cavira 年支出（不含換車缺口）
+      const evYr_n= evYr + em + tireE_yr + insE_yr + taxE_yr(n);
+      // 當年淨節省（Cavira比CRV6少花多少）
+      const netSave= crvYr - evYr_n;
+      cumSave += netSave;
+      // 殘值差在第10年加入（EV殘值多10萬）
+      const residAdj = n===10 ? (EV_RES-CRV_RES) : 0;
+      const cumSaveAdj = cumSave + residAdj;
+      gapRemain = gap - cumSaveAdj;
+
+      const broke = gapRemain<=0;
+      const brokeFirst = broke && (gap-(cumSave-netSave+(n===10?(EV_RES-CRV_RES):0)))>0;
+
+      // 狀態標籤
+      let status, rowStyle='';
+      if(brokeFirst){
+        status='<span style="background:#15803D;color:#fff;padding:2px 8px;border-radius:4px;font-size:13px;font-weight:700">🎉 打平！</span>';
+        rowStyle='background:var(--grn-l);';
+      } else if(broke){
+        status='<span style="background:var(--blue-l);color:var(--blue);padding:2px 8px;border-radius:4px;font-size:13px;font-weight:700">✅ 回收中</span>';
+        rowStyle='background:var(--blue-l);';
+      } else {
+        status='<span style="color:var(--muted);font-size:13px">回本前</span>';
+      }
+
+      // 第1年 Cavira 含換車缺口
+      const evYrDisplay = n===1 ? evYr_n + gap : evYr_n;
+      const evYrLabel   = n===1 ? evYr_n.toFixed(2)+'<span style="font-size:12px;color:#93C5FD"> (+'+gap.toFixed(1)+'換車)</span>' : evYr_n.toFixed(2);
+      const residLabel  = n===10 ? '<span style="font-size:12px;color:#4ADE80"> (+10殘值差)</span>' : '';
+
+      rows+=`<tr style="${rowStyle}">
+        <td style="font-weight:700">${yr}</td>
+        <td style="text-align:center;color:var(--muted)">第${n}年</td>
+        <td style="text-align:right;color:var(--crv);font-weight:700">${crvYr.toFixed(2)}</td>
+        <td style="text-align:right;color:var(--blue);font-weight:700">${evYrLabel}</td>
+        <td style="text-align:right;font-weight:700;color:${netSave>=0?'var(--grn)':'var(--red)'}">${netSave>=0?'+':'' }${netSave.toFixed(2)}</td>
+        <td style="text-align:right;font-weight:700;color:${cumSaveAdj>=0?'var(--grn)':'var(--muted)'}">
+          ${cumSaveAdj.toFixed(2)}${residLabel}
+        </td>
+        <td style="text-align:right;font-weight:700;color:${broke?'var(--grn)':'var(--red)'}">
+          ${broke?'—':gapRemain.toFixed(2)}
+        </td>
+        <td style="text-align:center">${status}</td>
+      </tr>`;
+    }
+    tbody.innerHTML=rows;
+  })();
 
   /* s08 綜合評估 */
   upd('ev-vi-saving', saving.toFixed(1));
