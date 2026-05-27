@@ -372,6 +372,9 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
       共 14 個章節 · 規格 · 財務 · 充電樁 · 輪胎 · 投資建議<br>
       上方導覽列點擊即可跳至各章節
     </div>
+    <div style="background:rgba(74,222,128,.15);border:1px solid rgba(74,222,128,.4);border-radius:8px;padding:9px 14px;font-size:14px;color:#4ADE80;font-weight:700;margin-top:6px">
+      ✅ 2026/05/27 稅費已更正：CRV6 牌照稅＋燃料費 $11,920/年（原 $8,900），Cavira 2030前免徵、2031起按馬力課徵（原低估）
+    </div>
   </div>
 </div>
 
@@ -544,13 +547,13 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
         <tr><td><span class="cat cs">賣出</span></td><td>CRV6 Prestige 出售</td><td class="pos" id="dt-sell">＋80.0萬</td><td style="font-size:15px;color:var(--muted)">自售可掛 93–96 萬</td></tr>
         <tr><td><span class="cat cb2">購入</span></td><td>Cavira Emerge 車價</td><td class="neg" id="dt-evp">−123.9萬</td><td style="font-size:15px;color:var(--muted)">含免貨物稅（省 6–8 萬）</td></tr>
         <tr><td><span class="cat cb2">設備</span></td><td>家用 7kW 充電樁安裝</td><td class="neg" id="dt-chg">−3.0萬</td><td style="font-size:15px;color:var(--muted)">EVOASIS / Zerova，含拉線</td></tr>
-        <tr><td><span class="cat cm">雜費</span></td><td>過戶規費 + 牌照費</td><td class="neg">−0.5萬</td><td style="font-size:15px;color:var(--muted)">電動車免燃料稅</td></tr>
+        <tr><td><span class="cat cm">雜費</span></td><td>過戶規費 + 牌照費</td><td class="neg">−0.5萬</td><td style="font-size:15px;color:var(--muted)">電動車牌照稅免至2030底、燃料費2030前免徵</td></tr>
       </tbody>
       <tfoot><tr class="tot"><td colspan="2">換車淨支出合計</td><td id="dt-gap">−47.4 萬</td><td style="font-size:15px">首年一次性缺口</td></tr></tfoot>
     </table>
   </div>
 
-  <div class="ib blue">💡 電動車貨物稅全免（省 6–8 萬）、燃料稅全免（年省 $3,600）。首半年 U-POWER 等 9 家業者免費充電吃到飽。</div>
+  <div class="ib blue">💡 電動車貨物稅全免（省 6–8 萬）、燃料費 2030 年前全免（前5年年省 $11,920）。首半年 U-POWER 等 9 家業者免費充電吃到飽。</div>
 
   <div class="g2" style="margin-top:16px">
     <div style="background:var(--crv-l);border:1px solid var(--crv-bd);border-radius:var(--r);padding:20px 24px">
@@ -666,7 +669,7 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
     <div class="cc">
       <div class="ccl">各項 10 年費用對比（萬元）</div>
       <div style="position:relative;height:300px"><canvas id="tChart" role="img" aria-label="總成本對比"></canvas></div>
-      <div class="lgd"><span><span class="lsq" style="background:var(--crv)"></span>CRV6 合計 <span id="t-lgd-crv">168.1</span>萬</span><span><span class="lsq" style="background:var(--blue)"></span>Cavira 合計 <span id="t-lgd-ev">102.9</span>萬</span></div>
+      <div class="lgd"><span><span class="lsq" style="background:var(--crv)"></span>CRV6 合計 <span id="t-lgd-crv">171.1</span>萬</span><span><span class="lsq" style="background:var(--blue)"></span>Cavira 合計 <span id="t-lgd-ev">115.3</span>萬</span></div>
     </div>
     <div class="card" style="overflow:hidden">
       <table class="tbl">
@@ -677,15 +680,54 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
           <tr><td>保養維修</td><td class="ccr" id="t-maint-c">18.2</td><td class="cbl" id="t-maint-e">5.8</td><td class="pos" id="t-maint-d">省 12.4</td></tr>
           <tr><td>輪胎費 ⚠</td><td class="ccr">17.3</td><td class="cbl">25.2</td><td class="neg">多 7.9</td></tr>
           <tr><td>保險費 ⚠</td><td class="ccr">17.4</td><td class="cbl">26.9</td><td class="neg">多 9.5</td></tr>
-          <tr><td>稅費</td><td class="ccr">8.9</td><td class="cbl">2.2</td><td class="pos">省 6.7</td></tr>
+          <tr><td>稅費 <span style="font-size:13px;font-weight:600;color:var(--muted)">（已更正）</span></td><td class="ccr">11.9</td><td class="cbl">8.7</td><td class="pos">省 3.2</td></tr>
           <tr><td>殘值（扣）</td><td class="ccr">−8.0</td><td class="cbl">−18.0</td><td class="pos">省 10.0</td></tr>
         </tbody>
         <tfoot>
-          <tr class="sub"><td>10年總計</td><td style="color:var(--crv)" id="t-crv-tot">168.1萬</td><td style="color:var(--blue)" id="t-ev-tot">108.8萬</td><td></td></tr>
-          <tr class="tot"><td>10年省下</td><td colspan="3" style="text-align:right;color:#4ADE80;font-size:20px" id="t-saving">59.3 萬</td></tr>
+          <tr class="sub"><td>10年總計</td><td style="color:var(--crv)" id="t-crv-tot">171.1萬</td><td style="color:var(--blue)" id="t-ev-tot">115.3萬</td><td></td></tr>
+          <tr class="tot"><td>10年省下</td><td colspan="3" style="text-align:right;color:#4ADE80;font-size:20px" id="t-saving">55.8 萬</td></tr>
         </tfoot>
       </table>
     </div>
+  </div>
+
+  <!-- 稅費明細說明（已更正） -->
+  <div class="card" style="overflow:hidden;margin-top:4px">
+    <div style="background:#0F172A;color:#fff;padding:12px 18px;font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px">
+      <span>🔍</span> 稅費明細（2026年最新費率，已更正）
+    </div>
+    <table class="tbl" style="font-size:16px">
+      <thead><tr><th>車款</th><th>稅目</th><th>年額</th><th>10年合計</th><th>法規依據</th></tr></thead>
+      <tbody>
+        <tr>
+          <td rowspan="3" style="font-weight:700;color:var(--crv)">CRV6<br><span style="font-size:13px;font-weight:400;color:var(--muted)">1.5T 1,498cc</span></td>
+          <td>使用牌照稅</td><td style="text-align:right;font-weight:700">$7,120/年</td><td style="text-align:right">7.12萬</td><td style="font-size:13px;color:var(--muted)">排氣量 1,201–1,800cc 級距</td>
+        </tr>
+        <tr>
+          <td>汽車燃料使用費</td><td style="text-align:right;font-weight:700">$4,800/年</td><td style="text-align:right">4.80萬</td><td style="font-size:13px;color:var(--muted)">排氣量 1,201–1,800cc 級距</td>
+        </tr>
+        <tr style="background:var(--crv-l)">
+          <td style="font-weight:700;color:var(--crv)">合計</td><td style="text-align:right;font-weight:800;color:var(--crv)">$11,920/年</td><td style="text-align:right;font-weight:800;color:var(--crv)">11.92萬</td><td style="font-size:13px;color:var(--crv)">原本 8.9萬 → 少算燃料費</td>
+        </tr>
+        <tr>
+          <td rowspan="4" style="font-weight:700;color:var(--blue)">Cavira EV<br><span style="font-size:13px;font-weight:400;color:var(--muted)">純電 249hp</span></td>
+          <td>牌照稅（2026–2030）</td><td style="text-align:right;font-weight:700;color:var(--grn)">$0/年</td><td style="text-align:right;color:var(--grn)">0萬</td><td style="font-size:13px;color:var(--muted)">立院三讀，免徵至2030年底</td>
+        </tr>
+        <tr>
+          <td>公路養護費（2026–2029）</td><td style="text-align:right;font-weight:700;color:var(--grn)">$0/年</td><td style="text-align:right;color:var(--grn)">0萬</td><td style="font-size:13px;color:var(--muted)">電動車預估2030年後開徵</td>
+        </tr>
+        <tr>
+          <td>牌照稅（2031–2035）</td><td style="text-align:right;font-weight:700">$11,230/年</td><td style="text-align:right">5.62萬</td><td style="font-size:13px;color:var(--muted)">249hp 對應稅額，2031起課</td>
+        </tr>
+        <tr>
+          <td>公路養護費（2030–2035）</td><td style="text-align:right;font-weight:700">≈$6,180/年</td><td style="text-align:right">≈3.09萬</td><td style="font-size:13px;color:var(--muted)">比照燃油車1,498cc估算，2030起</td>
+        </tr>
+        <tr style="background:var(--blue-l)">
+          <td style="font-weight:700;color:var(--blue)">Cavira 合計</td><td colspan="2" style="text-align:right;font-weight:800;color:var(--blue)">平均≈$8,710/年</td><td style="text-align:right;font-weight:800;color:var(--blue)">≈8.7萬</td><td style="font-size:13px;color:var(--blue)">原本 2.2萬 → 嚴重低估</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="ib warn" style="margin:12px 16px">⚠ Cavira EV 稅費前5年為零，後5年（2031起）牌照稅依馬力課徵（249hp → $11,230/年），加上公路養護費（預計2030起按馬力折算，約 $6,180/年）。兩者合計10年約 8.7 萬，非原報告的 2.2 萬。</div>
   </div>
 </div>
 <div class="divider"></div>
@@ -1234,7 +1276,7 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
     <div id="wr-bars"></div>
 
     <div style="font-size:13px;color:var(--muted);margin-top:14px;line-height:1.7;background:var(--bg);border-radius:8px;padding:12px 14px">
-      固定參數（不可調整）：輪胎費 CRV6 17.3萬 / Cavira 25.2萬 · 保險費 CRV6 17.4萬 / Cavira 26.9萬 · 稅費 CRV6 8.9萬 / EV 2.2萬 · EV殘值 18萬 · 費率依台電 114年10月1日起最新公告
+      固定參數（不可調整）：輪胎費 CRV6 17.3萬 / Cavira 25.2萬 · 保險費 CRV6 17.4萬 / Cavira 26.9萬 · 稅費 CRV6 <b>11.92萬</b>（牌照稅$7,120+燃料費$4,800×10年）/ EV <b>8.7萬</b>（前5年免徵，後5年牌照稅+公路養護費） · EV殘值 18萬 · 費率依台電 114年10月1日起最新公告
     </div>
 
     <!-- 三方案對比 -->
@@ -1318,7 +1360,7 @@ const TOU={
   '2段':{sp:5.16,so:2.06,nsp:4.93,nso:1.99,note:'離峰 $2.06（夏）/ $1.99（非夏）· 尖峰 $5.16/$4.93'},
   '3段':{sp:7.13,shp:4.69,so:2.06,nshp:4.48,nso:1.99,note:'離峰 $2.06（夏）/ $1.99（非夏）· 尖峰 $7.13（夏16–22時）'}
 };
-const TIRE_C=17.3,TIRE_E=25.2,INS_C=17.4,INS_E=26.9,TAX_C=8.9,TAX_E=2.2,EV_RES=18,CRV_RES=8;
+const TIRE_C=17.3,TIRE_E=25.2,INS_C=17.4,INS_E=26.9,TAX_C=11.92,TAX_E=8.7,EV_RES=18,CRV_RES=8;
 const SM=4,NM=8; /* 夏月4個月，非夏月8個月 */
 
 let touMode='2段';
@@ -1716,7 +1758,7 @@ if(document.readyState==='loading'){
 
 <footer>
   資料來源：Foxtron 官方規格表 · CarStuff · U-CAR · 台電電費（2026/4月）· 明台產險試算 · 車麗屋報價 · 7Car養護紀錄<br>
-  製作日期：2026.05.20　·　本報告僅供財務參考，實際決策請諮詢專業顧問
+  製作日期：2026.05.20　·　稅費更正：2026.05.27（牌照稅＋燃料費依交通部2026年費率）　·　本報告僅供財務參考，實際決策請諮詢專業顧問
 </footer>
 
 <script>
@@ -1727,7 +1769,7 @@ const leg={display:true,position:'top',labels:{color:'#64748B',font:{size:13,fam
 
 window._eChart=new Chart(document.getElementById('eChart'),{type:'bar',data:{
   labels:['燃油/電費','保養維修','輪胎費','保險費','稅費'],
-  datasets:[{label:'CRV6',data:[114.2,18.2,17.3,17.4,8.9],backgroundColor:C,borderRadius:4},{label:'Cavira',data:[13.4,5.8,25.2,26.9,2.2],backgroundColor:E,borderRadius:4}]
+  datasets:[{label:'CRV6',data:[114.2,18.2,17.3,17.4,11.92],backgroundColor:C,borderRadius:4},{label:'Cavira',data:[13.4,5.8,25.2,26.9,8.7],backgroundColor:E,borderRadius:4}]
 },options:{...base,plugins:{legend:leg},scales:{y:{...ax},x:{...ax,grid:{display:false}}}}});
 
 new Chart(document.getElementById('iChart'),{type:'bar',data:{
@@ -1737,12 +1779,12 @@ new Chart(document.getElementById('iChart'),{type:'bar',data:{
 
 window._tChart=new Chart(document.getElementById('tChart'),{type:'bar',data:{
   labels:['換車','燃油/電','保養','輪胎','保險','稅費','殘值'],
-  datasets:[{label:'CRV6',data:[0,114.2,18.2,17.3,17.4,8.9,-8.0],backgroundColor:C,borderRadius:4},{label:'Cavira',data:[47.4,13.4,5.8,25.2,26.9,2.2,-18.0],backgroundColor:E,borderRadius:4}]
+  datasets:[{label:'CRV6',data:[0,114.2,18.2,17.3,17.4,11.92,-8.0],backgroundColor:C,borderRadius:4},{label:'Cavira',data:[47.4,13.4,5.8,25.2,26.9,8.7,-18.0],backgroundColor:E,borderRadius:4}]
 },options:{...base,plugins:{legend:{display:false}},scales:{y:{...ax},x:{...ax,grid:{display:false},ticks:{...ax.ticks,maxRotation:0}}}}});
 
 const yrs=['2026','2027','2028','2029','2030','2031','2032','2033','2034','2035'];
-const cum=yrs.map((_,i)=>+((i+1)*10.5).toFixed(1));
-const net=yrs.map((_,i)=>+((i+1)*10.5-47.4).toFixed(1));
+const cum=yrs.map((_,i)=>+((i+1)*10.15).toFixed(1));
+const net=yrs.map((_,i)=>+((i+1)*10.15-47.4).toFixed(1));
 window._beChart=new Chart(document.getElementById('bChart'),{type:'line',data:{labels:yrs,datasets:[
   {label:'累積節省',data:cum,borderColor:G,backgroundColor:'rgba(21,128,61,.07)',borderWidth:2.5,pointRadius:4,fill:true,tension:.35},
   {label:'淨餘額（扣缺口）',data:net,borderColor:E,backgroundColor:'rgba(29,78,216,.06)',borderWidth:2.5,pointRadius:4,fill:true,tension:.35,borderDash:[6,3]},
