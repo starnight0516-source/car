@@ -255,13 +255,15 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
 <div style="position:sticky;top:0;z-index:50;display:flex;align-items:stretch;background:#fff;border-bottom:1px solid var(--border)">
 <button id="nav-left" aria-label="向左" style="flex-shrink:0;width:36px;border:none;border-right:1px solid var(--border);background:#fff;cursor:pointer;font-size:16px;color:var(--muted);padding:0;transition:opacity .2s">‹</button>
 <nav style="position:relative;top:auto;z-index:auto;background:transparent;border-bottom:none;flex:1;cursor:grab;user-select:none;-webkit-user-select:none">
-  <div class="nav-logo">CRV6 × CAVIRA</div>
+  <div class="nav-logo">CRV6 × CAVIRA × RAV4 PHEV</div>
   <a class="nl" href="#hero">封面</a>
+  <a class="nl" href="#s00" style="color:#F59E0B;font-weight:700">★ 三車結論</a>
   <a class="nl" href="#s01">規格對比</a>
   <a class="nl" href="#s02">換車成本</a>
   <a class="nl" href="#s03">能源費用</a>
   <a class="nl" href="#s04">輪胎保險</a>
   <a class="nl" href="#s05">10年總成本</a>
+  <a class="nl" href="#s05b" style="color:#059669;font-weight:700">🟢 三車比較</a>
   <a class="nl" href="#s06">損益平衡</a>
   <a class="nl" href="#s07">輪胎指南</a>
   <a class="nl" href="#s08">綜合評估</a>
@@ -374,6 +376,140 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
     </div>
     <div style="background:rgba(74,222,128,.15);border:1px solid rgba(74,222,128,.4);border-radius:8px;padding:9px 14px;font-size:14px;color:#4ADE80;font-weight:700;margin-top:6px">
       ✅ 2026/05/27 稅費已更正：CRV6 牌照稅＋燃料費 $11,920/年（原 $8,900），Cavira 2030前免徵、2031起按馬力課徵（原低估）
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 00 三車結論 — 最前面 -->
+<div class="wrap" id="s00">
+  <div class="ph">
+    <div class="ph-num" style="background:linear-gradient(135deg,#0F172A,#1E3A5F)">★</div>
+    <div class="ph-title">三車方案結論 · 哪一台最適合你？</div>
+    <div class="ph-sub">基於年跑 42,000 km · 10 年持有 · 完整財務分析 · 數字隨下方試算機連動</div>
+  </div>
+
+  <!-- 三張選擇卡 -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px">
+
+    <!-- 留 CRV6 -->
+    <div style="border:2px solid #B45309;border-radius:14px;overflow:hidden">
+      <div style="background:#B45309;color:#fff;padding:13px 16px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.8px;opacity:.85;margin-bottom:3px">方案 A</div>
+        <div style="font-size:18px;font-weight:800">留用 CRV6</div>
+        <div style="font-size:12px;opacity:.8;margin-top:2px">Honda CR-V 6th Gen</div>
+      </div>
+      <div style="padding:14px 16px;background:#FFFBF5">
+        <div style="font-size:13px;font-weight:700;color:#92400E;margin-bottom:8px">✅ 適合這種人</div>
+        <div style="font-size:14px;color:var(--body);line-height:1.9;margin-bottom:12px">
+          · 資金緊，不想一次動用大筆現金<br>
+          · 里程短（年跑 &lt;2.5萬km）<br>
+          · CRV6 車況良好，保固仍在<br>
+          · 保險起見，靜待 EV 市場成熟
+        </div>
+        <div style="border-top:1px solid #FDE68A;padding-top:10px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:13px">
+            <div style="color:var(--muted)">換車成本</div><div style="font-weight:700;color:#B45309">$0</div>
+            <div style="color:var(--muted)">10年總持有</div><div style="font-weight:700;color:#B45309" id="c0-crv-tot">—</div>
+            <div style="color:var(--muted)">年均稅費</div><div style="font-weight:700">$11,920</div>
+            <div style="color:var(--muted)">最大風險</div><div style="font-weight:700;color:#B91C1C">油價漲、殘值跌</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cavira EV -->
+    <div style="border:3px solid #1D4ED8;border-radius:14px;overflow:hidden;position:relative">
+      <div style="position:absolute;top:12px;right:12px;background:#4ADE80;color:#14532D;font-size:11px;font-weight:800;padding:2px 8px;border-radius:20px">💰 10年最省</div>
+      <div style="background:linear-gradient(135deg,#1D4ED8,#3B82F6);color:#fff;padding:13px 16px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.8px;opacity:.85;margin-bottom:3px">方案 B　⭐ 財務最優</div>
+        <div style="font-size:18px;font-weight:800">換 Cavira EV</div>
+        <div style="font-size:12px;opacity:.8;margin-top:2px">Foxtron Cavira Emerge · 123.9 萬</div>
+      </div>
+      <div style="padding:14px 16px;background:#EFF6FF">
+        <div style="font-size:13px;font-weight:700;color:#1D4ED8;margin-bottom:8px">✅ 適合這種人</div>
+        <div style="font-size:14px;color:var(--body);line-height:1.9;margin-bottom:12px">
+          · 有固定車位可裝充電樁<br>
+          · 年跑 3.5 萬 km 以上（本案 4.2 萬）<br>
+          · 接受新品牌，重視長期成本<br>
+          · 2030 前稅費全免是最大紅利
+        </div>
+        <div style="border-top:1px solid #BFDBFE;padding-top:10px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:13px">
+            <div style="color:var(--muted)">換車缺口</div><div style="font-weight:700;color:#1D4ED8" id="c0-ev-gap">—</div>
+            <div style="color:var(--muted)">10年總持有</div><div style="font-weight:700;color:#1D4ED8" id="c0-ev-tot">—</div>
+            <div style="color:var(--muted)">vs 留車省下</div><div style="font-weight:800;color:#15803D;font-size:15px" id="c0-ev-save">—</div>
+            <div style="color:var(--muted)">損益平衡</div><div style="font-weight:700;color:#1D4ED8" id="c0-ev-be">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RAV4 PHEV -->
+    <div style="border:2px solid #059669;border-radius:14px;overflow:hidden;position:relative">
+      <div style="position:absolute;top:12px;right:12px;background:#FEF3C7;color:#92400E;font-size:11px;font-weight:800;padding:2px 8px;border-radius:20px">⏳ 7月上市</div>
+      <div style="background:linear-gradient(135deg,#059669,#34D399);color:#fff;padding:13px 16px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.8px;opacity:.85;margin-bottom:3px">方案 C　🟢 折衷首選</div>
+        <div style="font-size:18px;font-weight:800">換 RAV4 PHEV</div>
+        <div style="font-size:12px;opacity:.8;margin-top:2px">Toyota RAV4 PHEV · 預接 150 萬</div>
+      </div>
+      <div style="padding:14px 16px;background:#ECFDF5">
+        <div style="font-size:13px;font-weight:700;color:#059669;margin-bottom:8px">✅ 適合這種人</div>
+        <div style="font-size:14px;color:var(--body);line-height:1.9;margin-bottom:12px">
+          · <b>無法裝充電樁</b>（社區、路邊停車）<br>
+          · 日通勤 &lt;145km，可幾乎全程純電<br>
+          · 重視 Toyota 品牌保值與服務<br>
+          · 不想依賴單一品牌或新車廠
+        </div>
+        <div style="border-top:1px solid #A7F3D0;padding-top:10px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:13px">
+            <div style="color:var(--muted)">換車缺口</div><div style="font-weight:700;color:#059669" id="c0-ph-gap">—</div>
+            <div style="color:var(--muted)">10年總持有</div><div style="font-weight:700;color:#059669" id="c0-ph-tot">—</div>
+            <div style="color:var(--muted)">vs 留車省下</div><div style="font-weight:800;font-size:15px" id="c0-ph-save">—</div>
+            <div style="color:var(--muted)">損益平衡</div><div style="font-weight:700;color:#059669" id="c0-ph-be">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 快速比較橫條 -->
+  <div style="background:var(--ink);border-radius:12px;padding:18px 22px;color:#fff">
+    <div style="font-size:13px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:.6px;margin-bottom:14px">三方案一眼速比（數字隨試算機連動）</div>
+    <div style="display:grid;grid-template-columns:120px 1fr 1fr 1fr;gap:8px;font-size:14px;align-items:center">
+      <div></div>
+      <div style="text-align:center;color:#FED7AA;font-weight:700">🟠 留 CRV6</div>
+      <div style="text-align:center;color:#93C5FD;font-weight:700">🔵 換 Cavira EV</div>
+      <div style="text-align:center;color:#6EE7B7;font-weight:700">🟢 換 RAV4 PHEV</div>
+
+      <div style="color:#94A3B8">換車缺口</div>
+      <div style="text-align:center;color:#FED7AA">$0</div>
+      <div style="text-align:center;color:#93C5FD;font-weight:700" id="c0-tbl-ev-gap">—</div>
+      <div style="text-align:center;color:#6EE7B7;font-weight:700" id="c0-tbl-ph-gap">—</div>
+
+      <div style="color:#94A3B8">10年能源費</div>
+      <div style="text-align:center;color:#FED7AA" id="c0-tbl-crv-fuel">—</div>
+      <div style="text-align:center;color:#93C5FD" id="c0-tbl-ev-fuel">—</div>
+      <div style="text-align:center;color:#6EE7B7" id="c0-tbl-ph-fuel">—</div>
+
+      <div style="color:#94A3B8">稅費（10年）</div>
+      <div style="text-align:center;color:#FED7AA">11.9萬</div>
+      <div style="text-align:center;color:#93C5FD">8.7萬</div>
+      <div style="text-align:center;color:#F87171;font-weight:700">22.4萬⚠</div>
+
+      <div style="color:#94A3B8">10年總持有</div>
+      <div style="text-align:center;color:#FED7AA;font-weight:700" id="c0-tbl-crv-tot">—</div>
+      <div style="text-align:center;color:#4ADE80;font-weight:800;font-size:16px" id="c0-tbl-ev-tot">—</div>
+      <div style="text-align:center;color:#6EE7B7;font-weight:700" id="c0-tbl-ph-tot">—</div>
+
+      <div style="color:#94A3B8">損益平衡</div>
+      <div style="text-align:center;color:#94A3B8">—</div>
+      <div style="text-align:center;color:#93C5FD;font-weight:700" id="c0-tbl-ev-be">—</div>
+      <div style="text-align:center;color:#6EE7B7;font-weight:700" id="c0-tbl-ph-be">—</div>
+    </div>
+    <div style="margin-top:14px;padding-top:12px;border-top:1px solid #1E3A5F;font-size:13px;color:#64748B;line-height:1.7">
+      ⚠ RAV4 PHEV 稅費高（2.5L 引擎 $22,410/年），是 Cavira EV 的 2.6 倍，是 10 年成本差異最大的單一項目。詳見 §05b 三車比較。
     </div>
   </div>
 </div>
@@ -732,6 +868,125 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
 </div>
 <div class="divider"></div>
 
+<!-- 05b RAV4 PHEV 三車比較 -->
+<div class="wrap" id="s05b">
+  <div class="ph">
+    <div class="ph-num" style="background:linear-gradient(135deg,#059669,#34D399)">05b</div>
+    <div class="ph-title">三車完整比較 · CRV6 vs Cavira EV vs RAV4 PHEV</div>
+    <div class="ph-sub">RAV4 PHEV 預接單價 150 萬（2026/05/29）· 預計 7 月正式上市</div>
+  </div>
+
+  <!-- PHEV 規格卡 -->
+  <div style="background:linear-gradient(135deg,#ECFDF5,#D1FAE5);border:2px solid #059669;border-radius:14px;padding:20px 24px;margin-bottom:20px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+      <div style="background:#059669;color:#fff;padding:4px 12px;border-radius:6px;font-size:13px;font-weight:700">Toyota RAV4 PHEV 2026</div>
+      <div style="background:#FEF3C7;color:#92400E;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700">⏳ 預計 7 月上市</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px">
+      <div><div style="font-size:12px;color:#059669;font-weight:700;text-transform:uppercase;letter-spacing:.4px">預接單價</div><div style="font-size:26px;font-weight:800;color:#065F46">150 萬</div></div>
+      <div><div style="font-size:12px;color:#059669;font-weight:700;text-transform:uppercase;letter-spacing:.4px">綜效馬力</div><div style="font-size:26px;font-weight:800;color:#065F46">329 hp</div></div>
+      <div><div style="font-size:12px;color:#059669;font-weight:700;text-transform:uppercase;letter-spacing:.4px">純電里程</div><div style="font-size:26px;font-weight:800;color:#065F46">145 km</div></div>
+      <div><div style="font-size:12px;color:#059669;font-weight:700;text-transform:uppercase;letter-spacing:.4px">電池容量</div><div style="font-size:26px;font-weight:800;color:#065F46">22.7 kWh</div></div>
+      <div><div style="font-size:12px;color:#059669;font-weight:700;text-transform:uppercase;letter-spacing:.4px">驅動</div><div style="font-size:26px;font-weight:800;color:#065F46">E-Four AWD</div></div>
+      <div><div style="font-size:12px;color:#059669;font-weight:700;text-transform:uppercase;letter-spacing:.4px">快充</div><div style="font-size:26px;font-weight:800;color:#065F46">CCS1（30min→80%）</div></div>
+    </div>
+    <div style="margin-top:12px;font-size:13px;color:#065F46;line-height:1.7">
+      💡 PHEV 稅費：排氣量 2,500cc 以下按 2,001–2,400cc 級距課稅？實際引擎 2.487L，可能落在牌照稅 <b>$15,210/年</b>，燃料費 <b>$7,200/年</b>，合計年繳 <b>$22,410</b>（10年 22.41 萬）。
+    </div>
+  </div>
+
+  <!-- 三車KPI對比 -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:20px">
+    <div style="background:#FFF7ED;border:2px solid #B45309;border-radius:12px;padding:16px 18px">
+      <div style="font-size:12px;font-weight:700;color:#B45309;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">CRV6（留車）</div>
+      <div style="font-size:13px;color:var(--body);line-height:2">
+        換車成本：<b>$0</b><br>
+        10年能源：<b id="ph3-crv-fuel">—</b><br>
+        稅費：<b>11.92萬</b><br>
+        10年總計：<b id="ph3-crv-tot" style="color:#B45309">—</b>
+      </div>
+    </div>
+    <div style="background:#EFF6FF;border:2px solid #1D4ED8;border-radius:12px;padding:16px 18px">
+      <div style="font-size:12px;font-weight:700;color:#1D4ED8;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Cavira EV</div>
+      <div style="font-size:13px;color:var(--body);line-height:2">
+        換車缺口：<b id="ph3-ev-gap">—</b><br>
+        10年能源：<b id="ph3-ev-fuel">—</b><br>
+        稅費：<b>8.7萬</b><br>
+        10年總計：<b id="ph3-ev-tot" style="color:#1D4ED8">—</b><br>
+        vs CRV6：<b id="ph3-ev-save" style="color:#15803D">—</b>
+      </div>
+    </div>
+    <div style="background:#ECFDF5;border:2px solid #059669;border-radius:12px;padding:16px 18px">
+      <div style="font-size:12px;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">RAV4 PHEV ⭐</div>
+      <div style="font-size:13px;color:var(--body);line-height:2">
+        換車缺口：<b id="ph3-ph-gap">—</b><br>
+        10年能源：<b id="ph3-ph-fuel">—</b><br>
+        稅費：<b>22.41萬</b><br>
+        10年總計：<b id="ph3-ph-tot" style="color:#059669">—</b><br>
+        vs CRV6：<b id="ph3-ph-save">—</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- 三車詳細比較表 -->
+  <div class="card" style="overflow:hidden;margin-bottom:16px">
+    <table class="tbl" style="font-size:15px">
+      <thead>
+        <tr>
+          <th>成本項目（10年）</th>
+          <th style="text-align:right;color:#FED7AA">CRV6</th>
+          <th style="text-align:right;color:#93C5FD">Cavira EV</th>
+          <th style="text-align:right;color:#6EE7B7">RAV4 PHEV</th>
+          <th style="text-align:center">最省</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>換車成本</td><td style="text-align:right;color:var(--muted)">—</td><td class="cbl" id="ph-t-ev-gap">—</td><td style="text-align:right;color:#059669;font-weight:700" id="ph-t-ph-gap">—</td><td style="text-align:center">🟠 留CRV6</td></tr>
+        <tr><td>燃油 / 電費</td><td class="ccr" id="ph-t-crv-fuel">—</td><td class="cbl" id="ph-t-ev-fuel">—</td><td style="text-align:right;color:#059669;font-weight:700" id="ph-t-ph-fuel">—</td><td style="text-align:center" id="ph-t-fuel-best">—</td></tr>
+        <tr><td>保養維修</td><td class="ccr">${(1.82*10).toFixed(1)}</td><td class="cbl">5.8</td><td style="text-align:right;color:#059669;font-weight:700">12.0</td><td style="text-align:center">🔵 Cavira</td></tr>
+        <tr><td>輪胎費</td><td class="ccr">17.3</td><td class="cbl">25.2</td><td style="text-align:right;color:#059669;font-weight:700">26.0</td><td style="text-align:center">🟠 CRV6</td></tr>
+        <tr><td>保險費</td><td class="ccr">17.4</td><td class="cbl">26.9</td><td style="text-align:right;color:#059669;font-weight:700">28.5</td><td style="text-align:center">🟠 CRV6</td></tr>
+        <tr><td>稅費（10年）</td><td class="ccr">11.9</td><td class="cbl">8.7</td><td style="text-align:right;color:#B91C1C;font-weight:700">22.4</td><td style="text-align:center">🔵 Cavira</td></tr>
+        <tr><td>殘值（扣）</td><td class="ccr">−8.0</td><td class="cbl">−18.0</td><td style="text-align:right;color:#059669;font-weight:700">−17.0</td><td style="text-align:center">🔵 Cavira</td></tr>
+      </tbody>
+      <tfoot>
+        <tr class="sub">
+          <td>10年總計</td>
+          <td style="color:var(--crv);text-align:right" id="ph-t-crv-tot">—</td>
+          <td style="color:var(--blue);text-align:right" id="ph-t-ev-tot">—</td>
+          <td style="color:#059669;text-align:right" id="ph-t-ph-tot">—</td>
+          <td></td>
+        </tr>
+        <tr class="tot">
+          <td>vs CRV6 省下</td>
+          <td style="text-align:right;color:#94A3B8">—</td>
+          <td style="text-align:right;color:#4ADE80;font-size:18px" id="ph-t-ev-save">—</td>
+          <td style="text-align:right;font-size:18px" id="ph-t-ph-save">—</td>
+          <td></td>
+        </tr>
+        <tr style="background:#FFF">
+          <td>損益平衡</td>
+          <td style="text-align:right;color:#94A3B8">—</td>
+          <td style="text-align:right;color:#1D4ED8;font-weight:700" id="ph-t-ev-be">—</td>
+          <td style="text-align:right;color:#059669;font-weight:700" id="ph-t-ph-be">—</td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <!-- 結論框 -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+    <div class="ib blue" style="margin:0">
+      🔵 <b>Cavira EV 適合：</b>有固定停車位可裝充電樁、年跑 3.5 萬 km 以上、接受新品牌、追求最低長期成本者。<br>10年省最多，但換車缺口大（約 77 萬）。
+    </div>
+    <div style="background:#ECFDF5;border-left:4px solid #059669;padding:12px 16px;border-radius:0 8px 8px 0;font-size:15px;line-height:1.8">
+      🟢 <b>RAV4 PHEV 適合：</b>無法裝充電樁、重視 Toyota 保值性、通勤短（日均 &lt;145km 可幾乎純電）、不想適應新品牌者。<br>換車缺口較小（約 <span id="ph-txt-gap">77</span> 萬），稅費高但品牌信賴度高。
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+
 <!-- 06 損益平衡 -->
 <div class="wrap" id="s06">
   <div class="ph"><div class="ph-num">06</div><div class="ph-title">損益平衡分析</div><div class="ph-sub">換車缺口 47.4 萬，何時回本？</div></div>
@@ -754,26 +1009,28 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
       <span style="font-size:13px;font-weight:400;color:#94A3B8">參數變動時自動更新</span>
     </div>
     <div style="overflow-x:auto">
-    <table class="tbl" id="yr-table" style="font-size:16px;min-width:860px">
+    <table class="tbl" id="yr-table" style="font-size:15px;min-width:1000px">
       <thead>
         <tr>
-          <th style="width:60px">年份</th>
-          <th style="text-align:center">持有第N年</th>
-          <th style="text-align:right;color:#FED7AA">CRV6 年支出</th>
-          <th style="text-align:right;color:#93C5FD">Cavira 年支出</th>
-          <th style="text-align:right;color:#4ADE80">當年淨節省</th>
-          <th style="text-align:right;color:#4ADE80">累積節省</th>
-          <th style="text-align:right;color:#FCA5A5">換車缺口餘額</th>
-          <th style="text-align:center">狀態</th>
+          <th style="width:55px">年份</th>
+          <th style="text-align:center">第N年</th>
+          <th style="text-align:right;color:#FED7AA">CRV6<br><span style="font-size:11px;font-weight:400">年支出</span></th>
+          <th style="text-align:right;color:#93C5FD">Cavira EV<br><span style="font-size:11px;font-weight:400">年支出</span></th>
+          <th style="text-align:right;color:#6EE7B7">RAV4 PHEV<br><span style="font-size:11px;font-weight:400">年支出</span></th>
+          <th style="text-align:right;color:#4ADE80">EV當年<br>節省</th>
+          <th style="text-align:right;color:#34D399">PHEV當年<br>節省</th>
+          <th style="text-align:right;color:#4ADE80">EV累積<br>節省</th>
+          <th style="text-align:right;color:#34D399">PHEV累積<br>節省</th>
+          <th style="text-align:center">EV狀態</th>
+          <th style="text-align:center">PHEV狀態</th>
         </tr>
       </thead>
       <tbody id="yr-tbody">
-        <!-- 由 JS 動態填入 -->
       </tbody>
     </table>
     </div>
     <div style="padding:12px 18px;font-size:13px;color:var(--muted);border-top:1px solid var(--border);line-height:1.7">
-      ※ 年支出包含：能源費＋保養＋輪胎（平均）＋保險（平均）＋稅費（平均）。第1年 Cavira 另含換車缺口。殘值差（+10萬）於第10年計入。
+      ※ 年支出含：能源費＋保養＋輪胎（攤提）＋保險（攤提）＋稅費（攤提）。第1年含換車缺口。第10年加入殘值差。RAV4 PHEV 以預接單價 150 萬計算（2026/05/29）。
     </div>
   </div>
 </div>
@@ -1391,6 +1648,13 @@ const TOU={
   '3段':{sp:7.13,shp:4.69,so:2.06,nshp:4.48,nso:1.99,note:'離峰 $2.06（夏）/ $1.99（非夏）· 尖峰 $7.13（夏16–22時）'}
 };
 const TIRE_C=17.3,TIRE_E=25.2,INS_C=17.4,INS_E=26.9,TAX_C=11.92,TAX_E=8.7,EV_RES=18,CRV_RES=8;
+/* ── RAV4 PHEV 固定參數 ── */
+const PHEV_PRICE=150; /* 預接單價 150萬（2026/05/29 和泰正式公布）*/
+const TIRE_P=26.0;      /* 10年輪胎（20吋重車） */
+const INS_P=28.5;       /* 10年保費（車價高） */
+const TAX_P=22.41;      /* 牌照稅$15,210+燃料費$7,200×10年 */
+const MAINT_P=1.2;      /* 保養/年（PHEV免換油但仍需定保） */
+const PHEV_RES=17;      /* 10年殘值（Toyota保值佳） */
 const SM=4,NM=8; /* 夏月4個月，非夏月8個月 */
 
 let touMode='2段';
@@ -1478,6 +1742,32 @@ function calc(){
   const evTot =gap+ev10+em10+TIRE_E+INS_E+TAX_E-EV_RES;
   const saving=crvTot-evTot;
 
+  /* ── RAV4 PHEV 計算 ── */
+  /* PHEV 能源：純電145km優先，年跑42000km假設日跑115km */
+  /* 若日跑≤純電里程 → 大部分靠電；若日跑>純電里程 → 超出部分燒油 */
+  const dailyKm = km/365;
+  /* 純電比例：若日跑 > EV里程，超過部分燒油 */
+  const phevEvRatio = Math.min(1, 145/Math.max(dailyKm,1));
+  const phevFuelRatio = 1 - phevEvRatio;
+  /* 電費：按CRV6同比例離峰充電（每100km耗電約18kWh for PHEV） */
+  const phevEvKwh = 18; /* kWh/100km（PHEV充電效率） */
+  const phevEvYr = calcEV(km*phevEvRatio, phevEvKwh, op, touMode);
+  /* 燃油費：燃油段以CRV6油耗估（PHEV純燃油模式約12km/L） */
+  const phevFuelYr = km*phevFuelRatio/12*fuel/10000;
+  const phevEnergyYr = phevEvYr + phevFuelYr;
+  const phevEnergy10 = phevEnergyYr*10;
+  /* PHEV 換車缺口 */
+  const phevGap = PHEV_PRICE - sell + 0.5;
+  /* PHEV 10年總持有成本 */
+  const pm10 = MAINT_P*10;
+  const phevTot = phevGap + phevEnergy10 + pm10 + TIRE_P + INS_P + TAX_P - PHEV_RES;
+  /* PHEV vs CRV6 省下 */
+  const phevSaving = crvTot - phevTot;
+  /* PHEV 損益平衡 */
+  const phevAnnNet = (fuelYr+cm)-(phevEnergyYr+MAINT_P)-(TIRE_P-TIRE_C)/10-(INS_P-INS_C)/10;
+  const phevBe = phevAnnNet>0 ? (phevGap-(PHEV_RES-CRV_RES))/phevAnnNet : 99;
+  const phevBeYr = phevBe<20 ? String(new Date().getFullYear()+Math.ceil(phevBe)) : '—';
+
   /* 損益平衡 */
   const annSave =(fuelYr+cm)-(evYr+em);
   const annExtra=(TIRE_E-TIRE_C)/10+(INS_E-INS_C)/10;
@@ -1546,77 +1836,133 @@ function calc(){
   upd('be-ib-yr2030', beCalYr);
   upd('be-ib-annual', annNet.toFixed(1));
 
-  /* ── 逐年明細表 ── */
+  /* ── 逐年明細表（含 PHEV）── */
   (function(){
     const tbody=document.getElementById('yr-tbody');
     if(!tbody) return;
     const startYr=2026;
-    // 各項年均攤（固定）
-    const tireC_yr=TIRE_C/10, tireE_yr=TIRE_E/10;
-    const insC_yr =INS_C/10,  insE_yr =INS_E/10;
-    // 稅費逐年（CRV6全年一樣；EV前5年0，後5年按比例）
-    const taxC_yr =TAX_C/10;  // 1.192萬/年
-    // EV稅：前5年0，後5年=8.7萬/5=1.74萬/年
-    function taxE_yr(n){ return n<=5 ? 0 : 8.7/5; }
+    const tireC_yr=TIRE_C/10, tireE_yr=TIRE_E/10, tireP_yr=TIRE_P/10;
+    const insC_yr=INS_C/10,   insE_yr=INS_E/10,   insP_yr=INS_P/10;
+    const taxC_yr=TAX_C/10,   taxP_yr=TAX_P/10;
+    function taxE_yr(n){ return n<=5?0:8.7/5; }
 
-    let cumSave=0, gapRemain=gap;
+    let cumEV=0, cumPH=0;
     let rows='';
     for(let n=1;n<=10;n++){
       const yr=startYr+n-1;
-      // CRV6 年支出
-      const crvYr= fuelYr + cm + tireC_yr + insC_yr + taxC_yr;
-      // Cavira 年支出（不含換車缺口）
-      const evYr_n= evYr + em + tireE_yr + insE_yr + taxE_yr(n);
-      // 當年淨節省（Cavira比CRV6少花多少）
-      const netSave= crvYr - evYr_n;
-      cumSave += netSave;
-      // 殘值差在第10年加入（EV殘值多10萬）
-      const residAdj = n===10 ? (EV_RES-CRV_RES) : 0;
-      const cumSaveAdj = cumSave + residAdj;
-      gapRemain = gap - cumSaveAdj;
+      const crvYr  = fuelYr + cm + tireC_yr + insC_yr + taxC_yr;
+      const evYr_n = evYr + em + tireE_yr + insE_yr + taxE_yr(n);
+      const phYr_n = phevEnergyYr + MAINT_P + tireP_yr + insP_yr + taxP_yr;
+      const netEV  = crvYr - evYr_n;
+      const netPH  = crvYr - phYr_n;
+      const residEV = n===10?(EV_RES-CRV_RES):0;
+      const residPH = n===10?(PHEV_RES-CRV_RES):0;
+      cumEV += netEV;
+      cumPH += netPH;
+      const cumEVadj = cumEV + residEV;
+      const cumPHadj = cumPH + residPH;
 
-      const broke = gapRemain<=0;
-      const brokeFirst = broke && (gap-(cumSave-netSave+(n===10?(EV_RES-CRV_RES):0)))>0;
+      const evBroke  = cumEVadj >= phevGap-(EV_RES-CRV_RES) && cumEV>=0; // simplified: check gap
+      // simpler: check if net cumulative >= gap
+      const evPaid   = cumEVadj >= (gap-(EV_RES-CRV_RES));
+      const phPaid   = cumPHadj >= (phevGap-(PHEV_RES-CRV_RES));
+      const evPaidFirst = evPaid && !(cumEV-netEV+(n===10?(EV_RES-CRV_RES):0) >= (gap-(EV_RES-CRV_RES)));
+      const phPaidFirst = phPaid && !(cumPH-netPH+(n===10?(PHEV_RES-CRV_RES):0) >= (phevGap-(PHEV_RES-CRV_RES)));
 
-      // 狀態標籤
-      let status, rowStyle='';
-      if(brokeFirst){
-        status='<span style="background:#15803D;color:#fff;padding:2px 8px;border-radius:4px;font-size:13px;font-weight:700">🎉 打平！</span>';
-        rowStyle='background:var(--grn-l);';
-      } else if(broke){
-        status='<span style="background:var(--blue-l);color:var(--blue);padding:2px 8px;border-radius:4px;font-size:13px;font-weight:700">✅ 回收中</span>';
-        rowStyle='background:var(--blue-l);';
-      } else {
-        status='<span style="color:var(--muted);font-size:13px">回本前</span>';
+      function statusBadge(paid, paidFirst){
+        if(paidFirst) return '<span style="background:#15803D;color:#fff;padding:1px 7px;border-radius:4px;font-size:12px;font-weight:700">🎉 打平</span>';
+        if(paid)      return '<span style="background:#DCFCE7;color:#15803D;padding:1px 7px;border-radius:4px;font-size:12px;font-weight:700">✅ 回收</span>';
+        return '<span style="color:#94A3B8;font-size:12px">尚未</span>';
       }
 
-      // 第1年 Cavira 含換車缺口
-      const evYrDisplay = n===1 ? evYr_n + gap : evYr_n;
-      const evYrLabel   = n===1 ? evYr_n.toFixed(2)+'<span style="font-size:12px;color:#93C5FD"> (+'+gap.toFixed(1)+'換車)</span>' : evYr_n.toFixed(2);
-      const residLabel  = n===10 ? '<span style="font-size:12px;color:#4ADE80"> (+10殘值差)</span>' : '';
+      const evYrLabel = n===1
+        ? evYr_n.toFixed(2)+'<span style="font-size:11px;color:#93C5FD;display:block">(+'+gap.toFixed(1)+'缺口)</span>'
+        : evYr_n.toFixed(2);
+      const phYrLabel = n===1
+        ? phYr_n.toFixed(2)+'<span style="font-size:11px;color:#6EE7B7;display:block">(+'+phevGap.toFixed(1)+'缺口)</span>'
+        : phYr_n.toFixed(2);
+      const evResLabel = n===10?'<span style="font-size:11px;color:#4ADE80"> +殘值差</span>':'';
+      const phResLabel = n===10?'<span style="font-size:11px;color:#34D399"> +殘值差</span>':'';
 
-      rows+=`<tr style="${rowStyle}">
+      const rowBg = evPaidFirst||phPaidFirst ? 'background:#F0FDF4' : (evPaid&&phPaid?'background:#F0FDF9':'');
+
+      rows+=`<tr style="${rowBg}">
         <td style="font-weight:700">${yr}</td>
         <td style="text-align:center;color:var(--muted)">第${n}年</td>
         <td style="text-align:right;color:var(--crv);font-weight:700">${crvYr.toFixed(2)}</td>
-        <td style="text-align:right;color:var(--blue);font-weight:700">${evYrLabel}</td>
-        <td style="text-align:right;font-weight:700;color:${netSave>=0?'var(--grn)':'var(--red)'}">${netSave>=0?'+':'' }${netSave.toFixed(2)}</td>
-        <td style="text-align:right;font-weight:700;color:${cumSaveAdj>=0?'var(--grn)':'var(--muted)'}">
-          ${cumSaveAdj.toFixed(2)}${residLabel}
-        </td>
-        <td style="text-align:right;font-weight:700;color:${broke?'var(--grn)':'var(--red)'}">
-          ${broke?'—':gapRemain.toFixed(2)}
-        </td>
-        <td style="text-align:center">${status}</td>
+        <td style="text-align:right;color:#3B82F6;font-weight:700">${evYrLabel}</td>
+        <td style="text-align:right;color:#059669;font-weight:700">${phYrLabel}</td>
+        <td style="text-align:right;font-weight:700;color:${netEV>=0?'#15803D':'#B91C1C'}">${netEV>=0?'+':''}${netEV.toFixed(2)}</td>
+        <td style="text-align:right;font-weight:700;color:${netPH>=0?'#059669':'#B91C1C'}">${netPH>=0?'+':''}${netPH.toFixed(2)}</td>
+        <td style="text-align:right;font-weight:700;color:${cumEVadj>=0?'#15803D':'#94A3B8'}">${cumEVadj.toFixed(2)}${evResLabel}</td>
+        <td style="text-align:right;font-weight:700;color:${cumPHadj>=0?'#059669':'#94A3B8'}">${cumPHadj.toFixed(2)}${phResLabel}</td>
+        <td style="text-align:center">${statusBadge(evPaid,evPaidFirst)}</td>
+        <td style="text-align:center">${statusBadge(phPaid,phPaidFirst)}</td>
       </tr>`;
     }
     tbody.innerHTML=rows;
   })();
 
+  /* s00 三車結論卡 */
+  upd('c0-crv-tot',  fw(crvTot));
+  upd('c0-ev-gap',   fw(gap));
+  upd('c0-ev-tot',   fw(evTot));
+  upd('c0-ev-save',  (saving>0?'省 ':'多 ')+fw(Math.abs(saving)));
+  const c0evSaveEl=document.getElementById('c0-ev-save');
+  if(c0evSaveEl) c0evSaveEl.style.color=saving>0?'#15803D':'#B91C1C';
+  upd('c0-ev-be',    beYrs<20?beYrs.toFixed(1)+' 年':'>10年');
+  upd('c0-ph-gap',   fw(phevGap));
+  upd('c0-ph-tot',   fw(phevTot));
+  upd('c0-ph-save',  (phevSaving>0?'省 ':'多 ')+fw(Math.abs(phevSaving)));
+  const c0phSaveEl=document.getElementById('c0-ph-save');
+  if(c0phSaveEl) c0phSaveEl.style.color=phevSaving>0?'#059669':'#B91C1C';
+  upd('c0-ph-be',    phevBe<20?phevBe.toFixed(1)+' 年':'>10年');
+  upd('c0-tbl-ev-gap',   fw(gap));
+  upd('c0-tbl-ph-gap',   fw(phevGap));
+  upd('c0-tbl-crv-fuel', fw(fuel10));
+  upd('c0-tbl-ev-fuel',  fw(ev10));
+  upd('c0-tbl-ph-fuel',  fw(phevEnergy10));
+  upd('c0-tbl-crv-tot',  fw(crvTot));
+  upd('c0-tbl-ev-tot',   fw(evTot));
+  upd('c0-tbl-ph-tot',   fw(phevTot));
+  upd('c0-tbl-ev-be',    beYrs<20?beYrs.toFixed(1)+'年':'>10年');
+  upd('c0-tbl-ph-be',    phevBe<20?phevBe.toFixed(1)+'年':'>10年');
+
   /* s08 綜合評估 */
   upd('ev-vi-saving', saving.toFixed(1));
   upd('ev-vi-fuel',   fuel10.toFixed(1));
   upd('ev-vi-gap',    gap.toFixed(1));
+
+  /* s05b RAV4 PHEV 三車比較 */
+  upd('ph3-crv-fuel', fw(fuel10));
+  upd('ph3-crv-tot',  fw(crvTot));
+  upd('ph3-ev-gap',   fw(gap));
+  upd('ph3-ev-fuel',  fw(ev10));
+  upd('ph3-ev-tot',   fw(evTot));
+  const ph3evSave=saving;
+  const ph3phSave=phevSaving;
+  upd('ph3-ev-save',  (ph3evSave>0?'省 ':'多 ')+fw(Math.abs(ph3evSave)));
+  upd('ph3-ph-gap',   fw(phevGap));
+  upd('ph3-ph-fuel',  fw(phevEnergy10));
+  upd('ph3-ph-tot',   fw(phevTot));
+  upd('ph3-ph-save',  (ph3phSave>0?'省 ':'多 ')+fw(Math.abs(ph3phSave)));
+  /* table */
+  upd('ph-t-crv-fuel', fwn(fuel10));
+  upd('ph-t-ev-gap',   gap.toFixed(1));
+  upd('ph-t-ev-fuel',  fwn(ev10));
+  upd('ph-t-ph-gap',   phevGap.toFixed(1));
+  upd('ph-t-ph-fuel',  fwn(phevEnergy10));
+  upd('ph-t-crv-tot',  fw(crvTot));
+  upd('ph-t-ev-tot',   fw(evTot));
+  upd('ph-t-ph-tot',   fw(phevTot));
+  upd('ph-t-ev-save',  (saving>0?'省 ':'多 ')+fw(Math.abs(saving)));
+  const phSaveEl=document.getElementById('ph-t-ph-save');
+  if(phSaveEl){ phSaveEl.textContent=(phevSaving>0?'省 ':'多 ')+fw(Math.abs(phevSaving)); phSaveEl.style.color=phevSaving>0?'#15803D':'#B91C1C'; }
+  const fuelBestEl=document.getElementById('ph-t-fuel-best');
+  if(fuelBestEl){ const mn=Math.min(fuel10,ev10,phevEnergy10); fuelBestEl.textContent=mn===ev10?'🔵 Cavira':mn===phevEnergy10?'🟢 PHEV':'🟠 CRV6'; }
+  upd('ph-t-ev-be',   beYrs<20?beYrs.toFixed(1)+'年':'—');
+  upd('ph-t-ph-be',   phevBe<20?phevBe.toFixed(1)+'年':'—');
+  upd('ph-txt-gap',   phevGap.toFixed(1));
 
   /* s14 最終結論 */
   upd('fin-gap',    gap.toFixed(1));
