@@ -1430,38 +1430,475 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
 
 <!-- 12 資金規劃 -->
 <div class="wrap" id="s12">
-  <div class="ph"><div class="ph-num">12</div><div class="ph-title">購車資金規劃分析</div><div class="ph-sub">換車缺口 47.4 萬 · 車貸 × 信貸 × 房屋增貸 三方案完整比較</div></div>
-  <div class="g3" style="margin-bottom:16px">
-    <div class="loan"><div class="loanhd" style="background:var(--blue)">方案 A　車貸<span class="lrate">年利率 1.68%–3.5%</span></div><table class="lt"><thead><tr><th>期數</th><th>月繳(2.5%)</th><th>總利息</th></tr></thead><tbody><tr><td>36期（3年）</td><td class="lh" style="color:var(--blue)">$13,680</td><td>$18,491</td></tr><tr><td>48期（4年）</td><td class="lh" style="color:var(--blue)">$10,387</td><td>$24,588</td></tr><tr><td>60期（5年）</td><td class="lh" style="color:var(--blue)">$8,412</td><td>$30,735</td></tr></tbody></table><div style="padding:11px 14px;font-size:16px;color:var(--muted);border-top:1px solid var(--border)">✓ 原廠可能有促銷利率<br>✓ 核貸快（1–3天）<br>△ 利率高於房貸</div></div>
-    <div class="loan"><div class="loanhd" style="background:#D97706">方案 B　信貸<span class="lrate">年利率 3.5%–7.0%</span></div><table class="lt"><thead><tr><th>期數</th><th>月繳(5%)</th><th>總利息</th></tr></thead><tbody><tr><td>36期（3年）</td><td class="lh" style="color:#D97706">$14,206</td><td style="color:var(--red)">$37,423</td></tr><tr><td>60期（5年）</td><td class="lh" style="color:#D97706">$8,945</td><td style="color:var(--red)">$62,698</td></tr></tbody></table><div style="padding:11px 14px;font-size:16px;color:var(--muted);border-top:1px solid var(--border)">✓ 無需擔保品，申辦最快<br>△ 利率最高（3.5–7%）<br>△ 總利息最多達 8 萬</div></div>
-    <div class="loan" style="border:2px solid var(--grn)"><div class="loanhd" style="background:var(--grn)">方案 C　房屋增貸 ★<span class="lrate">年利率 2.0%–3.0%</span></div><table class="lt"><thead><tr><th>期數</th><th>月繳(2.2%)</th><th>總利息</th></tr></thead><tbody><tr><td>60期（5年）</td><td class="lh" style="color:var(--grn)">$8,350</td><td>$26,982</td></tr><tr><td>84期（7年）</td><td class="lh" style="color:var(--grn)">$6,157</td><td>$43,176</td></tr><tr><td>120期（10年）</td><td class="lh" style="color:var(--grn)">$4,468</td><td>$62,207</td></tr></tbody></table><div style="padding:11px 14px;font-size:16px;color:var(--muted);border-top:1px solid var(--border)">✓ 利率最低（2–3%）<br>✓ 月繳最小，保留現金投資<br>△ 需有增貸空間</div></div>
+  <div class="ph">
+    <div class="ph-num">12</div>
+    <div class="ph-title">購車資金規劃分析</div>
+    <div class="ph-sub">車貸 × 信貸 × 房屋增貸（本息攤還 vs 只繳利息）完整比較 · 利率 3.8%</div>
   </div>
+
+  <!-- 增貸「只繳利息」說明 -->
+  <div style="background:linear-gradient(135deg,#ECFDF5,#D1FAE5);border:2px solid #059669;border-radius:14px;padding:20px 24px;margin-bottom:22px">
+    <div style="font-size:16px;font-weight:800;color:#065F46;margin-bottom:10px">🏠 房屋增貸「只繳利息、不還本金」方案說明</div>
+    <div style="font-size:15px;color:#064E3B;line-height:2">
+      部分銀行提供「理財型房貸」或「增貸動撥額度」，允許借款人<b>只繳利息，本金隨時清償</b>。<br>
+      以 3.8% 年利率、換車缺口 <b id="lio-gap-label">—</b> 萬為例：<br>
+      <span style="display:inline-block;margin-top:6px">
+        每月利息 = 本金 × 3.8% ÷ 12 ≈ <b id="lio-monthly" style="color:#059669;font-size:18px">—</b> 元/月
+      </span><br>
+      本金不減少，保留現金做投資；待累積足夠或提前還款時一次清償。
+    </div>
+  </div>
+
+  <!-- 試算互動區 -->
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px 24px;margin-bottom:22px">
+    <div style="font-size:16px;font-weight:800;color:var(--ink);margin-bottom:16px">💰 增貸資金試算機（年利率 3.8%）</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-bottom:20px">
+      <div>
+        <label style="font-size:13px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px">選擇換購車款</label>
+        <select id="lio-car" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:15px;font-family:var(--f)">
+          <option value="ev">Cavira EV（缺口動態）</option>
+          <option value="phev">RAV4 PHEV（缺口動態）</option>
+          <option value="custom">自訂金額</option>
+        </select>
+      </div>
+      <div id="lio-custom-wrap" style="display:none">
+        <label style="font-size:13px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px">自訂借款金額（萬）</label>
+        <input id="lio-custom" type="number" value="50" min="10" max="200" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:15px">
+      </div>
+      <div>
+        <label style="font-size:13px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px">年利率（%）</label>
+        <input id="lio-rate" type="number" value="3.8" min="1" max="10" step="0.1" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:15px">
+      </div>
+      <div>
+        <label style="font-size:13px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px">持有年數（年）</label>
+        <input id="lio-years" type="number" value="10" min="1" max="20" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:15px">
+      </div>
+    </div>
+
+    <!-- 結果 KPI -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;background:var(--bg);border-radius:10px;padding:16px">
+      <div style="text-align:center">
+        <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">借款本金</div>
+        <div style="font-size:24px;font-weight:800;color:var(--ink)" id="lio-principal">—</div>
+        <div style="font-size:13px;color:var(--muted)">萬元</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">月繳利息</div>
+        <div style="font-size:24px;font-weight:800;color:#059669" id="lio-mo">—</div>
+        <div style="font-size:13px;color:var(--muted)">元/月</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">年利息支出</div>
+        <div style="font-size:24px;font-weight:800;color:#059669" id="lio-annual">—</div>
+        <div style="font-size:13px;color:var(--muted)">元/年</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">N年總利息</div>
+        <div style="font-size:24px;font-weight:800;color:#B45309" id="lio-total-int">—</div>
+        <div style="font-size:13px;color:var(--muted)">萬元</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 三種還款方式比較 -->
+  <div style="font-size:16px;font-weight:800;color:var(--ink);margin-bottom:14px">三種還款方式 完整比較</div>
+  <div class="g3" style="margin-bottom:20px">
+
+    <!-- 車貸 -->
+    <div class="loan">
+      <div class="loanhd" style="background:var(--blue)">方案 A　車貸<span class="lrate">年利率 2.5%–3.5%</span></div>
+      <table class="lt">
+        <thead><tr><th>期數</th><th>月繳(2.5%)</th><th>總利息</th></tr></thead>
+        <tbody>
+          <tr><td>36期（3年）</td><td class="lh" style="color:var(--blue)" id="car-36m">—</td><td id="car-36i">—</td></tr>
+          <tr><td>48期（4年）</td><td class="lh" style="color:var(--blue)" id="car-48m">—</td><td id="car-48i">—</td></tr>
+          <tr><td>60期（5年）</td><td class="lh" style="color:var(--blue)" id="car-60m">—</td><td id="car-60i">—</td></tr>
+        </tbody>
+      </table>
+      <div style="padding:11px 14px;font-size:15px;color:var(--muted);border-top:1px solid var(--border)">
+        ✓ 核貸快（1–3天）<br>✓ 原廠可能有促銷利率<br>△ 利率高於房貸<br>△ 本金持續減少，無法靈活運用
+      </div>
+    </div>
+
+    <!-- 增貸本息攤還 -->
+    <div class="loan">
+      <div class="loanhd" style="background:#7C3AED">方案 B　房屋增貸（本息攤還）<span class="lrate">年利率 3.8%</span></div>
+      <table class="lt">
+        <thead><tr><th>期數</th><th>月繳(3.8%)</th><th>總利息</th></tr></thead>
+        <tbody>
+          <tr><td>60期（5年）</td><td class="lh" style="color:#7C3AED" id="mtg-60m">—</td><td id="mtg-60i">—</td></tr>
+          <tr><td>120期（10年）</td><td class="lh" style="color:#7C3AED" id="mtg-120m">—</td><td id="mtg-120i">—</td></tr>
+          <tr><td>180期（15年）</td><td class="lh" style="color:#7C3AED" id="mtg-180m">—</td><td id="mtg-180i">—</td></tr>
+        </tbody>
+      </table>
+      <div style="padding:11px 14px;font-size:15px;color:var(--muted);border-top:1px solid var(--border)">
+        ✓ 利率低於信貸、車貸<br>✓ 長期攤還，月繳壓力小<br>△ 需有增貸額度<br>△ 本金逐月減少
+      </div>
+    </div>
+
+    <!-- 增貸只繳利息 -->
+    <div class="loan" style="border:2px solid #059669">
+      <div class="loanhd" style="background:#059669">方案 C　增貸「只繳利息」★<span class="lrate">年利率 3.8%</span></div>
+      <table class="lt">
+        <thead><tr><th>說明</th><th>月繳利息</th><th>N年總利息</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>僅繳利息<br><span style="font-size:13px;color:var(--muted)">本金不動，隨時可還</span></td>
+            <td class="lh" style="color:#059669" id="lio-mo2">—</td>
+            <td id="lio-total2">—</td>
+          </tr>
+          <tr style="background:#F0FDF4">
+            <td colspan="3" style="font-size:14px;color:#065F46;padding:8px 12px;line-height:1.8">
+              💡 保留本金 <b id="lio-keep">—</b> 萬投資，若年化報酬 <b>6%</b>，<br>
+              10年後本利和約 <b id="lio-invest10" style="color:#059669">—</b> 萬，<br>
+              扣除總利息 <b id="lio-cost10" style="color:#B45309">—</b> 萬，<br>
+              淨賺約 <b id="lio-net10" style="color:#15803D;font-size:16px">—</b> 萬 🎉
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="padding:11px 14px;font-size:15px;color:var(--muted);border-top:1px solid var(--border)">
+        ✓ 月繳最低，現金流最大化<br>✓ 本金保留，可持續投資<br>✓ 隨時可提前還本<br>△ 本金始終不減，需有還款計畫<br>△ 非所有銀行提供此方式
+      </div>
+    </div>
+  </div>
+
+  <!-- 機會成本對比（只繳利息 vs 全額現金） -->
+  <div class="card" style="overflow:hidden;margin-bottom:16px">
+    <div style="background:var(--ink);color:#fff;padding:12px 18px;font-size:15px;font-weight:700">
+      📊 增貸只繳利息 vs 全額現金買車：機會成本對比（以Cavira EV缺口為例）
+    </div>
+    <table class="tbl" style="font-size:15px">
+      <thead>
+        <tr>
+          <th>投資情境</th>
+          <th style="text-align:right">保留本金投資10年後</th>
+          <th style="text-align:right">10年總利息（3.8%）</th>
+          <th style="text-align:right;color:#4ADE80">淨賺（vs全現金）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>保守（4%/年）<span style="font-size:13px;color:var(--muted);display:block">定存ETF、公債</span></td>
+          <td style="text-align:right;font-weight:700" id="opp-4-val">—</td>
+          <td style="text-align:right;color:var(--muted)" id="opp-int">—</td>
+          <td style="text-align:right;font-weight:700" id="opp-4-net">—</td>
+        </tr>
+        <tr style="background:#EFF6FF">
+          <td style="color:var(--blue);font-weight:700">穩健（6%/年）<span style="font-size:13px;color:var(--muted);display:block">0050、006208 ETF</span></td>
+          <td style="text-align:right;font-weight:800;color:var(--blue)" id="opp-6-val">—</td>
+          <td style="text-align:right;color:var(--muted)" id="opp-int2">—</td>
+          <td style="text-align:right;font-weight:800;color:var(--blue);font-size:17px" id="opp-6-net">—</td>
+        </tr>
+        <tr>
+          <td style="color:var(--grn);font-weight:700">積極（8%/年）<span style="font-size:13px;color:var(--muted);display:block">台美ETF組合</span></td>
+          <td style="text-align:right;font-weight:700;color:var(--grn)" id="opp-8-val">—</td>
+          <td style="text-align:right;color:var(--muted)" id="opp-int3">—</td>
+          <td style="text-align:right;font-weight:700;color:var(--grn);font-size:17px" id="opp-8-net">—</td>
+        </tr>
+        <tr style="background:#F8FAFC">
+          <td style="color:var(--muted)">全現金買車（不投資）</td>
+          <td style="text-align:right;color:var(--muted)">本金用掉，=0</td>
+          <td style="text-align:right;color:var(--muted)">$0</td>
+          <td style="text-align:right;color:var(--muted)">機會成本基準</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ib warn" style="margin-bottom:12px">⚠ 「只繳利息」需確認所用銀行提供此產品（理財型房貸／額度型增貸）。利率 3.8% 為目前市場估值，請洽詢您的往來銀行確認實際條件。</div>
+  <div class="ib grn">★ 最優策略：若能取得增貸額度，建議採「只繳利息」方式，將本金留下持續投資台美ETF。年化報酬只要超過 3.8%（歷史0050約10%），數學上長期必然划算。此為財務邏輯參考，實際決策請諮詢專業理財顧問。</div>
 </div>
 <div class="divider"></div>
 
 <!-- 13 理財建議 -->
 <div class="wrap" id="s13">
-  <div class="ph"><div class="ph-num">13</div><div class="ph-title">機會成本 × 資金理財建議</div><div class="ph-sub">借錢買車 + 保留現金投資，長期是否更划算？</div></div>
-  <div class="ib blue" style="margin-bottom:20px">💡 核心邏輯：若投資年化報酬率 > 借款利率，「借低利貸款買車、保留現金繼續投資」在數學上更划算。以房屋增貸 2.2% 為例，只需年化超過 2.2% 即可打平。台灣 0050 歷史年化約 10%，空間極大。</div>
-  <div class="card" style="overflow:hidden;margin-bottom:20px">
-    <table class="tbl">
-      <thead><tr><th>投資情境</th><th>標的方向</th><th>47.4萬 10年後</th><th>借款利息（增貸2.2%/5年）</th><th>淨賺（vs全現金）</th></tr></thead>
+  <div class="ph">
+    <div class="ph-num">13</div>
+    <div class="ph-title">終極策略分析：新車全額增貸 + 賣舊車 80 萬全投資</div>
+    <div class="ph-sub">只繳利息 3.8% · 賣車款全進市場 · 長期複利 vs 利息成本完整試算</div>
+  </div>
+
+  <!-- 策略說明框 -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px">
+    <div style="background:#FFF7ED;border:2px solid #B45309;border-radius:12px;padding:18px 20px">
+      <div style="font-size:13px;font-weight:700;color:#92400E;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">舊策略（傳統換車）</div>
+      <div style="font-size:15px;color:var(--body);line-height:2.1">
+        賣 CRV6 → 得 <b>80 萬</b><br>
+        付新車頭款 → 花 <b>123.9 萬</b><br>
+        換車缺口 → 需補 <b>43.9 萬</b>（含雜費）<br>
+        剩餘可投資 → 約 <b>0 萬</b>（現金用完）<br>
+        月繳壓力 → 視是否貸款
+      </div>
+    </div>
+    <div style="background:#ECFDF5;border:2px solid #059669;border-radius:12px;padding:18px 20px;position:relative">
+      <div style="position:absolute;top:12px;right:12px;background:#059669;color:#fff;font-size:11px;font-weight:800;padding:2px 8px;border-radius:20px">★ 新策略</div>
+      <div style="font-size:13px;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">新策略（全增貸 + 投資）</div>
+      <div style="font-size:15px;color:var(--body);line-height:2.1">
+        新車全額增貸 → 月繳純利息 <b id="s13-mo-int" style="color:#059669">—</b><br>
+        賣 CRV6 → 得 <b id="s13-sell" style="color:#059669">80 萬</b> 全部投資<br>
+        換車缺口 → <b style="color:#059669">$0</b>（增貸全覆蓋）<br>
+        可投資金額 → <b id="s13-invest-amt" style="color:#059669">—</b><br>
+        月利息支出 → 比舊策略多 <b id="s13-int-extra" style="color:#B45309">—</b>/月
+      </div>
+    </div>
+  </div>
+
+  <!-- 月現金流抵消分析 -->
+  <div style="background:linear-gradient(135deg,#0F172A,#1E3A5F);border-radius:14px;padding:22px 26px;margin-bottom:22px;color:#fff">
+    <div style="font-size:15px;font-weight:800;margin-bottom:6px">💵 換車後每月實際現金流變化</div>
+    <div style="font-size:13px;color:#94A3B8;margin-bottom:18px">月繳利息 vs 月省油錢 — 實際口袋差多少？（參數隨主試算機連動）</div>
+
+    <div style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:0;align-items:center">
+      <!-- 月繳利息（支出） -->
+      <div style="background:rgba(185,28,28,.15);border:1px solid rgba(185,28,28,.3);border-radius:10px;padding:14px 16px;text-align:center">
+        <div style="font-size:11px;font-weight:700;color:#FCA5A5;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">每月增貸利息（支出）</div>
+        <div style="font-size:28px;font-weight:800;color:#FCA5A5" id="cf-mo-int">—</div>
+        <div style="font-size:12px;color:#94A3B8;margin-top:4px">全額增貸 3.8% 月息</div>
+      </div>
+      <div style="font-size:24px;font-weight:800;color:#475569;padding:0 14px">−</div>
+      <!-- 月省油錢（節省） -->
+      <div style="background:rgba(21,128,61,.15);border:1px solid rgba(21,128,61,.3);border-radius:10px;padding:14px 16px;text-align:center">
+        <div style="font-size:11px;font-weight:700;color:#4ADE80;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">每月省下（油→電+保養）</div>
+        <div style="font-size:28px;font-weight:800;color:#4ADE80" id="cf-mo-save">—</div>
+        <div style="font-size:12px;color:#94A3B8;margin-top:4px">油費差＋保養差（實際連動）</div>
+      </div>
+      <div style="font-size:24px;font-weight:800;color:#475569;padding:0 14px">=</div>
+      <!-- 淨現金流 -->
+      <div id="cf-result-box" style="background:rgba(30,58,95,.4);border:2px solid #3B82F6;border-radius:10px;padding:14px 16px;text-align:center">
+        <div style="font-size:11px;font-weight:700;color:#93C5FD;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">月淨現金流（省−息）</div>
+        <div style="font-size:28px;font-weight:800" id="cf-mo-net">—</div>
+        <div style="font-size:12px;color:#94A3B8;margin-top:4px" id="cf-mo-note">—</div>
+      </div>
+    </div>
+
+    <!-- 明細拆解 -->
+    <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:14px">
+      <div style="background:rgba(255,255,255,.05);border-radius:8px;padding:12px 14px;line-height:2">
+        <div style="font-weight:700;color:#94A3B8;font-size:12px;margin-bottom:4px">支出明細</div>
+        月增貸利息：<span id="cf-d-int" style="color:#FCA5A5;font-weight:700">—</span><br>
+        月保費差（多）：<span id="cf-d-ins" style="color:#FCA5A5;font-weight:700">—</span><br>
+        月輪胎差（多）：<span id="cf-d-tire" style="color:#FCA5A5;font-weight:700">—</span>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border-radius:8px;padding:12px 14px;line-height:2">
+        <div style="font-weight:700;color:#94A3B8;font-size:12px;margin-bottom:4px">節省明細</div>
+        月省油費：<span id="cf-d-fuel" style="color:#4ADE80;font-weight:700">—</span><br>
+        月省電費（支出）：<span id="cf-d-ev" style="color:#FCD34D;font-weight:700">—</span><br>
+        月省保養：<span id="cf-d-maint" style="color:#4ADE80;font-weight:700">—</span>
+      </div>
+    </div>
+
+    <div style="margin-top:14px;padding:10px 14px;background:rgba(74,222,128,.08);border-radius:8px;font-size:13px;color:#4ADE80;line-height:1.8" id="cf-summary-box">
+      計算中...
+    </div>
+  </div>
+
+  <!-- 試算控制 -->
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin-bottom:22px">
+    <div style="font-size:15px;font-weight:800;color:var(--ink);margin-bottom:16px">🔧 策略試算機（可調整）</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px">
+      <div>
+        <label style="font-size:13px;font-weight:700;color:var(--muted);display:block;margin-bottom:5px">新車售價（萬）</label>
+        <input id="s13-price" type="number" value="123.9" min="80" max="200" step="0.1"
+          style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:15px;font-family:var(--f)">
+        <div style="font-size:12px;color:var(--muted);margin-top:3px">EV=123.9 / PHEV=150</div>
+      </div>
+      <div>
+        <label style="font-size:13px;font-weight:700;color:var(--muted);display:block;margin-bottom:5px">賣舊車所得（萬）</label>
+        <input id="s13-sell-v" type="number" value="80" min="30" max="150" step="1"
+          style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:15px;font-family:var(--f)">
+        <div style="font-size:12px;color:var(--muted);margin-top:3px">CRV6 估值 80 萬</div>
+      </div>
+      <div>
+        <label style="font-size:13px;font-weight:700;color:var(--muted);display:block;margin-bottom:5px">增貸年利率（%）</label>
+        <input id="s13-rate" type="number" value="3.8" min="1" max="10" step="0.1"
+          style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:15px;font-family:var(--f)">
+        <div style="font-size:12px;color:var(--muted);margin-top:3px">目前房貸增貸約 3.8%</div>
+      </div>
+      <div>
+        <label style="font-size:13px;font-weight:700;color:var(--muted);display:block;margin-bottom:5px">分析年限（年）</label>
+        <input id="s13-yrs" type="number" value="10" min="5" max="20" step="1"
+          style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:15px;font-family:var(--f)">
+        <div style="font-size:12px;color:var(--muted);margin-top:3px">建議 10–15 年</div>
+      </div>
+    </div>
+
+    <!-- 即時 KPI -->
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;background:var(--bg);border-radius:10px;padding:14px">
+      <div style="text-align:center">
+        <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px">增貸本金</div>
+        <div style="font-size:20px;font-weight:800;color:var(--ink)" id="s13k-loan">—</div>
+        <div style="font-size:12px;color:var(--muted)">萬</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:11px;font-weight:700;color:#B45309;text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px">月繳利息</div>
+        <div style="font-size:20px;font-weight:800;color:#B45309" id="s13k-mo">—</div>
+        <div style="font-size:12px;color:var(--muted)">元/月</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:11px;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px">投入投資</div>
+        <div style="font-size:20px;font-weight:800;color:#059669" id="s13k-inv">—</div>
+        <div style="font-size:12px;color:var(--muted)">萬</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:11px;font-weight:700;color:#B45309;text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px">N年總利息</div>
+        <div style="font-size:20px;font-weight:800;color:#B45309" id="s13k-intcost">—</div>
+        <div style="font-size:12px;color:var(--muted)">萬</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:11px;font-weight:700;color:#15803D;text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px">損益平衡報酬率</div>
+        <div style="font-size:20px;font-weight:800;color:#15803D" id="s13k-be">—</div>
+        <div style="font-size:12px;color:var(--muted)">%/年即回本</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 三情境詳細試算 -->
+  <div class="card" style="overflow:hidden;margin-bottom:18px">
+    <div style="background:var(--ink);color:#fff;padding:13px 18px;font-size:15px;font-weight:700">
+      📊 投資報酬 vs 利息成本：三情境 N 年完整試算
+    </div>
+    <table class="tbl" style="font-size:15px">
+      <thead>
+        <tr>
+          <th>情境</th>
+          <th style="text-align:right">標的方向</th>
+          <th style="text-align:right">投資本金</th>
+          <th style="text-align:right">N年後總值</th>
+          <th style="text-align:right;color:#B45309">扣除總利息</th>
+          <th style="text-align:right;color:#4ADE80">淨利潤</th>
+          <th style="text-align:center">結論</th>
+        </tr>
+      </thead>
       <tbody>
-        <tr><td>保守（4%/年）</td><td style="font-size:16px;color:var(--muted)">台灣公債ETF、高評等公司債</td><td style="font-weight:700">$701,636</td><td style="color:var(--muted)">$26,982</td><td class="pos">淨增 $200,654</td></tr>
-        <tr><td style="color:var(--blue);font-weight:700">穩健成長（6%/年）</td><td style="font-size:16px;color:var(--muted)">台灣0050、006208 ETF</td><td style="font-weight:700;color:var(--blue)">$848,862</td><td style="color:var(--muted)">$26,982</td><td class="pos" style="font-size:18px">淨增 $347,880</td></tr>
-        <tr><td style="color:var(--grn);font-weight:700">積極成長（8%/年）</td><td style="font-size:16px;color:var(--muted)">台美ETF組合、科技股</td><td style="font-weight:700;color:var(--grn)">$1,023,330</td><td style="color:var(--muted)">$26,982</td><td class="pos" style="font-size:18px">淨增 $522,349</td></tr>
-        <tr><td style="color:var(--muted)">全現金買車（0%）</td><td style="font-size:16px;color:var(--muted)">不保留、不投資</td><td style="color:var(--muted)">$474,000</td><td style="color:var(--muted)">$0</td><td style="text-align:right;color:var(--muted)">機會成本 $0</td></tr>
+        <tr>
+          <td style="color:var(--muted)">保守（4%/年）</td>
+          <td style="text-align:right;font-size:13px;color:var(--muted)">公債ETF、定存</td>
+          <td style="text-align:right;font-weight:700" id="s13r-4-prin">—</td>
+          <td style="text-align:right;font-weight:700" id="s13r-4-val">—</td>
+          <td style="text-align:right;color:#B45309" id="s13r-4-int">—</td>
+          <td style="text-align:right;font-weight:700" id="s13r-4-net">—</td>
+          <td style="text-align:center" id="s13r-4-verdict">—</td>
+        </tr>
+        <tr style="background:#EFF6FF">
+          <td style="color:var(--blue);font-weight:700">穩健（6%/年）</td>
+          <td style="text-align:right;font-size:13px;color:var(--muted)">0050 / 006208</td>
+          <td style="text-align:right;font-weight:700" id="s13r-6-prin">—</td>
+          <td style="text-align:right;font-weight:800;color:var(--blue)" id="s13r-6-val">—</td>
+          <td style="text-align:right;color:#B45309" id="s13r-6-int">—</td>
+          <td style="text-align:right;font-weight:800;color:var(--blue);font-size:17px" id="s13r-6-net">—</td>
+          <td style="text-align:center" id="s13r-6-verdict">—</td>
+        </tr>
+        <tr style="background:#F0FDF4">
+          <td style="color:var(--grn);font-weight:700">積極（8%/年）</td>
+          <td style="text-align:right;font-size:13px;color:var(--muted)">台美ETF組合</td>
+          <td style="text-align:right;font-weight:700" id="s13r-8-prin">—</td>
+          <td style="text-align:right;font-weight:800;color:var(--grn)" id="s13r-8-val">—</td>
+          <td style="text-align:right;color:#B45309" id="s13r-8-int">—</td>
+          <td style="text-align:right;font-weight:800;color:var(--grn);font-size:17px" id="s13r-8-net">—</td>
+          <td style="text-align:center" id="s13r-8-verdict">—</td>
+        </tr>
+        <tr>
+          <td style="color:var(--muted)">不投資（0%）</td>
+          <td style="text-align:right;font-size:13px;color:var(--muted)">現金放著</td>
+          <td style="text-align:right;color:var(--muted)" id="s13r-0-prin">—</td>
+          <td style="text-align:right;color:var(--muted)" id="s13r-0-val">—</td>
+          <td style="text-align:right;color:#B45309" id="s13r-0-int">—</td>
+          <td style="text-align:right;color:var(--red);font-weight:700" id="s13r-0-net">—</td>
+          <td style="text-align:center">❌ 虧</td>
+        </tr>
       </tbody>
     </table>
+    <div style="padding:12px 18px;font-size:13px;color:var(--muted);border-top:1px solid var(--border);line-height:1.8">
+      ※ 淨利潤 = N年後總值 − 投資本金 − N年總利息。「不投資」情境則是純付利息，無收益。本金於N年後仍在（可一次還清增貸）。
+    </div>
   </div>
-  <div style="font-weight:700;font-size:17px;margin-bottom:14px;color:var(--ink)">建議投資配置（僅供參考，非投資建議）</div>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:16px">
-    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px"><div style="width:30px;height:30px;border-radius:50%;background:#F1F5F9;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;color:var(--muted);margin-bottom:10px">1</div><div style="font-weight:700;margin-bottom:4px">緊急備用金</div><div style="font-size:16px;font-weight:700;color:var(--muted);margin-bottom:6px">6個月支出</div><div style="font-size:16px;color:var(--muted)">活存/定存/貨幣基金，不可動用</div><div style="font-size:16px;font-weight:700;color:var(--muted);margin-top:8px">年化 1.5–2%</div></div>
-    <div style="background:var(--card);border:2px solid var(--blue);border-radius:var(--r);padding:16px"><div style="width:30px;height:30px;border-radius:50%;background:var(--blue-l);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;color:var(--blue);margin-bottom:10px">2</div><div style="font-weight:700;margin-bottom:4px">核心 ETF（台美）</div><div style="font-size:16px;font-weight:700;color:var(--blue);margin-bottom:6px">40–50%</div><div style="font-size:16px;color:var(--muted)">0050、006208、VOO、QQQ，長期持有</div><div style="font-size:16px;font-weight:700;color:var(--blue);margin-top:8px">年化 6–10%（歷史）</div></div>
-    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px"><div style="width:30px;height:30px;border-radius:50%;background:#F5F3FF;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;color:#6D28D9;margin-bottom:10px">3</div><div style="font-weight:700;margin-bottom:4px">固定收益</div><div style="font-size:16px;font-weight:700;color:#6D28D9;margin-bottom:6px">20–30%</div><div style="font-size:16px;color:var(--muted)">高評等公司債ETF、美國國債</div><div style="font-size:16px;font-weight:700;color:#6D28D9;margin-top:8px">年化 3–5%</div></div>
-    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px"><div style="width:30px;height:30px;border-radius:50%;background:var(--amber-l);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;color:var(--amber);margin-bottom:10px">4</div><div style="font-weight:700;margin-bottom:4px">機動靈活</div><div style="font-size:16px;font-weight:700;color:var(--amber);margin-bottom:6px">10–20%</div><div style="font-size:16px;color:var(--muted)">個股、主題ETF、REITs</div><div style="font-size:16px;font-weight:700;color:var(--amber);margin-top:8px">年化 視機會</div></div>
+
+  <!-- 逐年現金流量表 -->
+  <div style="font-size:15px;font-weight:800;color:var(--ink);margin-bottom:12px">📅 逐年現金流量（穩健6%情境）</div>
+  <div class="card" style="overflow:hidden;margin-bottom:18px">
+    <div style="overflow-x:auto">
+    <table class="tbl" style="font-size:14px;min-width:700px">
+      <thead>
+        <tr>
+          <th>年份</th>
+          <th style="text-align:right;color:#B45309">年利息支出</th>
+          <th style="text-align:right;color:#4ADE80">投資組合市值（6%）</th>
+          <th style="text-align:right;color:#4ADE80">當年投資獲利</th>
+          <th style="text-align:right;color:#93C5FD">累積淨利潤</th>
+          <th style="text-align:center">狀態</th>
+        </tr>
+      </thead>
+      <tbody id="s13-yr-tbody"></tbody>
+    </table>
+    </div>
   </div>
-  <div class="ib grn">★ 最優策略：以房屋增貸（2.2% / 60–84期）支付換車缺口，保留現金投資台美ETF，長期預期收益遠高於利息成本。此為財務邏輯參考，實際決策請諮詢專業理財顧問。</div>
+
+  <!-- ★ 最低賣價反推分析 -->
+  <div style="background:linear-gradient(135deg,#1E1B4B,#312E81);border-radius:14px;padding:22px 26px;margin-bottom:18px;color:#fff">
+    <div style="font-size:16px;font-weight:800;margin-bottom:4px">🎯 關鍵問題：CRV6 至少要賣多少才划算？</div>
+    <div style="font-size:13px;color:#A5B4FC;margin-bottom:18px">反推三個臨界點 · 參數即時連動</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:18px">
+
+      <!-- 臨界點 A：投資收益剛好覆蓋利息 -->
+      <div style="background:rgba(255,255,255,.06);border:1px solid rgba(165,180,252,.3);border-radius:10px;padding:16px">
+        <div style="font-size:11px;font-weight:700;color:#A5B4FC;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">臨界 A ｜ 保守投資 4%</div>
+        <div style="font-size:11px;color:#818CF8;margin-bottom:10px">賣車款投資4%，N年後剛好付完利息</div>
+        <div style="font-size:28px;font-weight:800;color:#A5B4FC" id="be-sell-4">—</div>
+        <div style="font-size:12px;color:#818CF8;margin-top:4px">萬（最低底線）</div>
+        <div style="font-size:13px;color:#C7D2FE;margin-top:8px;line-height:1.7" id="be-sell-4-note">—</div>
+      </div>
+
+      <!-- 臨界點 B：穩健 6% -->
+      <div style="background:rgba(74,222,128,.08);border:2px solid rgba(74,222,128,.4);border-radius:10px;padding:16px">
+        <div style="font-size:11px;font-weight:700;color:#4ADE80;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">臨界 B ｜ 穩健投資 6% ★</div>
+        <div style="font-size:11px;color:#86EFAC;margin-bottom:10px">賣車款投資0050，10年後淨賺最多</div>
+        <div style="font-size:28px;font-weight:800;color:#4ADE80" id="be-sell-6">—</div>
+        <div style="font-size:12px;color:#86EFAC;margin-top:4px">萬（建議目標）</div>
+        <div style="font-size:13px;color:#BBF7D0;margin-top:8px;line-height:1.7" id="be-sell-6-note">—</div>
+      </div>
+
+      <!-- 臨界點 C：月現金流不倒貼 -->
+      <div style="background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.3);border-radius:10px;padding:16px">
+        <div style="font-size:11px;font-weight:700;color:#FCD34D;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">臨界 C ｜ 月現金流不倒貼</div>
+        <div style="font-size:11px;color:#FDE68A;margin-bottom:10px">省油錢 ≥ 月利息，不需補差額</div>
+        <div style="font-size:28px;font-weight:800;color:#FCD34D" id="be-sell-cf">—</div>
+        <div style="font-size:12px;color:#FDE68A;margin-top:4px">萬（現金流打平）</div>
+        <div style="font-size:13px;color:#FDE68A;margin-top:8px;line-height:1.7" id="be-sell-cf-note">—</div>
+      </div>
+    </div>
+
+    <!-- 賣價 vs 結果對照表 -->
+    <div style="font-size:13px;font-weight:700;color:#A5B4FC;margin-bottom:10px">不同賣價下的10年淨結果（穩健6%投資）</div>
+    <div style="overflow-x:auto">
+    <table style="width:100%;border-collapse:collapse;font-size:14px">
+      <thead>
+        <tr style="background:rgba(255,255,255,.06)">
+          <th style="padding:8px 12px;text-align:left;color:#94A3B8;font-weight:700;font-size:12px">賣車所得</th>
+          <th style="padding:8px 12px;text-align:right;color:#94A3B8;font-weight:700;font-size:12px">10年總利息</th>
+          <th style="padding:8px 12px;text-align:right;color:#94A3B8;font-weight:700;font-size:12px">投資10年後</th>
+          <th style="padding:8px 12px;text-align:right;color:#94A3B8;font-weight:700;font-size:12px">淨利潤</th>
+          <th style="padding:8px 12px;text-align:center;color:#94A3B8;font-weight:700;font-size:12px">月現金流</th>
+          <th style="padding:8px 12px;text-align:center;color:#94A3B8;font-weight:700;font-size:12px">建議</th>
+        </tr>
+      </thead>
+      <tbody id="be-sell-tbody"></tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- 風險提示 -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+    <div class="ib warn" style="margin:0">
+      ⚠ <b>風險提醒：</b>投資報酬不保證，過去績效不代表未來。若市場大跌（如2008、2022），投資帳戶可能短期大幅縮水，但增貸利息仍需每月支付。需有心理準備承受波動，且需保留足夠緊急備用金。
+    </div>
+    <div class="ib blue" style="margin:0">
+      💡 <b>最佳執行方式：</b>定期定額投入（月配息再投資），避免一次性進場風險。建議台灣 ETF（0050/006208）+ 美股 ETF（VOO/QQQ）各半，長期持有不頻繁交易。
+    </div>
+  </div>
+
+  <div class="ib grn">★ 結論：只要年化報酬 > <span id="s13-be-inline">3.8</span>%，新策略數學上必然划算。以0050歷史年均報酬約10%估算，10年後投資獲利遠超過增貸利息，且本金完整保留，可隨時一次還清。此為財務邏輯分析，非投資建議，請自行評估風險承受度並諮詢專業顧問。</div>
 </div>
 <div class="divider"></div>
 
@@ -1903,6 +2340,59 @@ function calc(){
     tbody.innerHTML=rows;
   })();
 
+  /* s13 月現金流（從主calc讀取真實參數） */
+  (function(){
+    const s13price = parseFloat(document.getElementById('s13-price')?.value) || 123.9;
+    const s13rate  = parseFloat(document.getElementById('s13-rate')?.value)  || 3.8;
+    const moLoanInt = s13price * 10000 * s13rate / 100 / 12;
+
+    const moFuelSave  = fuelYr * 10000 / 12;        // 月省油費
+    const moEvCost    = evYr   * 10000 / 12;        // 月電費（支出）
+    const moMaintSave = (cm - em) * 10000 / 12;     // 月省保養
+    const moInsSave   = -(INS_E - INS_C) / 10 * 10000 / 12;  // 月保費差（負=多付）
+    const moTireDiff  = -(TIRE_E - TIRE_C) / 10 * 10000 / 12; // 月輪胎差（負=多付）
+
+    // 月淨省 = 油費省 - 電費 + 保養省 + 保費差 + 輪胎差
+    const moNetSave = moFuelSave - moEvCost + moMaintSave + moInsSave + moTireDiff;
+    // 月口袋差 = 省下 - 利息
+    const moPocket = moNetSave - moLoanInt;
+
+    const fmtI = n => '$'+Math.abs(Math.round(n)).toLocaleString('zh-TW');
+    const fmtS = n => (n>=0?'+$':'−$')+Math.abs(Math.round(n)).toLocaleString('zh-TW');
+    const updc = (id,v,c) => { const el=document.getElementById(id); if(el){el.textContent=v; if(c) el.style.color=c;} };
+
+    updc('cf-mo-int',   fmtI(moLoanInt));
+    updc('cf-mo-save',  fmtI(moNetSave), moNetSave>=0?'#4ADE80':'#FCA5A5');
+    updc('cf-mo-net',   fmtS(moPocket),  moPocket>=0?'#4ADE80':'#FCA5A5');
+    updc('cf-mo-note',  moPocket>=0 ? '每月實際多出 $'+Math.round(moPocket).toLocaleString('zh-TW')+'！' : '每月仍需補貼 $'+Math.round(-moPocket).toLocaleString('zh-TW'));
+
+    // 結果框顏色
+    const box = document.getElementById('cf-result-box');
+    if(box){ box.style.borderColor = moPocket>=0?'#4ADE80':'#FCA5A5'; box.style.background=moPocket>=0?'rgba(21,128,61,.15)':'rgba(185,28,28,.15)'; }
+
+    // 明細
+    updc('cf-d-int',   fmtI(moLoanInt)+'／月');
+    updc('cf-d-ins',   fmtI(-moInsSave)+'／月',  '#FCA5A5');
+    updc('cf-d-tire',  fmtI(-moTireDiff)+'／月', '#FCA5A5');
+    updc('cf-d-fuel',  '+'+fmtI(moFuelSave)+'／月', '#4ADE80');
+    updc('cf-d-ev',    '−'+fmtI(moEvCost)+'／月',   '#FCD34D');
+    updc('cf-d-maint', '+'+fmtI(moMaintSave)+'／月', '#4ADE80');
+
+    // 摘要文字
+    const sumEl = document.getElementById('cf-summary-box');
+    if(sumEl){
+      if(moPocket >= 0){
+        sumEl.style.background='rgba(74,222,128,.08)';
+        sumEl.style.color='#4ADE80';
+        sumEl.innerHTML = `✅ 省油錢（$${Math.round(moFuelSave).toLocaleString('zh-TW')}/月）已超過月息（$${Math.round(moLoanInt).toLocaleString('zh-TW')}/月），換車後每月反而 <b>多出 $${Math.round(moPocket).toLocaleString('zh-TW')}</b>！增貸利息完全靠油錢抵銷，80萬投資是純賺。`;
+      } else {
+        sumEl.style.background='rgba(251,191,36,.08)';
+        sumEl.style.color='#FCD34D';
+        sumEl.innerHTML = `⚠ 月息（$${Math.round(moLoanInt).toLocaleString('zh-TW')}）高於月省油費（$${Math.round(moNetSave).toLocaleString('zh-TW')}），每月需多補貼 <b>$${Math.round(-moPocket).toLocaleString('zh-TW')}</b>。但80萬投資年化6%，每月被動收益約 $${Math.round(800000*0.06/12).toLocaleString('zh-TW')}，仍可覆蓋缺口。`;
+      }
+    }
+  })();
+
   /* s00 三車結論卡 */
   upd('c0-crv-tot',  fw(crvTot));
   upd('c0-ev-gap',   fw(gap));
@@ -2146,7 +2636,280 @@ function calc(){
   saveParams();
 }
 
-/* ═══ TOU 切換 ═══ */
+/* ═══ S12 增貸試算機 ═══ */
+(function(){
+  function fmt(n){ return Math.round(n).toLocaleString('zh-TW'); }
+  function fw2(n){ return n.toFixed(2); }
+
+  // 月付本息攤還公式
+  function pmt(principal, annRate, months){
+    const r = annRate/12/100;
+    if(r===0) return principal/months;
+    return principal * r * Math.pow(1+r,months) / (Math.pow(1+r,months)-1);
+  }
+
+  // 從主calc取得換車缺口（透過全域變數）
+  function getGap(car){
+    const gapEV  = parseFloat(document.getElementById('c0-ev-gap')?.textContent)||47.4;
+    const gapPHEV= parseFloat(document.getElementById('c0-ph-gap')?.textContent)||70.5;
+    if(car==='ev')   return gapEV;
+    if(car==='phev') return gapPHEV;
+    return parseFloat(document.getElementById('lio-custom')?.value)||50;
+  }
+
+  function updateLoan(){
+    const car   = document.getElementById('lio-car')?.value || 'ev';
+    const rate  = parseFloat(document.getElementById('lio-rate')?.value) || 3.8;
+    const yrs   = parseInt(document.getElementById('lio-years')?.value)  || 10;
+    const gap   = getGap(car);
+    const prin  = gap * 10000; // 元
+
+    // 顯示/隱藏自訂
+    const customWrap = document.getElementById('lio-custom-wrap');
+    if(customWrap) customWrap.style.display = car==='custom' ? '' : 'none';
+
+    // 只繳利息
+    const moInt    = prin * rate / 100 / 12;
+    const annInt   = moInt * 12;
+    const totalInt = annInt * yrs;
+
+    // KPI 區
+    const upd=(id,v)=>{ const el=document.getElementById(id); if(el) el.textContent=v; };
+    upd('lio-gap-label', gap.toFixed(1));
+    upd('lio-monthly',   fmt(moInt));
+    upd('lio-principal', gap.toFixed(1));
+    upd('lio-mo',        fmt(moInt));
+    upd('lio-annual',    fmt(annInt));
+    upd('lio-total-int', (totalInt/10000).toFixed(2));
+    upd('lio-mo2',       '$'+fmt(moInt)+'/月');
+    upd('lio-total2',    (totalInt/10000).toFixed(2)+'萬');
+    upd('lio-keep',      gap.toFixed(1));
+
+    // 投資試算（6%年化）
+    const invest10 = (prin * Math.pow(1.06, 10))/10000;
+    const cost10   = (prin * rate/100 * 10)/10000;
+    const net10    = invest10 - gap - cost10;
+    upd('lio-invest10', invest10.toFixed(1));
+    upd('lio-cost10',   cost10.toFixed(2));
+    upd('lio-net10',    net10.toFixed(1));
+
+    // 車貸（2.5%）本息攤還
+    const carRate = 2.5;
+    [[36,'car-36m','car-36i'],[48,'car-48m','car-48i'],[60,'car-60m','car-60i']].forEach(([mo,mid,iid])=>{
+      const mo_ = pmt(prin, carRate, mo);
+      upd(mid, '$'+fmt(mo_));
+      upd(iid, '$'+fmt(mo_*mo - prin));
+    });
+
+    // 增貸本息攤還（3.8%）
+    [[60,'mtg-60m','mtg-60i'],[120,'mtg-120m','mtg-120i'],[180,'mtg-180m','mtg-180i']].forEach(([mo,mid,iid])=>{
+      const mo_ = pmt(prin, rate, mo);
+      upd(mid, '$'+fmt(mo_));
+      upd(iid, '$'+fmt(mo_*mo - prin));
+    });
+
+    // 機會成本對比（10年，本金=gap）
+    const intTotal10 = prin * rate/100 * 10;
+    [4,6,8].forEach(r=>{
+      const val = prin * Math.pow(1+r/100, 10);
+      const net = val - prin - intTotal10;
+      upd('opp-'+r+'-val',  '$'+fmt(val));
+      upd('opp-'+r+'-net',  (net>=0?'+':'')+fmt(net));
+      const el = document.getElementById('opp-'+r+'-net');
+      if(el) el.style.color = net>=0 ? '#15803D' : '#B91C1C';
+    });
+    upd('opp-int',  '$'+fmt(intTotal10));
+    upd('opp-int2', '$'+fmt(intTotal10));
+    upd('opp-int3', '$'+fmt(intTotal10));
+  }
+
+  // 事件綁定
+  function bindLoan(){
+    ['lio-car','lio-rate','lio-years','lio-custom'].forEach(id=>{
+      const el=document.getElementById(id);
+      if(el) el.addEventListener('input', updateLoan);
+    });
+    updateLoan();
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', bindLoan);
+  } else {
+    setTimeout(bindLoan, 300);
+  }
+})();
+
+/* ═══ S13 全增貸+賣車投資試算機 ═══ */
+(function(){
+  function fmt(n){ return Math.round(n).toLocaleString('zh-TW'); }
+  function fmtW(n){ return n.toFixed(1)+'萬'; }
+
+  function upd(id,v,color){
+    const el=document.getElementById(id);
+    if(!el) return;
+    el.textContent=v;
+    if(color) el.style.color=color;
+  }
+
+  function calc13(){
+    const price  = parseFloat(document.getElementById('s13-price')?.value)  || 123.9;
+    const sellV  = parseFloat(document.getElementById('s13-sell-v')?.value) || 80;
+    const rate   = parseFloat(document.getElementById('s13-rate')?.value)   || 3.8;
+    const yrs    = parseInt(document.getElementById('s13-yrs')?.value)      || 10;
+
+    const loanAmt    = price;                    // 增貸本金（萬）
+    const investAmt  = sellV;                    // 賣車款全投資（萬）
+    const moInt      = loanAmt * 10000 * rate/100/12;  // 月利息（元）
+    const annInt     = moInt * 12;
+    const totalInt   = annInt * yrs;             // N年總利息（元）
+    const totalIntW  = totalInt/10000;           // 萬
+
+    // 損益平衡報酬率：投資Amt×r^N = Amt + totalInt → r^N = 1+totalInt/Amt → r = (1+totalInt/Amt)^(1/N)-1
+    const beRate     = (Math.pow(1 + totalIntW/investAmt, 1/yrs) - 1) * 100;
+
+    // 策略說明區
+    upd('s13-mo-int',    '$'+fmt(moInt)+'/月');
+    upd('s13-sell',      sellV+'萬');
+    upd('s13-invest-amt', investAmt.toFixed(1)+'萬');
+    // 比舊策略多的月息：舊策略沒貸款=0月息，所以多 moInt
+    upd('s13-int-extra', '$'+fmt(moInt));
+    // KPI
+    upd('s13k-loan',    loanAmt.toFixed(1));
+    upd('s13k-mo',      fmt(moInt));
+    upd('s13k-inv',     investAmt.toFixed(1));
+    upd('s13k-intcost', totalIntW.toFixed(2));
+    upd('s13k-be',      beRate.toFixed(2), beRate<rate+1?'#15803D':'#B45309');
+    upd('s13-be-inline', beRate.toFixed(2));
+
+    // 三情境試算
+    [4,6,8,0].forEach(r=>{
+      const val     = investAmt * Math.pow(1+r/100, yrs); // 萬
+      const net     = val - investAmt - totalIntW;
+      const id      = r===0?'0':String(r);
+      upd('s13r-'+id+'-prin', fmtW(investAmt));
+      upd('s13r-'+id+'-val',  fmtW(val));
+      upd('s13r-'+id+'-int',  '−'+totalIntW.toFixed(2)+'萬');
+      upd('s13r-'+id+'-net',  (net>=0?'+':'')+net.toFixed(1)+'萬',
+          net>=0?'#15803D':'#B91C1C');
+      if(r>0){
+        const el=document.getElementById('s13r-'+id+'-verdict');
+        if(el) el.textContent = net>=20?'🎉 大賺':net>=5?'✅ 划算':net>=0?'⚖ 打平':'⚠ 微虧';
+      }
+    });
+
+    // 逐年現金流量表（6%）
+    const tbody=document.getElementById('s13-yr-tbody');
+    if(tbody){
+      let rows='';
+      let cumNet=0;
+      for(let n=1;n<=yrs;n++){
+        const portVal   = investAmt * Math.pow(1.06, n);
+        const portGain  = portVal - investAmt;
+        const annGain   = investAmt * Math.pow(1.06,n) - investAmt * Math.pow(1.06,n-1);
+        cumNet          = portGain - totalIntW*(n/yrs);
+        const cumIntSoFar = totalIntW*(n/yrs);
+        const paid      = cumNet > 0;
+        const paidFirst = paid && (investAmt*Math.pow(1.06,n-1)-investAmt - totalIntW*((n-1)/yrs)) <= 0;
+        const rowBg     = paidFirst?'background:#F0FDF4':paid?'background:#F0FDF9':'';
+        let badge='';
+        if(paidFirst) badge='<span style="background:#15803D;color:#fff;padding:1px 7px;border-radius:4px;font-size:12px;font-weight:700">🎉 開始獲利</span>';
+        else if(paid) badge='<span style="background:#DCFCE7;color:#15803D;padding:1px 7px;border-radius:4px;font-size:12px;font-weight:700">✅ 正報酬</span>';
+        else          badge='<span style="color:#94A3B8;font-size:12px">累積中</span>';
+        const annIntW   = annInt/10000; // 年利息（萬）
+        rows+=`<tr style="${rowBg}">
+          <td style="font-weight:700">第${n}年</td>
+          <td style="text-align:right;color:#B45309;font-weight:700">−${annIntW.toFixed(2)}萬</td>
+          <td style="text-align:right;font-weight:700;color:#059669">${fmtW(portVal)}</td>
+          <td style="text-align:right;color:#4ADE80;font-weight:700">+${fmtW(annGain)}</td>
+          <td style="text-align:right;font-weight:700;color:${cumNet>=0?'#15803D':'#94A3B8'}">${cumNet>=0?'+':''}${cumNet.toFixed(1)}萬</td>
+          <td style="text-align:center">${badge}</td>
+        </tr>`;
+      }
+      tbody.innerHTML=rows;
+    }
+
+    // ── 最低賣價反推 ──
+    // 讀取月省油淨額（從主 calc 更新的 DOM）
+    const moSaveTxt = document.getElementById('cf-mo-save')?.textContent || '';
+    const moSaveRaw = parseInt(moSaveTxt.replace(/[^0-9]/g,'')) || 0;
+    // 月利息 = loanAmt × rate / 12 / 100（元）
+    const moIntEl = moLoanInt => moLoanInt; // alias
+
+    // 臨界 A：賣車所得 S，投資4%，N年後 S×1.04^N - S ≥ totalInt → S ≥ totalInt/(1.04^N-1)
+    function minSell(investRate, yrs_, totalIntW_){
+      const growth = Math.pow(1+investRate/100, yrs_) - 1;
+      return growth > 0 ? totalIntW_ / growth : Infinity;
+    }
+    const beA = minSell(4, yrs, totalIntW);
+    const beB = minSell(6, yrs, totalIntW);
+    // 臨界 C：省油淨月 ≥ 月利息 → sell 決定月利息（loanAmt固定，sell只影響投資）
+    // 月利息固定 = price × rate / 12 / 100 × 10000，與sell無關
+    // 所以CF臨界是：省油月額 ≥ moInt，若省油已>月息則無需最低值；否則顯示「增加里程或降油價」
+    const moInt_ = loanAmt * 10000 * rate / 100 / 12;
+    // 月省油淨（從DOM讀，若失敗用估算）
+    const moNetSaveEst = moSaveRaw || 4000;
+    const cfSufficient = moNetSaveEst >= moInt_;
+
+    const updI = (id,v,c) => { const el=document.getElementById(id); if(el){el.textContent=v; if(c)el.style.color=c;} };
+
+    updI('be-sell-4', beA < 200 ? beA.toFixed(1) : '>200', beA<=60?'#4ADE80':beA<=80?'#FCD34D':'#FCA5A5');
+    updI('be-sell-4-note', `4%年化：賣超過${beA.toFixed(1)}萬投資，10年利息全靠報酬覆蓋`);
+    updI('be-sell-6', beB < 200 ? beB.toFixed(1) : '>200', beB<=60?'#4ADE80':beB<=80?'#FCD34D':'#FCA5A5');
+    updI('be-sell-6-note', `6%年化：賣超過${beB.toFixed(1)}萬即可讓投資完全抵銷利息成本`);
+    updI('be-sell-cf', cfSufficient ? '無門檻' : (moInt_/10000*12/rate*100).toFixed(0)+'萬↓',
+         cfSufficient ? '#4ADE80' : '#FCD34D');
+    updI('be-sell-cf-note', cfSufficient
+      ? `✅ 目前月省油（$${moNetSaveEst.toLocaleString('zh-TW')}）已超過月息（$${Math.round(moInt_).toLocaleString('zh-TW')}），現金流不倒貼`
+      : `⚠ 月省油尚不足以覆蓋月息，差額 $${Math.round(moInt_-moNetSaveEst).toLocaleString('zh-TW')}/月`);
+
+    // 對照表：不同賣價場景
+    const tbody2 = document.getElementById('be-sell-tbody');
+    if(tbody2){
+      const scenarios = [50, 60, 65, 70, 75, 80, 85, 90, 95, 100];
+      const annIntW_ = loanAmt * rate / 100;
+      const totalIntW_ = annIntW_ * yrs;
+      let rows2 = '';
+      scenarios.forEach(s => {
+        const portVal10 = s * Math.pow(1.06, yrs);
+        const netProfit = portVal10 - s - totalIntW_;
+        const moIntHere = loanAmt * 10000 * rate / 100 / 12;
+        const cfOk = moNetSaveEst >= moIntHere;
+        const isTarget = (s === Math.round(sellV/5)*5);
+        const rowBg = isTarget ? 'background:rgba(74,222,128,.12);' : s < beB ? 'background:rgba(185,28,28,.06);' : '';
+        const netCol = netProfit >= 20 ? '#4ADE80' : netProfit >= 0 ? '#FCD34D' : '#FCA5A5';
+        let verdict = '';
+        if(netProfit >= 20)      verdict = '<span style="color:#4ADE80;font-weight:700">🎉 大賺</span>';
+        else if(netProfit >= 5)  verdict = '<span style="color:#86EFAC;font-weight:700">✅ 划算</span>';
+        else if(netProfit >= 0)  verdict = '<span style="color:#FCD34D;font-weight:700">⚖ 打平</span>';
+        else                     verdict = '<span style="color:#FCA5A5;font-weight:700">❌ 不足</span>';
+        const highlight = isTarget ? 'font-weight:800;' : '';
+        rows2 += `<tr style="${rowBg}">
+          <td style="padding:8px 12px;${highlight}color:#E2E8F0">${s}萬${isTarget?' ◀ 目前值':''}</td>
+          <td style="padding:8px 12px;text-align:right;color:#FCA5A5">−${totalIntW_.toFixed(1)}萬</td>
+          <td style="padding:8px 12px;text-align:right;color:#4ADE80">${portVal10.toFixed(1)}萬</td>
+          <td style="padding:8px 12px;text-align:right;font-weight:700;color:${netCol}">${netProfit>=0?'+':''}${netProfit.toFixed(1)}萬</td>
+          <td style="padding:8px 12px;text-align:center;color:${cfOk?'#4ADE80':'#FCA5A5'}">${cfOk?'✅ 不倒貼':'⚠ 需補貼'}</td>
+          <td style="padding:8px 12px;text-align:center">${verdict}</td>
+        </tr>`;
+      });
+      tbody2.innerHTML = rows2;
+    }
+  }
+
+  function bindS13(){
+    ['s13-price','s13-sell-v','s13-rate','s13-yrs'].forEach(id=>{
+      const el=document.getElementById(id);
+      if(el) el.addEventListener('input', calc13);
+    });
+    calc13();
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', bindS13);
+  } else {
+    setTimeout(bindS13, 400);
+  }
+})();
 window.wSetTOU=function(m){
   touMode=m;
   const bl='#1D4ED8', gr='var(--border)';
