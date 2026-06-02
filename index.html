@@ -1898,9 +1898,326 @@ footer{background:var(--ink);color:#64748B;font-size:16px;text-align:center;padd
     </div>
   </div>
 
+  <!-- ★ 投資標的建議（台股 ETF ＋ 台積電） -->
+  <div style="margin-bottom:18px">
+    <div style="font-size:16px;font-weight:800;color:var(--ink);margin-bottom:6px">📈 台股投資標的建議：ETF ＋ 台積電組合（以賣車所得為本金）</div>
+    <div style="font-size:14px;color:var(--muted);margin-bottom:14px">⚠ 注意：台積電已佔 0050 權重約 33–35%，另外單獨持有會提高集中度，需留意單一個股風險</div>
+
+    <!-- 配置總覽 dark bar -->
+    <div style="background:var(--ink);border-radius:14px;padding:20px 24px;margin-bottom:16px;color:#fff">
+      <div style="font-size:13px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:.6px;margin-bottom:14px">建議配置（以80萬為例）· ETF 核心 ＋ 台積電衛星</div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px">
+        <div style="background:rgba(29,78,216,.25);border:1px solid rgba(93,130,255,.4);border-radius:10px;padding:12px;text-align:center">
+          <div style="font-size:20px;font-weight:800;color:#60A5FA">35%</div>
+          <div style="font-size:12px;font-weight:700;color:#93C5FD;margin:3px 0">寬基大盤 ETF</div>
+          <div style="font-size:11px;color:#64748B">約 28 萬</div>
+        </div>
+        <div style="background:rgba(220,38,38,.2);border:2px solid rgba(248,113,113,.5);border-radius:10px;padding:12px;text-align:center">
+          <div style="font-size:20px;font-weight:800;color:#F87171">20%</div>
+          <div style="font-size:12px;font-weight:700;color:#FCA5A5;margin:3px 0">台積電 2330</div>
+          <div style="font-size:11px;color:#64748B">約 16 萬 ★</div>
+        </div>
+        <div style="background:rgba(5,150,105,.2);border:1px solid rgba(52,211,153,.4);border-radius:10px;padding:12px;text-align:center">
+          <div style="font-size:20px;font-weight:800;color:#34D399">20%</div>
+          <div style="font-size:12px;font-weight:700;color:#6EE7B7;margin:3px 0">高股息 ETF</div>
+          <div style="font-size:11px;color:#64748B">約 16 萬</div>
+        </div>
+        <div style="background:rgba(124,58,237,.2);border:1px solid rgba(167,139,250,.4);border-radius:10px;padding:12px;text-align:center">
+          <div style="font-size:20px;font-weight:800;color:#A78BFA">15%</div>
+          <div style="font-size:12px;font-weight:700;color:#C4B5FD;margin:3px 0">債券 ETF</div>
+          <div style="font-size:11px;color:#64748B">約 12 萬</div>
+        </div>
+        <div style="background:rgba(245,158,11,.15);border:1px solid rgba(251,191,36,.4);border-radius:10px;padding:12px;text-align:center">
+          <div style="font-size:20px;font-weight:800;color:#FCD34D">10%</div>
+          <div style="font-size:12px;font-weight:700;color:#FDE68A;margin:3px 0">活存備用</div>
+          <div style="font-size:11px;color:#64748B">約 8 萬</div>
+        </div>
+      </div>
+      <!-- 比例條 -->
+      <div style="height:12px;border-radius:6px;overflow:hidden;display:flex;margin-bottom:6px">
+        <div style="width:35%;background:#3B82F6"></div>
+        <div style="width:20%;background:#EF4444"></div>
+        <div style="width:20%;background:#10B981"></div>
+        <div style="width:15%;background:#8B5CF6"></div>
+        <div style="width:10%;background:#F59E0B"></div>
+      </div>
+      <div style="display:flex;gap:14px;font-size:12px;color:#64748B;flex-wrap:wrap">
+        <span>🔵 大盤ETF 35%</span>
+        <span>🔴 台積電 20%</span>
+        <span>🟢 高股息 20%</span>
+        <span>🟣 債券 15%</span>
+        <span>🟡 活存 10%</span>
+      </div>
+      <!-- 台積電集中度警示 -->
+      <div style="margin-top:12px;padding:10px 14px;background:rgba(239,68,68,.12);border:1px solid rgba(248,113,113,.3);border-radius:8px;font-size:13px;color:#FCA5A5;line-height:1.8">
+        ⚠ <b>實際台積電曝險：</b>直接持有 20%＋透過0050間接持有約 35%×33%≈11.5%，合計曝險約 <b>31.5%</b>。集中在單一個股需有心理準備承受 AI 周期波動（2022年台積電曾腰斬）。
+      </div>
+    </div>
+
+    <!-- 五區塊標的卡 -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+
+      <!-- 台積電 -->
+      <div style="background:var(--card);border:2px solid #EF4444;border-radius:12px;overflow:hidden">
+        <div style="background:linear-gradient(135deg,#DC2626,#EF4444);color:#fff;padding:11px 16px;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:space-between">
+          <span>🔴 台積電 2330（20%，約 16 萬）— 成長核心</span>
+          <span style="background:rgba(255,255,255,.2);padding:2px 8px;border-radius:12px;font-size:11px">★ 重點標的</span>
+        </div>
+        <div style="padding:14px 16px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+            <div style="background:#FEF2F2;border-radius:8px;padding:10px 12px;text-align:center">
+              <div style="font-size:11px;color:#B91C1C;font-weight:700;margin-bottom:3px">歷史年化報酬</div>
+              <div style="font-size:22px;font-weight:800;color:#DC2626">≈25–30%</div>
+              <div style="font-size:11px;color:var(--muted)">2015–2024 含息</div>
+            </div>
+            <div style="background:#FEF2F2;border-radius:8px;padding:10px 12px;text-align:center">
+              <div style="font-size:11px;color:#B91C1C;font-weight:700;margin-bottom:3px">配息殖利率</div>
+              <div style="font-size:22px;font-weight:800;color:#DC2626">≈1.5–2%</div>
+              <div style="font-size:11px;color:var(--muted)">季配息（每季配）</div>
+            </div>
+          </div>
+          <table style="width:100%;border-collapse:collapse;font-size:13px;margin-bottom:10px">
+            <tbody>
+              <tr style="border-bottom:1px solid #FEE2E2">
+                <td style="padding:7px 0;color:var(--muted)">護城河</td>
+                <td style="padding:7px 0;font-weight:700">3奈米/2奈米先進製程，全球唯一量產</td>
+              </tr>
+              <tr style="border-bottom:1px solid #FEE2E2">
+                <td style="padding:7px 0;color:var(--muted)">AI 驅動</td>
+                <td style="padding:7px 0;font-weight:700">輝達、蘋果、AMD 主要供應商，AI 需求直接受惠</td>
+              </tr>
+              <tr style="border-bottom:1px solid #FEE2E2">
+                <td style="padding:7px 0;color:var(--muted)">地緣風險</td>
+                <td style="padding:7px 0;font-weight:700;color:#B91C1C">台海緊張時首當其衝，波動最大</td>
+              </tr>
+              <tr>
+                <td style="padding:7px 0;color:var(--muted)">建議進場</td>
+                <td style="padding:7px 0;font-weight:700">分 3–4 批進場，避免單次追高</td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="background:#FFF5F5;border-left:3px solid #EF4444;padding:8px 12px;font-size:13px;color:#7F1D1D;line-height:1.7">
+            💡 以16萬買約 <b id="tsmc-shares">—</b> 股（依當前股價），每季領息約 $<b id="tsmc-div">3,500–5,000</b>。長期持有的報酬率遠優於ETF，但需承受個股波動風險。
+          </div>
+        </div>
+      </div>
+
+      <!-- 寬基大盤 -->
+      <div style="background:var(--card);border:2px solid #3B82F6;border-radius:12px;overflow:hidden">
+        <div style="background:#1D4ED8;color:#fff;padding:11px 16px;font-size:14px;font-weight:700">🔵 寬基大盤 ETF（35%，約 28 萬）— 壓艙分散</div>
+        <table style="width:100%;border-collapse:collapse;font-size:14px">
+          <thead><tr style="background:#EFF6FF">
+            <th style="padding:8px 12px;text-align:left;color:#1D4ED8;font-size:12px">代號／名稱</th>
+            <th style="padding:8px 12px;text-align:center;color:#1D4ED8;font-size:12px">比重</th>
+            <th style="padding:8px 12px;text-align:right;color:#1D4ED8;font-size:12px">年化</th>
+            <th style="padding:8px 12px;text-align:right;color:#1D4ED8;font-size:12px">費用率</th>
+            <th style="padding:8px 12px;text-align:left;color:#1D4ED8;font-size:12px">功能</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid #E2E8F0">
+              <td style="padding:8px 12px;font-weight:700">006208<br><span style="font-size:11px;color:var(--muted);font-weight:400">富邦台50</span></td>
+              <td style="padding:8px 12px;text-align:center;font-weight:700;color:#1D4ED8">20%</td>
+              <td style="padding:8px 12px;text-align:right;font-weight:700;color:#15803D">~10%</td>
+              <td style="padding:8px 12px;text-align:right;color:#15803D;font-weight:700">0.03%</td>
+              <td style="padding:8px 12px;font-size:13px;color:var(--muted)">費用最低，核心壓艙</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px;font-weight:700">0050<br><span style="font-size:11px;color:var(--muted);font-weight:400">元大台灣50</span></td>
+              <td style="padding:8px 12px;text-align:center;font-weight:700;color:#1D4ED8">15%</td>
+              <td style="padding:8px 12px;text-align:right;font-weight:700;color:#15803D">~10%</td>
+              <td style="padding:8px 12px;text-align:right;color:var(--muted)">0.43%</td>
+              <td style="padding:8px 12px;font-size:13px;color:var(--muted)">流動性最佳，半年配息</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="padding:10px 14px;font-size:13px;color:#1D4ED8;background:#EFF6FF;border-top:1px solid #BFDBFE">
+          💡 ETF本身已含台積電33%，再加上直接持有20%，台積電合計曝險≈31%，需留意
+        </div>
+      </div>
+
+      <!-- 高股息 -->
+      <div style="background:var(--card);border:2px solid #10B981;border-radius:12px;overflow:hidden">
+        <div style="background:#059669;color:#fff;padding:11px 16px;font-size:14px;font-weight:700">🟢 高股息 ETF（20%，約 16 萬）— 現金流還息</div>
+        <table style="width:100%;border-collapse:collapse;font-size:14px">
+          <thead><tr style="background:#ECFDF5">
+            <th style="padding:8px 12px;text-align:left;color:#059669;font-size:12px">代號／名稱</th>
+            <th style="padding:8px 12px;text-align:center;color:#059669;font-size:12px">比重</th>
+            <th style="padding:8px 12px;text-align:right;color:#059669;font-size:12px">殖利率</th>
+            <th style="padding:8px 12px;text-align:right;color:#059669;font-size:12px">配息</th>
+            <th style="padding:8px 12px;text-align:left;color:#059669;font-size:12px">功能</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid #E2E8F0">
+              <td style="padding:8px 12px;font-weight:700">00919<br><span style="font-size:11px;color:var(--muted);font-weight:400">群益台灣精選高息</span></td>
+              <td style="padding:8px 12px;text-align:center;font-weight:700;color:#059669">12%</td>
+              <td style="padding:8px 12px;text-align:right;font-weight:700;color:#15803D">7–9%</td>
+              <td style="padding:8px 12px;text-align:right;font-weight:700;color:#059669">月配</td>
+              <td style="padding:8px 12px;font-size:13px;color:var(--muted)"><b>月月配息</b>，直接對沖月利息</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px;font-weight:700">00878<br><span style="font-size:11px;color:var(--muted);font-weight:400">國泰永續高股息</span></td>
+              <td style="padding:8px 12px;text-align:center;font-weight:700;color:#059669">8%</td>
+              <td style="padding:8px 12px;text-align:right;font-weight:700;color:#15803D">6–8%</td>
+              <td style="padding:8px 12px;text-align:right;font-weight:700;color:#059669">季配</td>
+              <td style="padding:8px 12px;font-size:13px;color:var(--muted)">ESG篩選，規模最大，持股穩定</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="padding:10px 14px;font-size:13px;color:#059669;background:#ECFDF5;border-top:1px solid #A7F3D0">
+          💡 00919月配（16萬 × 8% ÷ 12 ≈ $1,067/月）＋省油 $9,500，完全覆蓋月息 $3,924
+        </div>
+      </div>
+
+      <!-- 債券＋執行 -->
+      <div style="display:grid;grid-template-rows:1fr 1fr;gap:14px">
+        <div style="background:var(--card);border:2px solid #8B5CF6;border-radius:12px;overflow:hidden">
+          <div style="background:#7C3AED;color:#fff;padding:10px 16px;font-size:13px;font-weight:700">🟣 債券 ETF（15%，約 12 萬）— 穩定錨＋月配</div>
+          <table style="width:100%;border-collapse:collapse;font-size:13px">
+            <tbody>
+              <tr style="border-bottom:1px solid #E2E8F0">
+                <td style="padding:8px 12px;font-weight:700">00679B<br><span style="font-size:11px;color:var(--muted);font-weight:400">元大美債20年</span></td>
+                <td style="padding:8px 12px;text-align:center;font-weight:700;color:#7C3AED">10%</td>
+                <td style="padding:8px 12px;text-align:right;font-weight:700;color:#15803D">4–5%</td>
+                <td style="padding:8px 12px;font-size:12px;color:var(--muted)">月配，股市跌時反漲</td>
+              </tr>
+              <tr>
+                <td style="padding:8px 12px;font-weight:700">00720B<br><span style="font-size:11px;color:var(--muted);font-weight:400">元大投資級公司債</span></td>
+                <td style="padding:8px 12px;text-align:center;font-weight:700;color:#7C3AED">5%</td>
+                <td style="padding:8px 12px;text-align:right;font-weight:700;color:#15803D">4–5%</td>
+                <td style="padding:8px 12px;font-size:12px;color:var(--muted)">月配，低波動緩衝</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="background:var(--card);border:2px solid #F59E0B;border-radius:12px;overflow:hidden">
+          <div style="background:#D97706;color:#fff;padding:10px 16px;font-size:13px;font-weight:700">⚡ 執行建議</div>
+          <div style="padding:12px 14px;font-size:13px;line-height:1.9;color:var(--body)">
+            ✅ 台積電分 <b>3–4 批</b>進場，每月買一批，避免追高<br>
+            ✅ ETF 定期定額，賣車款分 <b>6 個月</b>投入<br>
+            ✅ 配息全部再投資，不提領<br>
+            ✅ 每年底再平衡一次<br>
+            ❌ 不在台積電大漲後一次梭哈<br>
+            ❌ 股價跌 20% 不停損（個股正常波動）
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 加權報酬試算 -->
+    <div style="background:#F8FAFC;border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:4px">
+      <div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:12px">📊 ETF＋台積電組合 · 加權年化預估</div>
+      <div style="overflow-x:auto;margin-bottom:12px">
+      <table style="width:100%;border-collapse:collapse;font-size:13px">
+        <thead><tr style="background:#F1F5F9">
+          <th style="padding:7px 12px;text-align:left;color:var(--muted);font-weight:700">標的</th>
+          <th style="padding:7px 12px;text-align:center;color:var(--muted);font-weight:700">比重</th>
+          <th style="padding:7px 12px;text-align:right;color:var(--muted);font-weight:700">預估年化</th>
+          <th style="padding:7px 12px;text-align:right;color:var(--muted);font-weight:700">加權貢獻</th>
+          <th style="padding:7px 12px;text-align:left;color:var(--muted);font-weight:700">風險</th>
+        </tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid #F1F5F9">
+            <td style="padding:7px 12px;font-weight:700">🔴 台積電 2330</td>
+            <td style="padding:7px 12px;text-align:center">20%</td>
+            <td style="padding:7px 12px;text-align:right;color:#DC2626;font-weight:700">~20–25%</td>
+            <td style="padding:7px 12px;text-align:right;color:#DC2626;font-weight:800">+4.0–5.0%</td>
+            <td style="padding:7px 12px;font-size:12px;color:#B91C1C">高（單股集中）</td>
+          </tr>
+          <tr style="border-bottom:1px solid #F1F5F9">
+            <td style="padding:7px 12px;font-weight:700">🔵 大盤ETF（006208＋0050）</td>
+            <td style="padding:7px 12px;text-align:center">35%</td>
+            <td style="padding:7px 12px;text-align:right;color:#1D4ED8;font-weight:700">~10%</td>
+            <td style="padding:7px 12px;text-align:right;color:#1D4ED8;font-weight:700">+3.5%</td>
+            <td style="padding:7px 12px;font-size:12px;color:var(--muted)">中（指數分散）</td>
+          </tr>
+          <tr style="border-bottom:1px solid #F1F5F9">
+            <td style="padding:7px 12px;font-weight:700">🟢 高股息ETF（00919＋00878）</td>
+            <td style="padding:7px 12px;text-align:center">20%</td>
+            <td style="padding:7px 12px;text-align:right;color:#059669;font-weight:700">~8%</td>
+            <td style="padding:7px 12px;text-align:right;color:#059669;font-weight:700">+1.6%</td>
+            <td style="padding:7px 12px;font-size:12px;color:var(--muted)">中低（多股分散）</td>
+          </tr>
+          <tr style="border-bottom:1px solid #F1F5F9">
+            <td style="padding:7px 12px;font-weight:700">🟣 債券ETF（00679B＋00720B）</td>
+            <td style="padding:7px 12px;text-align:center">15%</td>
+            <td style="padding:7px 12px;text-align:right;color:#7C3AED;font-weight:700">~4.5%</td>
+            <td style="padding:7px 12px;text-align:right;color:#7C3AED;font-weight:700">+0.68%</td>
+            <td style="padding:7px 12px;font-size:12px;color:var(--muted)">低（利率風險）</td>
+          </tr>
+          <tr style="border-bottom:1px solid #F1F5F9">
+            <td style="padding:7px 12px;font-weight:700">🟡 活存</td>
+            <td style="padding:7px 12px;text-align:center">10%</td>
+            <td style="padding:7px 12px;text-align:right;color:var(--muted)">~1.5%</td>
+            <td style="padding:7px 12px;text-align:right;color:var(--muted)">+0.15%</td>
+            <td style="padding:7px 12px;font-size:12px;color:var(--muted)">極低</td>
+          </tr>
+          <tr style="background:#FFF1F2">
+            <td style="padding:8px 12px;font-weight:800;color:#DC2626">組合加權年化（保守估台積電20%）</td>
+            <td style="padding:8px 12px;text-align:center;font-weight:700">100%</td>
+            <td colspan="2" style="padding:8px 12px;text-align:right;font-weight:800;color:#DC2626;font-size:17px">≈ 9.9 – 10.9%</td>
+            <td style="padding:8px 12px;font-size:12px;color:#B91C1C">中高</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+
+      <!-- 三情境對比 -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px">
+        <div style="text-align:center;padding:12px;background:#FFF7ED;border-radius:8px">
+          <div style="font-size:12px;color:#92400E;font-weight:700;margin-bottom:4px">保守（台積電停滯）</div>
+          <div style="font-size:24px;font-weight:800;color:#B45309">6–8%</div>
+          <div style="font-size:13px;color:#059669;font-weight:700;margin-top:4px">仍超過利率 3.8% ✅</div>
+        </div>
+        <div style="text-align:center;padding:12px;background:#FFF1F2;border-radius:8px;border:2px solid #FCA5A5">
+          <div style="font-size:12px;color:#B91C1C;font-weight:700;margin-bottom:4px">基準 ★（台積電年化20%）</div>
+          <div style="font-size:24px;font-weight:800;color:#DC2626">10–11%</div>
+          <div style="font-size:13px;color:#059669;font-weight:700;margin-top:4px">超過利率 2.6倍 🎉</div>
+        </div>
+        <div style="text-align:center;padding:12px;background:#F0FDF4;border-radius:8px">
+          <div style="font-size:12px;color:#15803D;font-weight:700;margin-bottom:4px">樂觀（AI繼續多頭）</div>
+          <div style="font-size:24px;font-weight:800;color:#15803D">15–20%</div>
+          <div style="font-size:13px;color:#059669;font-weight:700;margin-top:4px">超過利率 4–5倍 🚀</div>
+        </div>
+      </div>
+
+      <!-- 純ETF vs ETF+台積電比較 -->
+      <div style="background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:12px">
+        <div style="padding:9px 14px;background:#F8FAFC;font-size:13px;font-weight:700;color:var(--ink);border-bottom:1px solid var(--border)">純ETF 組合 vs ETF＋台積電 比較（以80萬 / 10年 / 保守估）</div>
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead><tr style="background:#F1F5F9">
+            <th style="padding:7px 12px;text-align:left;font-weight:700;color:var(--muted)">策略</th>
+            <th style="padding:7px 12px;text-align:right;font-weight:700;color:var(--muted)">預估年化</th>
+            <th style="padding:7px 12px;text-align:right;font-weight:700;color:var(--muted)">10年後市值</th>
+            <th style="padding:7px 12px;text-align:right;font-weight:700;color:var(--muted)">扣利息後</th>
+            <th style="padding:7px 12px;text-align:center;font-weight:700;color:var(--muted)">波動程度</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid #F1F5F9">
+              <td style="padding:7px 12px;font-weight:700">純 ETF（0050＋006208為主）</td>
+              <td style="padding:7px 12px;text-align:right;color:#1D4ED8;font-weight:700">≈7.85%</td>
+              <td style="padding:7px 12px;text-align:right;font-weight:700">≈167萬</td>
+              <td style="padding:7px 12px;text-align:right;color:#15803D;font-weight:700">≈+20萬</td>
+              <td style="padding:7px 12px;text-align:center">★★☆☆☆ 低</td>
+            </tr>
+            <tr style="background:#FFF1F2">
+              <td style="padding:7px 12px;font-weight:700">ETF ＋ 台積電 20%</td>
+              <td style="padding:7px 12px;text-align:right;color:#DC2626;font-weight:700">≈10.4%</td>
+              <td style="padding:7px 12px;text-align:right;font-weight:800;color:#DC2626">≈216萬</td>
+              <td style="padding:7px 12px;text-align:right;color:#15803D;font-weight:800;font-size:15px">≈+69萬</td>
+              <td style="padding:7px 12px;text-align:center">★★★☆☆ 中高</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="font-size:13px;color:var(--muted);line-height:1.7">
+        ※ 台積電 2015–2024 含息年化約25–30%，本表以保守20%估算。過去績效不代表未來，個股風險遠高於ETF。增加台積電比重可提高預期報酬，但需承受更高波動。非投資建議，請自行評估風險承受度。
+      </div>
+    </div>
+  </div>
+
   <div class="ib grn">★ 結論：只要年化報酬 > <span id="s13-be-inline">3.8</span>%，新策略數學上必然划算。以0050歷史年均報酬約10%估算，10年後投資獲利遠超過增貸利息，且本金完整保留，可隨時一次還清。此為財務邏輯分析，非投資建議，請自行評估風險承受度並諮詢專業顧問。</div>
 </div>
-<div class="divider"></div>
 
 <!-- 14 最終結論 -->
 <div class="wrap" id="s14">
