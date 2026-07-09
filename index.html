@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CR-V 6 Prestige → Foxtron CAVIRA Emerge 十年換車成本、家充回收、真實電費與投資回本分析 V16 Firebase Cloud Sync</title>
+  <title>CR-V 6 Prestige → Foxtron CAVIRA Emerge 十年換車成本、家充回收、真實電費與投資回本分析 V19 GitHub Gist One Button Sync</title>
   <style>
     :root{
       --bg:#07111f; --panel:#101d30; --panel2:#0c1728; --card:#13233a; --line:#263d5d;
@@ -39,6 +39,9 @@
     .panel{background:rgba(16,29,48,.92);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;overflow:hidden}.panel h3{margin:0 0 14px;font-size:18px}.panel p{color:var(--muted);margin:8px 0}.metric{display:flex;align-items:baseline;justify-content:space-between;gap:16px;border-bottom:1px dashed rgba(255,255,255,.10);padding:12px 0}.metric:last-child{border-bottom:0}.metric span{color:var(--muted)}.metric strong{font-size:20px;text-align:right}.metric strong.ok{color:var(--ok)}.metric strong.warn{color:var(--warn)}.metric strong.danger{color:var(--danger)}
     .inputs{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.field{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:12px}.field label{display:block;color:var(--muted);font-size:12px;font-weight:800;margin-bottom:6px}.field input{width:100%;background:transparent;border:0;color:var(--text);font-size:20px;font-weight:900;outline:0}.field .suffix{color:var(--muted);font-size:12px;margin-top:3px}.field.wide{grid-column:span 2}.miniInput{width:88px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.10);border-radius:10px;color:var(--text);font-weight:900;font-size:14px;padding:8px 10px;text-align:right;outline:0}.portfolioBadge{display:inline-flex;padding:4px 8px;border-radius:999px;background:rgba(113,225,197,.12);color:var(--brand);font-size:11px;font-weight:900;margin-top:6px}.smallText{font-size:12px;color:var(--muted);line-height:1.45}.resetBtn{cursor:pointer;background:linear-gradient(135deg,var(--brand),var(--brand2));border:0;border-radius:14px;color:#06101d;font-weight:1000;padding:12px 14px;font-size:14px;box-shadow:0 14px 24px rgba(113,225,197,.18)}
 
+
+    .cloudTopNotice{margin:0 auto 18px;padding:16px 18px;border-radius:18px;background:linear-gradient(135deg,rgba(255,198,109,.18),rgba(113,225,197,.10));border:1px solid rgba(255,198,109,.30);color:#ffe4ad;font-weight:800;box-shadow:var(--shadow)}
+    .cloudTopNotice strong{color:#fff}.cloudTopNotice .steps{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.cloudTopNotice .steps span{display:inline-flex;padding:6px 9px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);font-size:12px;color:#fff}
     .cloudPanel{background:linear-gradient(145deg,rgba(16,29,48,.96),rgba(7,17,31,.96));border:1px solid rgba(113,225,197,.18);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;overflow:hidden}
     .cloudGrid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;align-items:start}
     .cloudControls{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
@@ -94,7 +97,7 @@
     <div class="wrap">
       <div class="eyebrow">十年總持有成本・貸款利息・家充回收・單筆投資回本模型｜月支出拆解可視化・真實台電帳單預估</div>
       <h1>CR-V 6 Prestige → Foxtron CAVIRA Emerge<br/>換車成本分析</h1>
-      <p class="subtitle">以目前里程 75,000 km、CAVIRA Emerge 預估購車價 127 萬、家充安裝 11.5 萬、房屋增貸金額與單筆投資金額均可調整，建立可重算的十年現金流模型，並加入你提供的台電帳單歷史資料，推估改為簡易型時間電價（二段式）且加入 CAVIRA 家充後，每一期可能出現的總電費。此 GitHub Pages 版已加入手機表格卡片化與本機參數儲存。</p>
+      <p class="subtitle">以目前里程 75,000 km、CAVIRA Emerge 預估購車價 127 萬、家充安裝 11.5 萬、房屋增貸金額與單筆投資金額均可調整，建立可重算的十年現金流模型，並加入你提供的台電帳單歷史資料，推估改為簡易型時間電價（二段式）且加入 CAVIRA 家充後，每一期可能出現的總電費。此 V19 版改用 GitHub Gist 作為雲端資料庫：第一次只需貼 GitHub Token，之後按「☁ 雲端同步」即可在電腦與手機之間同步同一組參數。</p>
       <div class="topgrid">
         <div class="heroCard">
           <div class="carline">
@@ -115,7 +118,7 @@
             <p class="verdictText" id="verdictText">請調整下方參數，模型會自動重算。</p>
           </div>
           <div class="taglist">
-            <span class="tag">簡易時間電價</span><span class="tag">利息-only</span><span class="tag">本金/利息分離</span><span class="tag">投資回本檢查</span><span class="tag">Firebase 雲端同步</span><span class="tag">油電成本差</span>
+            <span class="tag">簡易時間電價</span><span class="tag">利息-only</span><span class="tag">本金/利息分離</span><span class="tag">投資回本檢查</span><span class="tag">GitHub Gist 雲端同步</span><span class="tag">油電成本差</span>
           </div>
         </aside>
       </div>
@@ -124,8 +127,43 @@
 
   <nav><div class="wrap"><a href="#inputs">參數設定</a><a href="#cloud">雲端同步</a><a href="#cost">成本比較</a><a href="#charger">家充回收</a><a href="#tou">每期電費預估</a><a href="#loan">貸款與投資</a><a href="#dca">每月定期定額</a><a href="#portfolio">台股投資組合</a><a href="#sensitivity">敏感度</a><a href="#strategy">結論建議</a><a href="#sources">資料來源</a></div></nav>
 
+  <section id="cloudNotice"><div class="wrap"><div class="cloudTopNotice"><strong>V19 同步方式：</strong>參考你給的範例，改成 GitHub Gist 雲端同步。第一次貼入 GitHub Token 後，之後平常只要按「☁ 雲端同步」；電腦修改會上傳，手機開啟後按同一顆鍵會下載最新設定。<div class="steps"><span>1. 產生 GitHub Token，勾選 gist</span><span>2. 貼入本頁並儲存</span><span>3. 按雲端同步</span><span>4. 其他裝置用同一 Token 同步</span></div></div></div></section>
+
+  <section id="cloud"><div class="wrap">
+    <div class="sectionTitle"><h2>01｜GitHub Gist 雲端同步</h2><p class="hint">GitHub Pages 本身不能寫入資料，所以用你的 GitHub Gist 當私人雲端資料庫。Token 只存在你的瀏覽器 localStorage，不會寫進 HTML，也不會傳給我。</p></div>
+    <div class="cloudPanel">
+      <div class="cloudGrid">
+        <div>
+          <h3 style="margin-top:0">一鍵同步</h3>
+          <p class="smallText">第一次設定完成後，之後只需要按下方紫色按鈕。系統會自動判斷本機與雲端哪一邊比較新，該上傳就上傳、該下載就下載。</p>
+          <div class="cloudControls" style="grid-template-columns:1fr 1fr;margin-top:12px">
+            <button class="cloudBtn primary" id="cloudSyncBtn" type="button">☁ 雲端同步</button>
+            <button class="cloudBtn" id="cloudDownloadBtn" type="button">⬇ 強制下載雲端</button>
+            <button class="cloudBtn" id="cloudUploadBtn" type="button">⬆ 強制上傳本機</button>
+            <button class="cloudBtn danger" id="cloudClearBtn" type="button">清除本機 Token</button>
+          </div>
+          <div class="cloudStatus" id="cloudStatus" style="margin-top:12px"><strong>尚未同步。</strong><br>第一次請先貼入 GitHub Token，之後就只要按「☁ 雲端同步」。</div>
+        </div>
+        <div>
+          <h3 style="margin-top:0">第一次設定，只做一次</h3>
+          <p class="smallText">請產生 GitHub Personal Access Token，權限只勾 <span class="cloudCode">gist</span>。這跟你給的範例邏輯一樣：資料會存在你自己的 GitHub Gist。</p>
+          <div class="field" style="margin-bottom:12px"><label>GitHub Token，只儲存在本機瀏覽器</label><input id="githubToken" type="password" placeholder="ghp_... 或 github_pat_..."><div class="suffix"><a href="https://github.com/settings/tokens/new?scopes=gist&description=CRV%20CAVIRA%20cost%20sync" target="_blank" rel="noopener" style="color:var(--brand)">點我產生 Token，勾選 gist</a></div></div>
+          <div class="field" style="margin-bottom:12px"><label>雲端方案 ID</label><input id="cloudPlanId" type="text" value="main"><div class="suffix">預設 main；可改 conservative / aggressive 建立多組方案</div></div>
+          <div class="cloudControls" style="grid-template-columns:1fr 1fr">
+            <button class="cloudBtn primary" id="saveGitHubTokenBtn" type="button">儲存 Token</button>
+            <button class="cloudBtn" id="testGitHubTokenBtn" type="button">測試連線</button>
+          </div>
+          <div class="noteList" style="margin-top:12px">
+            <div class="noteItem">換電腦或手機時，只要在新裝置也貼同一個 Token，按「☁ 雲端同步」就會抓到同一份資料。</div>
+            <div class="noteItem">Token 等於你的 Gist 鑰匙，不要放進公開 GitHub repo，也不要截圖公開。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div></section>
+
   <section id="inputs"><div class="wrap">
-    <div class="sectionTitle"><h2>01｜關鍵假設，可直接改數字</h2><p class="hint">預設值採「目前 75,000 km 推估年里程約 43,000 km」、95 無鉛油價 31.3 元/L、CAVIRA 實測效率 5.37 km/kWh、家充離峰約 2.013 元/kWh，外充平均電價預設 7.5 元/kWh；貸款金額、單筆投資金額與定期定額金額皆可手動覆蓋。</p></div>
+    <div class="sectionTitle"><h2>02｜關鍵假設，可直接改數字</h2><p class="hint">預設值採「目前 75,000 km 推估年里程約 43,000 km」、95 無鉛油價 31.3 元/L、CAVIRA 實測效率 5.37 km/kWh、家充離峰約 2.013 元/kWh，外充平均電價預設 7.5 元/kWh；貸款金額、單筆投資金額與定期定額金額皆可手動覆蓋。</p></div>
     <div class="panel">
       <div class="inputs">
         <div class="field"><label>年行駛里程</label><input id="annualKm" type="number" value="43000"><div class="suffix">km / 年</div></div>
@@ -155,42 +193,7 @@
   </div></section>
 
 
-  <section id="cloud"><div class="wrap">
-    <div class="sectionTitle"><h2>02｜雲端同步設定</h2><p class="hint">GitHub Pages 是靜態網頁，跨裝置同步需要外部雲端資料庫。此版支援 Firebase Authentication + Firestore：電腦調整後存到雲端，手機登入同一個 Google 帳號即可同步讀取與更新。</p></div>
-    <div class="cloudPanel">
-      <div class="cloudGrid">
-        <div>
-          <h3 style="margin-top:0">Firebase 專案設定</h3>
-          <p class="smallText">把 Firebase Console 提供的 <span class="cloudCode">firebaseConfig</span> JSON 貼到下方。API key 不是密碼，但仍建議設定 Firestore Security Rules，只允許登入者讀寫自己的資料。</p>
-          <textarea id="firebaseConfigText" class="cloudTextarea" spellcheck="false" placeholder='{
-  "apiKey": "...",
-  "authDomain": "your-project.firebaseapp.com",
-  "projectId": "your-project",
-  "storageBucket": "your-project.appspot.com",
-  "messagingSenderId": "...",
-  "appId": "..."
-}'></textarea>
-          <div class="inputs" style="margin-top:12px">
-            <div class="field"><label>雲端方案 ID</label><input id="cloudPlanId" type="text" value="crv-cavira-main"><div class="suffix">同一帳號可建立多組方案，例如 main / conservative</div></div>
-            <div class="field"><label>自動同步</label><input id="cloudAutoSync" type="checkbox" checked style="width:22px;height:22px"><div class="suffix">開啟後，修改數字約 1 秒後自動寫入雲端</div></div>
-          </div>
-        </div>
-        <div>
-          <h3 style="margin-top:0">同步控制</h3>
-          <div class="cloudStatus" id="cloudStatus"><strong>尚未啟用雲端同步。</strong><br>請先貼上 firebaseConfig，儲存設定後登入 Google。</div>
-          <div class="cloudControls" style="margin-top:12px">
-            <button class="cloudBtn" id="saveCloudConfigBtn" type="button">儲存 Firebase 設定</button>
-            <button class="cloudBtn primary" id="cloudSignInBtn" type="button">Google 登入</button>
-            <button class="cloudBtn" id="cloudLoadBtn" type="button">從雲端讀取</button>
-            <button class="cloudBtn primary" id="cloudSaveBtn" type="button">上傳目前數字</button>
-            <button class="cloudBtn warn" id="cloudPauseBtn" type="button">暫停自動同步</button>
-            <button class="cloudBtn danger" id="cloudSignOutBtn" type="button">登出</button>
-          </div>
-          <p class="smallText" style="margin-top:12px">同步口徑：雲端以 <span class="cloudCode">users/{uid}/plans/{方案ID}</span> 儲存。跨手機、電腦同步的關鍵是「登入同一個 Google 帳號」。</p>
-        </div>
-      </div>
-    </div>
-  </div></section>
+
 
   <section id="cost"><div class="wrap">
     <div class="sectionTitle"><h2>03｜十年用車成本：油耗 vs 家充電費</h2><p class="hint">此區先看「繼續開 CR-V」與「換 CAVIRA 後的能源成本」，貸款利息列入年度現金流；並新增每月支出拆解，把 CAVIRA 電費與貸款利息分開列示。本金償還則在投資回本區單獨檢查，避免把利息扣兩次，看起來像咖啡拿鐵加滷肉飯。</p></div>
@@ -463,7 +466,13 @@ const money = n => new Intl.NumberFormat('zh-TW',{maximumFractionDigits:0}).form
 const moneySigned = n => (n>=0?'+':'-') + money(Math.abs(n));
 const pct = n => (n*100).toFixed(2)+'%';
 function val(id){ return parseFloat($(id).value || 0); }
-const STORAGE_KEY = 'crv_cavira_cost_analysis_inputs_v16';
+const STORAGE_KEY = 'crv_cavira_cost_analysis_inputs_v19';
+const CLOUD_TOKEN_KEY = 'crv_cavira_github_token_v19';
+const CLOUD_PLAN_KEY = 'crv_cavira_cloud_plan_id_v19';
+const CLOUD_GIST_MAP_KEY = 'crv_cavira_gist_map_v19';
+const CLOUD_LOCAL_UPDATED_KEY = 'crv_cavira_local_updated_v19';
+const CLOUD_DESC = 'CRV_CAVIRA_COST_ANALYSIS_SYNC';
+let suppressLocalTimestamp = false;
 function resetDefaults(){
   localStorage.removeItem(STORAGE_KEY);
   Object.keys(defaults).forEach(k=>{ if($(k)) $(k).value=defaults[k]; });
@@ -475,8 +484,11 @@ function resetDefaults(){
 }
 function saveInputs(){
   const data = {};
-  document.querySelectorAll('input').forEach(el=>{ if(el.id) data[el.id] = el.type === 'checkbox' ? el.checked : el.value; });
-  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }catch(e){}
+  document.querySelectorAll('input').forEach(el=>{ if(el.id && !['githubToken'].includes(el.id)) data[el.id] = el.type === 'checkbox' ? el.checked : el.value; });
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    if(!suppressLocalTimestamp) localStorage.setItem(CLOUD_LOCAL_UPDATED_KEY, String(Date.now()));
+  }catch(e){}
 }
 function loadInputs(){
   try{
@@ -489,6 +501,15 @@ function loadInputs(){
       if(el.type === 'checkbox') el.checked = !!data[id];
       else el.value = data[id];
     });
+  }catch(e){}
+}
+
+function loadCloudSetup(){
+  try{
+    const token = localStorage.getItem(CLOUD_TOKEN_KEY) || '';
+    const plan = localStorage.getItem(CLOUD_PLAN_KEY) || 'main';
+    if($('cloudPlanId')) $('cloudPlanId').value = plan;
+    if(token && $('githubToken')) $('githubToken').placeholder = 'Token 已儲存；需要更換時重新貼上';
   }catch(e){}
 }
 
@@ -833,176 +854,235 @@ function drawPortfolioYearTable(lump, lumpRate, dcaRate, years, loan, monthlyDca
 }
 
 function roundRect(ctx,x,y,w,h,r,fill){if(h<0){y+=h;h=-h} if(h<r*2)r=Math.max(0,h/2); ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath(); if(fill)ctx.fill();}
-loadInputs(); Object.keys(defaults).forEach(k=>$(k).addEventListener('input',()=>{saveInputs(); calc();})); document.querySelectorAll('.portfolioInput').forEach(el=>el.addEventListener('input',()=>{saveInputs(); calc();})); window.addEventListener('resize',calc); calc();
-</script>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc, onSnapshot, serverTimestamp, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
-const CLOUD_CONFIG_KEY = 'crv_cavira_firebase_config_v16';
-let app = null, auth = null, db = null, currentUser = null, unsubscribeCloud = null;
-let cloudReady = false, autoSyncEnabled = true, remoteApplying = false, saveTimer = null, cloudPaused = false;
-const qs = id => document.getElementById(id);
-
-function setCloudStatus(message, tone='normal'){
-  const el = qs('cloudStatus');
-  if(!el) return;
-  const color = tone === 'ok' ? 'var(--ok)' : tone === 'warn' ? 'var(--warn)' : tone === 'danger' ? 'var(--danger)' : 'var(--muted)';
-  el.innerHTML = message;
-  el.style.borderColor = tone === 'ok' ? 'rgba(119,227,155,.28)' : tone === 'warn' ? 'rgba(255,198,109,.28)' : tone === 'danger' ? 'rgba(255,127,145,.28)' : 'rgba(255,255,255,.08)';
-  el.style.color = color;
+function getPlanId(){
+  const plan = ($('cloudPlanId')?.value || 'main').trim() || 'main';
+  try{ localStorage.setItem(CLOUD_PLAN_KEY, plan); }catch(e){}
+  return plan.replace(/[^a-zA-Z0-9_-]/g,'_');
 }
-function getCloudConfig(){
-  const text = (qs('firebaseConfigText')?.value || '').trim();
-  if(!text) throw new Error('尚未貼上 Firebase 設定 JSON。');
-  return JSON.parse(text);
+function cloudFileName(){ return `crv_cavira_cost_settings_${getPlanId()}.json`; }
+function getGistMap(){ try{return JSON.parse(localStorage.getItem(CLOUD_GIST_MAP_KEY)||'{}')}catch(e){return{}} }
+function setGistIdForFile(file,id){ const m=getGistMap(); m[file]=id; localStorage.setItem(CLOUD_GIST_MAP_KEY,JSON.stringify(m)); }
+function getGistIdForFile(file){ return getGistMap()[file] || ''; }
+function setCloudStatus(msg, tone='normal'){
+  const el=$('cloudStatus'); if(!el) return;
+  el.innerHTML=msg;
+  el.style.borderColor = tone==='ok' ? 'rgba(119,227,155,.30)' : tone==='warn' ? 'rgba(255,198,109,.30)' : tone==='danger' ? 'rgba(255,127,145,.30)' : 'rgba(255,255,255,.08)';
+  el.style.color = tone==='ok' ? 'var(--ok)' : tone==='warn' ? 'var(--warn)' : tone==='danger' ? 'var(--danger)' : 'var(--muted)';
 }
-function collectInputsForCloud(){
+function saveGitHubToken(){
+  const token = ($('githubToken')?.value || '').trim();
+  if(!token){ setCloudStatus('<strong>還沒貼 Token。</strong><br>請先點「產生 Token」，權限只勾 gist，貼上後再儲存。','warn'); return false; }
+  localStorage.setItem(CLOUD_TOKEN_KEY, token);
+  if($('githubToken')){ $('githubToken').value=''; $('githubToken').placeholder='Token 已儲存；需要更換時重新貼上'; }
+  setCloudStatus('<strong>Token 已儲存。</strong><br>接下來按「☁ 雲端同步」即可建立或讀取你的 Gist 雲端資料。','ok');
+  return true;
+}
+function getGitHubToken(){ return localStorage.getItem(CLOUD_TOKEN_KEY) || ''; }
+async function ghApi(path, opts={}){
+  const token=getGitHubToken();
+  if(!token) throw new Error('尚未儲存 GitHub Token');
+  const res = await fetch('https://api.github.com'+path, {
+    method: opts.method || 'GET',
+    headers: {
+      'Authorization':'Bearer '+token,
+      'Accept':'application/vnd.github+json',
+      'X-GitHub-Api-Version':'2022-11-28',
+      ...(opts.body ? {'Content-Type':'application/json'} : {})
+    },
+    body: opts.body ? JSON.stringify(opts.body) : undefined
+  });
+  if(!res.ok){
+    let text=''; try{text=await res.text()}catch(e){}
+    throw new Error(`GitHub API ${res.status}：${text || res.statusText}`);
+  }
+  if(res.status===204) return null;
+  return await res.json();
+}
+function buildCloudPayload(){
+  return {app:'crv-cavira-cost-analysis', version:19, planId:getPlanId(), updatedAt:Date.now(), inputs:collectShareInputs()};
+}
+function applyCloudPayload(payload){
+  if(!payload || !payload.inputs) throw new Error('雲端資料格式不正確');
+  suppressLocalTimestamp = true;
+  try{ applyShareInputs(payload.inputs); }
+  finally{ suppressLocalTimestamp = false; }
+  const ts = payload.updatedAt || Date.now();
+  localStorage.setItem(CLOUD_LOCAL_UPDATED_KEY, String(ts));
+  calc();
+}
+async function findOrCreateGist(file, createIfMissing=true){
+  const cached = getGistIdForFile(file);
+  if(cached){
+    try{
+      const gist = await ghApi('/gists/'+cached);
+      if(gist.files && gist.files[file]) return gist;
+    }catch(e){ /* cached id invalid; fall through */ }
+  }
+  const list = await ghApi('/gists?per_page=100');
+  const found = list.find(g => g.description === CLOUD_DESC && g.files && g.files[file]);
+  if(found){ setGistIdForFile(file, found.id); return await ghApi('/gists/'+found.id); }
+  if(!createIfMissing) return null;
+  const payload = buildCloudPayload();
+  const created = await ghApi('/gists', {method:'POST', body:{description:CLOUD_DESC, public:false, files:{[file]:{content:JSON.stringify(payload,null,2)}}}});
+  setGistIdForFile(file, created.id);
+  localStorage.setItem(CLOUD_LOCAL_UPDATED_KEY, String(payload.updatedAt));
+  return created;
+}
+function parseGistPayload(gist,file){
+  const f = gist?.files?.[file];
+  if(!f || !f.content) return null;
+  return JSON.parse(f.content);
+}
+async function uploadToCloud(){
+  if(!getGitHubToken()){ setCloudStatus('<strong>需要 GitHub Token。</strong><br>請先貼入 Token 並按「儲存 Token」。','warn'); return; }
+  setCloudStatus('<strong>上傳中…</strong><br>正在把目前參數寫入你的 GitHub Gist。');
+  const file = cloudFileName();
+  const gist = await findOrCreateGist(file, true);
+  const payload = buildCloudPayload();
+  const updated = await ghApi('/gists/'+gist.id, {method:'PATCH', body:{files:{[file]:{content:JSON.stringify(payload,null,2)}}}});
+  setGistIdForFile(file, updated.id);
+  localStorage.setItem(CLOUD_LOCAL_UPDATED_KEY, String(payload.updatedAt));
+  setCloudStatus(`<strong>已上傳到雲端。</strong><br>方案 <span class="cloudCode">${getPlanId()}</span> 已更新；手機用同一 Token 按同步即可讀到。`, 'ok');
+}
+async function downloadFromCloud(){
+  if(!getGitHubToken()){ setCloudStatus('<strong>需要 GitHub Token。</strong><br>請先貼入 Token 並按「儲存 Token」。','warn'); return; }
+  setCloudStatus('<strong>讀取中…</strong><br>正在從 GitHub Gist 下載最新參數。');
+  const file = cloudFileName();
+  const gist = await findOrCreateGist(file, false);
+  if(!gist){ setCloudStatus('<strong>雲端尚無資料。</strong><br>這個方案還沒有建立，請先在主要裝置按「強制上傳本機」。','warn'); return; }
+  const payload = parseGistPayload(gist,file);
+  applyCloudPayload(payload);
+  const t = payload.updatedAt ? new Date(payload.updatedAt).toLocaleString('zh-TW') : '未知';
+  setCloudStatus(`<strong>已從雲端套用。</strong><br>方案 <span class="cloudCode">${getPlanId()}</span>，雲端更新時間：${t}`, 'ok');
+}
+async function cloudSync(){
+  try{
+    const typed = ($('githubToken')?.value || '').trim();
+    if(typed) saveGitHubToken();
+    if(!getGitHubToken()){ setCloudStatus('<strong>第一次同步需要 GitHub Token。</strong><br>點右側連結產生 Token，權限只勾 gist，貼上後按「儲存 Token」。','warn'); $('githubToken')?.focus(); return; }
+    setCloudStatus('<strong>同步中…</strong><br>正在比較本機與雲端資料。');
+    const file = cloudFileName();
+    const gist = await findOrCreateGist(file, true);
+    const payload = parseGistPayload(gist,file);
+    const cloudTs = payload?.updatedAt || new Date(gist.updated_at).getTime() || 0;
+    const localTs = parseInt(localStorage.getItem(CLOUD_LOCAL_UPDATED_KEY) || '0', 10);
+    if(payload && cloudTs > localTs + 1500){
+      applyCloudPayload(payload);
+      setCloudStatus(`<strong>已下載雲端較新的資料。</strong><br>雲端時間：${new Date(cloudTs).toLocaleString('zh-TW')}`, 'ok');
+    }else if(localTs > cloudTs + 1500 || !payload){
+      await uploadToCloud();
+    }else{
+      setCloudStatus('<strong>已是最新。</strong><br>本機與雲端資料目前一致，不需要更新。','ok');
+    }
+  }catch(err){
+    setCloudStatus('<strong>同步失敗：</strong><br>'+String(err.message || err), 'danger');
+  }
+}
+async function testGitHubToken(){
+  try{
+    const typed = ($('githubToken')?.value || '').trim();
+    if(typed) saveGitHubToken();
+    const user = await ghApi('/user');
+    setCloudStatus(`<strong>GitHub 連線成功。</strong><br>已登入：${user.login}。可以按「☁ 雲端同步」了。`, 'ok');
+  }catch(err){ setCloudStatus('<strong>連線測試失敗：</strong><br>'+String(err.message || err), 'danger'); }
+}
+function clearCloudSetup(){
+  localStorage.removeItem(CLOUD_TOKEN_KEY); localStorage.removeItem(CLOUD_GIST_MAP_KEY); localStorage.removeItem(CLOUD_LOCAL_UPDATED_KEY);
+  if($('githubToken')) $('githubToken').placeholder='ghp_... 或 github_pat_...';
+  setCloudStatus('<strong>已清除本機雲端設定。</strong><br>Gist 雲端資料不會被刪除；下次貼回 Token 還可以再讀取。','warn');
+}
+
+function collectShareInputs(){
   const data = {};
   document.querySelectorAll('input').forEach(el=>{
-    if(!el.id) return;
-    if(['firebaseConfigText','cloudAutoSync'].includes(el.id)) return;
+    if(!el.id || el.id === 'githubToken') return;
     data[el.id] = el.type === 'checkbox' ? !!el.checked : el.value;
   });
   return data;
 }
-function applyInputsFromCloud(data){
-  if(!data || typeof data !== 'object') return;
-  remoteApplying = true;
+function applyShareInputs(data){
+  if(!data || typeof data !== 'object') return false;
   Object.keys(data).forEach(id=>{
-    const el = qs(id);
+    const el = $(id);
     if(!el) return;
     if(el.type === 'checkbox') el.checked = !!data[id];
     else el.value = data[id];
   });
-  try{ window.saveInputs && window.saveInputs(); }catch(e){}
-  try{ window.calc && window.calc(); }catch(e){}
-  remoteApplying = false;
+  saveInputs();
+  calc();
+  return true;
 }
-function getPlanRef(){
-  if(!db || !currentUser) throw new Error('尚未登入或 Firestore 尚未初始化。');
-  const planId = (qs('cloudPlanId')?.value || 'crv-cavira-main').trim().replace(/[\\/#?\[\]]/g,'-') || 'crv-cavira-main';
-  return doc(db, 'users', currentUser.uid, 'plans', planId);
+function encodeShareData(data){
+  const json = JSON.stringify({v:18,t:Date.now(),inputs:data});
+  return btoa(unescape(encodeURIComponent(json))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 }
-async function initCloud(){
-  if(app && auth && db) return;
-  const cfg = getCloudConfig();
-  app = initializeApp(cfg);
-  auth = getAuth(app);
-  db = getFirestore(app);
-  try { await enableIndexedDbPersistence(db); } catch(e) { /* 多分頁或瀏覽器不支援時略過 */ }
-  onAuthStateChanged(auth, async user=>{
-    currentUser = user;
-    if(user){
-      cloudReady = true;
-      setCloudStatus(`<strong>已登入：</strong>${user.email || user.uid}<br>雲端同步就緒。方案 ID：<span class="cloudCode">${qs('cloudPlanId')?.value || 'crv-cavira-main'}</span>`, 'ok');
-      subscribeCloud();
-      await loadCloudOnce(false);
-    }else{
-      cloudReady = false;
-      if(unsubscribeCloud){ unsubscribeCloud(); unsubscribeCloud = null; }
-      setCloudStatus('<strong>尚未登入。</strong><br>登入 Google 後才會讀寫雲端資料。', 'warn');
-    }
-  });
+function decodeShareData(token){
+  const normalized = token.replace(/-/g,'+').replace(/_/g,'/');
+  const pad = normalized.length % 4 ? '='.repeat(4 - normalized.length % 4) : '';
+  const json = decodeURIComponent(escape(atob(normalized + pad)));
+  return JSON.parse(json);
 }
-async function signInCloud(){
+function setShareStatus(msg, tone='normal'){
+  const el = $('shareStatus');
+  if(!el) return;
+  el.innerHTML = msg;
+  el.style.borderColor = tone==='ok' ? 'rgba(119,227,155,.28)' : tone==='warn' ? 'rgba(255,198,109,.28)' : tone==='danger' ? 'rgba(255,127,145,.28)' : 'rgba(255,255,255,.08)';
+  el.style.color = tone==='ok' ? 'var(--ok)' : tone==='warn' ? 'var(--warn)' : tone==='danger' ? 'var(--danger)' : 'var(--muted)';
+}
+function createShareLink(){
   try{
-    await initCloud();
-    const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
+    saveInputs();
+    const token = encodeShareData(collectShareInputs());
+    const base = window.location.href.split('#')[0];
+    const url = base + '#cfg=' + token;
+    const out = $('shareUrlText');
+    if(out) out.value = url;
+    setShareStatus('<strong>同步連結已產生。</strong><br>把這條連結傳到手機，手機打開後會自動套用目前全部參數。', 'ok');
+    history.replaceState(null, '', '#cfg=' + token);
   }catch(err){
-    setCloudStatus(`<strong>登入失敗：</strong>${err.message}<br>手機瀏覽器若阻擋 popup，可先在電腦登入或確認 Firebase Auth 已加入 GitHub Pages 網域。`, 'danger');
+    setShareStatus('<strong>產生失敗：</strong>' + err.message, 'danger');
   }
 }
-async function saveCloudNow(showStatus=true){
-  if(remoteApplying || cloudPaused) return;
+async function copyShareLink(){
+  const out = $('shareUrlText');
+  if(!out || !out.value) createShareLink();
+  const text = $('shareUrlText')?.value || window.location.href;
   try{
-    await initCloud();
-    if(!currentUser) throw new Error('請先登入 Google。');
-    const payload = {
-      inputs: collectInputsForCloud(),
-      updatedAt: serverTimestamp(),
-      updatedAtClient: new Date().toISOString(),
-      userAgent: navigator.userAgent.slice(0,180)
-    };
-    await setDoc(getPlanRef(), payload, {merge:true});
-    if(showStatus) setCloudStatus(`<strong>已上傳雲端。</strong><br>手機/電腦登入同一 Google 帳號後會同步這組參數。`, 'ok');
-  }catch(err){
-    setCloudStatus(`<strong>上傳失敗：</strong>${err.message}`, 'danger');
+    await navigator.clipboard.writeText(text);
+    setShareStatus('<strong>已複製連結。</strong><br>直接傳到 LINE / 訊息 / Email，手機打開就會套用。', 'ok');
+  }catch(e){
+    $('shareUrlText')?.select();
+    setShareStatus('<strong>瀏覽器不允許自動複製。</strong><br>請手動全選上方連結複製。', 'warn');
   }
 }
-async function loadCloudOnce(showStatus=true){
+function applyShareFromHash(){
+  const hash = window.location.hash || '';
+  if(!hash.startsWith('#cfg=')) return false;
   try{
-    await initCloud();
-    if(!currentUser) throw new Error('請先登入 Google。');
-    const snap = await getDoc(getPlanRef());
-    if(!snap.exists()){
-      if(showStatus) setCloudStatus('<strong>雲端尚無資料。</strong><br>可按「上傳目前數字」建立第一份雲端設定。', 'warn');
-      return;
-    }
-    const data = snap.data();
-    applyInputsFromCloud(data.inputs || {});
-    const t = data.updatedAtClient ? new Date(data.updatedAtClient).toLocaleString('zh-TW') : '未知時間';
-    if(showStatus) setCloudStatus(`<strong>已從雲端讀取。</strong><br>最後更新：${t}`, 'ok');
+    const payload = decodeShareData(hash.slice(5));
+    const ok = applyShareInputs(payload.inputs || {});
+    const t = payload.t ? new Date(payload.t).toLocaleString('zh-TW') : '';
+    if($('shareUrlText')) $('shareUrlText').value = window.location.href;
+    setShareStatus(`<strong>已套用同步連結。</strong><br>${t ? '設定產生時間：' + t + '<br>' : ''}這組參數已儲存在本機瀏覽器。`, 'ok');
+    return ok;
   }catch(err){
-    setCloudStatus(`<strong>讀取失敗：</strong>${err.message}`, 'danger');
+    setShareStatus('<strong>同步連結無法讀取：</strong>' + err.message, 'danger');
+    return false;
   }
 }
-function subscribeCloud(){
-  if(!db || !currentUser) return;
-  if(unsubscribeCloud) unsubscribeCloud();
-  try{
-    unsubscribeCloud = onSnapshot(getPlanRef(), snap=>{
-      if(!snap.exists() || remoteApplying) return;
-      const data = snap.data();
-      applyInputsFromCloud(data.inputs || {});
-      const t = data.updatedAtClient ? new Date(data.updatedAtClient).toLocaleString('zh-TW') : '剛剛';
-      setCloudStatus(`<strong>已同步雲端資料。</strong><br>最後更新：${t}`, 'ok');
-    }, err=>setCloudStatus(`<strong>即時同步中斷：</strong>${err.message}`, 'danger'));
-  }catch(err){
-    setCloudStatus(`<strong>訂閱失敗：</strong>${err.message}`, 'danger');
-  }
-}
-function scheduleCloudSave(){
-  if(remoteApplying || cloudPaused) return;
-  autoSyncEnabled = !!qs('cloudAutoSync')?.checked;
-  if(!autoSyncEnabled || !cloudReady || !currentUser) return;
-  clearTimeout(saveTimer);
-  saveTimer = setTimeout(()=>saveCloudNow(false), 1000);
-}
-function saveCloudConfig(){
-  try{
-    const cfg = getCloudConfig();
-    localStorage.setItem(CLOUD_CONFIG_KEY, JSON.stringify(cfg, null, 2));
-    setCloudStatus('<strong>Firebase 設定已儲存在本機。</strong><br>接著請按「Google 登入」。', 'ok');
-  }catch(err){
-    setCloudStatus(`<strong>Firebase 設定格式錯誤：</strong>${err.message}`, 'danger');
-  }
-}
-function loadCloudConfigLocal(){
-  const text = localStorage.getItem(CLOUD_CONFIG_KEY);
-  if(text && qs('firebaseConfigText')) qs('firebaseConfigText').value = text;
+function clearShareHash(){
+  history.replaceState(null, '', window.location.href.split('#')[0]);
+  if($('shareUrlText')) $('shareUrlText').value = '';
+  setShareStatus('<strong>已清除網址參數。</strong><br>目前仍保留本機已套用的數字。', 'warn');
 }
 
-loadCloudConfigLocal();
-qs('saveCloudConfigBtn')?.addEventListener('click', saveCloudConfig);
-qs('cloudSignInBtn')?.addEventListener('click', signInCloud);
-qs('cloudSignOutBtn')?.addEventListener('click', async()=>{ try{ if(auth) await signOut(auth); }catch(e){} });
-qs('cloudLoadBtn')?.addEventListener('click', ()=>loadCloudOnce(true));
-qs('cloudSaveBtn')?.addEventListener('click', ()=>saveCloudNow(true));
-qs('cloudPauseBtn')?.addEventListener('click', ()=>{
-  cloudPaused = !cloudPaused;
-  qs('cloudPauseBtn').textContent = cloudPaused ? '恢復自動同步' : '暫停自動同步';
-  setCloudStatus(cloudPaused ? '<strong>已暫停自動同步。</strong><br>本機可繼續試算，不會寫入雲端。' : '<strong>已恢復自動同步。</strong><br>後續修改會自動寫入雲端。', cloudPaused ? 'warn' : 'ok');
-});
-qs('cloudPlanId')?.addEventListener('input', ()=>{ if(currentUser) subscribeCloud(); });
-document.querySelectorAll('input').forEach(el=>{
-  if(['firebaseConfigText'].includes(el.id)) return;
-  el.addEventListener('input', scheduleCloudSave);
-});
+loadInputs(); loadCloudSetup(); applyShareFromHash(); Object.keys(defaults).forEach(k=>$(k).addEventListener('input',()=>{saveInputs(); calc();})); document.querySelectorAll('.portfolioInput').forEach(el=>el.addEventListener('input',()=>{saveInputs(); calc();})); $('cloudPlanId')?.addEventListener('input',()=>{try{localStorage.setItem(CLOUD_PLAN_KEY,getPlanId())}catch(e){}}); window.addEventListener('resize',calc); calc();
+$('createShareLinkBtn')?.addEventListener('click', createShareLink); $('copyShareLinkBtn')?.addEventListener('click', copyShareLink); $('clearShareLinkBtn')?.addEventListener('click', clearShareHash); window.addEventListener('hashchange', applyShareFromHash); $('saveGitHubTokenBtn')?.addEventListener('click', saveGitHubToken); $('cloudSyncBtn')?.addEventListener('click', cloudSync); $('cloudDownloadBtn')?.addEventListener('click', ()=>downloadFromCloud().catch(err=>setCloudStatus('<strong>下載失敗：</strong><br>'+String(err.message||err),'danger'))); $('cloudUploadBtn')?.addEventListener('click', ()=>uploadToCloud().catch(err=>setCloudStatus('<strong>上傳失敗：</strong><br>'+String(err.message||err),'danger'))); $('testGitHubTokenBtn')?.addEventListener('click', testGitHubToken); $('cloudClearBtn')?.addEventListener('click', clearCloudSetup);
 </script>
+
+
 
 </body>
 </html>
