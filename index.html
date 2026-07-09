@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CR-V 6 Prestige → Foxtron CAVIRA Emerge 十年換車成本、家充回收、真實電費與投資回本分析 V19 GitHub Gist One Button Sync</title>
+  <title>CR-V 6 Prestige → Foxtron CAVIRA Emerge 十年換車成本、家充回收、真實電費與投資回本分析 V20 Clean One Button GitHub Gist Sync</title>
   <style>
     :root{
       --bg:#07111f; --panel:#101d30; --panel2:#0c1728; --card:#13233a; --line:#263d5d;
@@ -54,6 +54,17 @@
     .cloudStatus strong{color:var(--text)}
     .cloudCode{display:inline-flex;padding:2px 7px;border-radius:8px;background:rgba(255,255,255,.08);font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;color:#ddecff}
 
+
+
+    .oneKeySync{position:absolute;right:4vw;top:28px;z-index:20;display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .oneKeySync button{cursor:pointer;border:0;border-radius:16px;background:linear-gradient(135deg,#7457ff,#49d4c6);color:#06101d;font-weight:1000;padding:13px 20px;font-size:15px;box-shadow:0 16px 34px rgba(73,212,198,.22)}
+    .oneKeySync span{font-size:12px;color:var(--muted);background:rgba(16,29,48,.82);border:1px solid rgba(255,255,255,.10);border-radius:999px;padding:7px 10px;max-width:280px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .modalOverlay{position:fixed;inset:0;background:rgba(0,0,0,.64);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;z-index:999;padding:18px}
+    .modalOverlay.show{display:flex}
+    .syncModal{width:min(680px,96vw);max-height:88vh;overflow:auto;background:linear-gradient(145deg,rgba(16,29,48,.98),rgba(7,17,31,.98));border:1px solid rgba(113,225,197,.24);box-shadow:0 28px 90px rgba(0,0,0,.55);border-radius:24px;padding:22px}
+    .syncModalHeader{display:flex;justify-content:space-between;gap:14px;align-items:start;margin-bottom:12px}.syncModalHeader h3{margin:0;font-size:23px}.syncModalHeader p{margin:5px 0 0;color:var(--muted);font-size:14px}.modalClose{cursor:pointer;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.08);color:var(--text);border-radius:12px;font-weight:900;padding:8px 11px}
+    .modalActions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.modalActions .cloudBtn{width:100%}.syncTip{font-size:12px;color:var(--muted);line-height:1.5;margin-top:10px}.syncTip a{color:var(--brand);font-weight:900}
+
     .chartBox{height:320px;padding:12px;background:rgba(7,17,31,.45);border:1px solid rgba(255,255,255,.06);border-radius:18px}canvas{width:100%;height:100%}.tableWrap{overflow:auto;border:1px solid rgba(255,255,255,.08);border-radius:18px}table{width:100%;border-collapse:collapse;min-width:720px}th,td{padding:13px 14px;text-align:right;border-bottom:1px solid rgba(255,255,255,.07)}th:first-child,td:first-child{text-align:left}th{background:rgba(255,255,255,.055);color:#ddecff;font-size:13px}td{color:var(--muted)}td strong{color:var(--text)}.pill{display:inline-flex;align-items:center;border-radius:999px;padding:5px 9px;font-size:12px;font-weight:900}.pill.ok{background:rgba(119,227,155,.13);color:var(--ok)}.pill.warn{background:rgba(255,198,109,.13);color:var(--warn)}.pill.danger{background:rgba(255,127,145,.13);color:var(--danger)}.totalRow{background:rgba(113,225,197,.075);position:sticky;bottom:0;z-index:1}.totalRow td{border-top:2px solid rgba(113,225,197,.28);border-bottom:0}.totalRow strong{font-size:17px}.totalRow strong.ok{color:var(--ok)}.totalRow strong.warn{color:var(--warn)}.totalRow strong.danger{color:var(--danger)}.weightNote{max-width:320px;color:var(--muted);line-height:1.45}.weightNote.ok{color:var(--ok)}.weightNote.warn{color:var(--warn)}
     .callout{border-radius:22px;padding:22px;background:linear-gradient(135deg,rgba(113,225,197,.16),rgba(129,169,255,.10));border:1px solid rgba(113,225,197,.22)}.callout h3{margin:0 0 10px}.callout ol{margin:10px 0 0;padding-left:23px;color:var(--muted)}.callout li{margin:6px 0}.noteList{display:grid;gap:10px}.noteItem{padding:14px 16px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.06);border-radius:16px;color:var(--muted)}
     footer{padding:36px 0 54px;color:var(--muted);font-size:13px}.source{border-top:1px solid rgba(255,255,255,.08);padding-top:18px}.printBtn{position:fixed;right:22px;bottom:22px;z-index:20;cursor:pointer;border:1px solid rgba(255,255,255,.12);background:rgba(16,29,48,.9);color:var(--text);padding:12px 16px;border-radius:999px;font-weight:900;box-shadow:var(--shadow);backdrop-filter:blur(10px)}
@@ -94,10 +105,11 @@
 <body>
   <button class="printBtn" onclick="window.print()">列印 / 匯出 PDF</button>
   <header>
+    <div class="oneKeySync"><button id="cloudSyncBtn" type="button">☁ 雲端同步</button><span id="cloudMiniStatus">未同步</span></div>
     <div class="wrap">
       <div class="eyebrow">十年總持有成本・貸款利息・家充回收・單筆投資回本模型｜月支出拆解可視化・真實台電帳單預估</div>
       <h1>CR-V 6 Prestige → Foxtron CAVIRA Emerge<br/>換車成本分析</h1>
-      <p class="subtitle">以目前里程 75,000 km、CAVIRA Emerge 預估購車價 127 萬、家充安裝 11.5 萬、房屋增貸金額與單筆投資金額均可調整，建立可重算的十年現金流模型，並加入你提供的台電帳單歷史資料，推估改為簡易型時間電價（二段式）且加入 CAVIRA 家充後，每一期可能出現的總電費。此 V19 版改用 GitHub Gist 作為雲端資料庫：第一次只需貼 GitHub Token，之後按「☁ 雲端同步」即可在電腦與手機之間同步同一組參數。</p>
+      <p class="subtitle">以目前里程 75,000 km、CAVIRA Emerge 預估購車價 127 萬、家充安裝 11.5 萬、房屋增貸金額與單筆投資金額均可調整，建立可重算的十年現金流模型，並加入你提供的台電帳單歷史資料，推估改為簡易型時間電價（二段式）且加入 CAVIRA 家充後，每一期可能出現的總電費。此 V20 版把雲端同步做成真正乾淨的一鍵式介面：平常只看到「☁ 雲端同步」；第一次需要 GitHub Token 時才彈出設定視窗。</p>
       <div class="topgrid">
         <div class="heroCard">
           <div class="carline">
@@ -118,52 +130,39 @@
             <p class="verdictText" id="verdictText">請調整下方參數，模型會自動重算。</p>
           </div>
           <div class="taglist">
-            <span class="tag">簡易時間電價</span><span class="tag">利息-only</span><span class="tag">本金/利息分離</span><span class="tag">投資回本檢查</span><span class="tag">GitHub Gist 雲端同步</span><span class="tag">油電成本差</span>
+            <span class="tag">簡易時間電價</span><span class="tag">利息-only</span><span class="tag">本金/利息分離</span><span class="tag">投資回本檢查</span><span class="tag">一鍵雲端同步</span><span class="tag">油電成本差</span>
           </div>
         </aside>
       </div>
     </div>
   </header>
 
-  <nav><div class="wrap"><a href="#inputs">參數設定</a><a href="#cloud">雲端同步</a><a href="#cost">成本比較</a><a href="#charger">家充回收</a><a href="#tou">每期電費預估</a><a href="#loan">貸款與投資</a><a href="#dca">每月定期定額</a><a href="#portfolio">台股投資組合</a><a href="#sensitivity">敏感度</a><a href="#strategy">結論建議</a><a href="#sources">資料來源</a></div></nav>
+  <nav><div class="wrap"><a href="#inputs">參數設定</a><a href="#cost">成本比較</a><a href="#charger">家充回收</a><a href="#tou">每期電費預估</a><a href="#loan">貸款與投資</a><a href="#dca">每月定期定額</a><a href="#portfolio">台股投資組合</a><a href="#sensitivity">敏感度</a><a href="#strategy">結論建議</a><a href="#sources">資料來源</a></div></nav>
 
-  <section id="cloudNotice"><div class="wrap"><div class="cloudTopNotice"><strong>V19 同步方式：</strong>參考你給的範例，改成 GitHub Gist 雲端同步。第一次貼入 GitHub Token 後，之後平常只要按「☁ 雲端同步」；電腦修改會上傳，手機開啟後按同一顆鍵會下載最新設定。<div class="steps"><span>1. 產生 GitHub Token，勾選 gist</span><span>2. 貼入本頁並儲存</span><span>3. 按雲端同步</span><span>4. 其他裝置用同一 Token 同步</span></div></div></div></section>
-
-  <section id="cloud"><div class="wrap">
-    <div class="sectionTitle"><h2>01｜GitHub Gist 雲端同步</h2><p class="hint">GitHub Pages 本身不能寫入資料，所以用你的 GitHub Gist 當私人雲端資料庫。Token 只存在你的瀏覽器 localStorage，不會寫進 HTML，也不會傳給我。</p></div>
-    <div class="cloudPanel">
-      <div class="cloudGrid">
+  <div class="modalOverlay" id="cloudModal" aria-hidden="true">
+    <div class="syncModal" role="dialog" aria-modal="true" aria-labelledby="cloudModalTitle">
+      <div class="syncModalHeader">
         <div>
-          <h3 style="margin-top:0">一鍵同步</h3>
-          <p class="smallText">第一次設定完成後，之後只需要按下方紫色按鈕。系統會自動判斷本機與雲端哪一邊比較新，該上傳就上傳、該下載就下載。</p>
-          <div class="cloudControls" style="grid-template-columns:1fr 1fr;margin-top:12px">
-            <button class="cloudBtn primary" id="cloudSyncBtn" type="button">☁ 雲端同步</button>
-            <button class="cloudBtn" id="cloudDownloadBtn" type="button">⬇ 強制下載雲端</button>
-            <button class="cloudBtn" id="cloudUploadBtn" type="button">⬆ 強制上傳本機</button>
-            <button class="cloudBtn danger" id="cloudClearBtn" type="button">清除本機 Token</button>
-          </div>
-          <div class="cloudStatus" id="cloudStatus" style="margin-top:12px"><strong>尚未同步。</strong><br>第一次請先貼入 GitHub Token，之後就只要按「☁ 雲端同步」。</div>
+          <h3 id="cloudModalTitle">第一次雲端同步設定</h3>
+          <p>平常只需要按「☁ 雲端同步」。只有第一次或換新裝置時，需要貼 GitHub Token。</p>
         </div>
-        <div>
-          <h3 style="margin-top:0">第一次設定，只做一次</h3>
-          <p class="smallText">請產生 GitHub Personal Access Token，權限只勾 <span class="cloudCode">gist</span>。這跟你給的範例邏輯一樣：資料會存在你自己的 GitHub Gist。</p>
-          <div class="field" style="margin-bottom:12px"><label>GitHub Token，只儲存在本機瀏覽器</label><input id="githubToken" type="password" placeholder="ghp_... 或 github_pat_..."><div class="suffix"><a href="https://github.com/settings/tokens/new?scopes=gist&description=CRV%20CAVIRA%20cost%20sync" target="_blank" rel="noopener" style="color:var(--brand)">點我產生 Token，勾選 gist</a></div></div>
-          <div class="field" style="margin-bottom:12px"><label>雲端方案 ID</label><input id="cloudPlanId" type="text" value="main"><div class="suffix">預設 main；可改 conservative / aggressive 建立多組方案</div></div>
-          <div class="cloudControls" style="grid-template-columns:1fr 1fr">
-            <button class="cloudBtn primary" id="saveGitHubTokenBtn" type="button">儲存 Token</button>
-            <button class="cloudBtn" id="testGitHubTokenBtn" type="button">測試連線</button>
-          </div>
-          <div class="noteList" style="margin-top:12px">
-            <div class="noteItem">換電腦或手機時，只要在新裝置也貼同一個 Token，按「☁ 雲端同步」就會抓到同一份資料。</div>
-            <div class="noteItem">Token 等於你的 Gist 鑰匙，不要放進公開 GitHub repo，也不要截圖公開。</div>
-          </div>
-        </div>
+        <button class="modalClose" id="cloudModalClose" type="button">關閉</button>
       </div>
+      <div class="cloudStatus" id="cloudStatus"><strong>尚未設定 Token。</strong><br>按下方連結產生 Token，權限只勾 gist，貼上後按「儲存並同步」。</div>
+      <div class="field" style="margin-top:12px"><label>GitHub Token，只儲存在本機瀏覽器</label><input id="githubToken" type="password" placeholder="ghp_... 或 github_pat_..."><div class="suffix"><a href="https://github.com/settings/tokens/new?scopes=gist&description=CRV%20CAVIRA%20cost%20sync" target="_blank" rel="noopener" style="color:var(--brand)">點我產生 Token，權限只勾 gist</a></div></div>
+      <div class="field" style="margin-top:12px"><label>雲端方案 ID</label><input id="cloudPlanId" type="text" value="main"><div class="suffix">預設 main；需要多組情境時可改 conservative / aggressive。</div></div>
+      <div class="modalActions">
+        <button class="cloudBtn primary" id="saveGitHubTokenBtn" type="button">儲存並同步</button>
+        <button class="cloudBtn" id="testGitHubTokenBtn" type="button">測試 Token</button>
+        <button class="cloudBtn" id="cloudDownloadBtn" type="button">⬇ 讀取雲端</button>
+        <button class="cloudBtn danger" id="cloudClearBtn" type="button">清除本機 Token</button>
+      </div>
+      <p class="syncTip">Token 等於你的 Gist 鑰匙，不要放進公開 repo 或截圖公開。設定完成後，這個視窗不用再開，主畫面只按一顆「☁ 雲端同步」即可。</p>
     </div>
-  </div></section>
+  </div>
 
   <section id="inputs"><div class="wrap">
-    <div class="sectionTitle"><h2>02｜關鍵假設，可直接改數字</h2><p class="hint">預設值採「目前 75,000 km 推估年里程約 43,000 km」、95 無鉛油價 31.3 元/L、CAVIRA 實測效率 5.37 km/kWh、家充離峰約 2.013 元/kWh，外充平均電價預設 7.5 元/kWh；貸款金額、單筆投資金額與定期定額金額皆可手動覆蓋。</p></div>
+    <div class="sectionTitle"><h2>01｜關鍵假設，可直接改數字</h2><p class="hint">預設值採「目前 75,000 km 推估年里程約 43,000 km」、95 無鉛油價 31.3 元/L、CAVIRA 實測效率 5.37 km/kWh、家充離峰約 2.013 元/kWh，外充平均電價預設 7.5 元/kWh；貸款金額、單筆投資金額與定期定額金額皆可手動覆蓋。</p></div>
     <div class="panel">
       <div class="inputs">
         <div class="field"><label>年行駛里程</label><input id="annualKm" type="number" value="43000"><div class="suffix">km / 年</div></div>
@@ -865,11 +864,24 @@ function cloudFileName(){ return `crv_cavira_cost_settings_${getPlanId()}.json`;
 function getGistMap(){ try{return JSON.parse(localStorage.getItem(CLOUD_GIST_MAP_KEY)||'{}')}catch(e){return{}} }
 function setGistIdForFile(file,id){ const m=getGistMap(); m[file]=id; localStorage.setItem(CLOUD_GIST_MAP_KEY,JSON.stringify(m)); }
 function getGistIdForFile(file){ return getGistMap()[file] || ''; }
-function setCloudStatus(msg, tone='normal'){
-  const el=$('cloudStatus'); if(!el) return;
-  el.innerHTML=msg;
-  el.style.borderColor = tone==='ok' ? 'rgba(119,227,155,.30)' : tone==='warn' ? 'rgba(255,198,109,.30)' : tone==='danger' ? 'rgba(255,127,145,.30)' : 'rgba(255,255,255,.08)';
+function stripHtmlText(html){
+  const d=document.createElement('div'); d.innerHTML=html; return (d.textContent||d.innerText||'').replace(/\s+/g,' ').trim();
+}
+function setCloudMini(msg, tone='normal'){
+  const el=$('cloudMiniStatus'); if(!el) return;
+  el.textContent=stripHtmlText(msg).slice(0,58) || '雲端同步';
   el.style.color = tone==='ok' ? 'var(--ok)' : tone==='warn' ? 'var(--warn)' : tone==='danger' ? 'var(--danger)' : 'var(--muted)';
+}
+function openCloudModal(){ const m=$('cloudModal'); if(m){m.classList.add('show'); m.setAttribute('aria-hidden','false'); setTimeout(()=>{$('githubToken')?.focus()},80);} }
+function closeCloudModal(){ const m=$('cloudModal'); if(m){m.classList.remove('show'); m.setAttribute('aria-hidden','true');} }
+function setCloudStatus(msg, tone='normal'){
+  const el=$('cloudStatus');
+  if(el){
+    el.innerHTML=msg;
+    el.style.borderColor = tone==='ok' ? 'rgba(119,227,155,.30)' : tone==='warn' ? 'rgba(255,198,109,.30)' : tone==='danger' ? 'rgba(255,127,145,.30)' : 'rgba(255,255,255,.08)';
+    el.style.color = tone==='ok' ? 'var(--ok)' : tone==='warn' ? 'var(--warn)' : tone==='danger' ? 'var(--danger)' : 'var(--muted)';
+  }
+  setCloudMini(msg,tone);
 }
 function saveGitHubToken(){
   const token = ($('githubToken')?.value || '').trim();
@@ -901,7 +913,7 @@ async function ghApi(path, opts={}){
   return await res.json();
 }
 function buildCloudPayload(){
-  return {app:'crv-cavira-cost-analysis', version:19, planId:getPlanId(), updatedAt:Date.now(), inputs:collectShareInputs()};
+  return {app:'crv-cavira-cost-analysis', version:20, planId:getPlanId(), updatedAt:Date.now(), inputs:collectShareInputs()};
 }
 function applyCloudPayload(payload){
   if(!payload || !payload.inputs) throw new Error('雲端資料格式不正確');
@@ -961,7 +973,7 @@ async function cloudSync(){
   try{
     const typed = ($('githubToken')?.value || '').trim();
     if(typed) saveGitHubToken();
-    if(!getGitHubToken()){ setCloudStatus('<strong>第一次同步需要 GitHub Token。</strong><br>點右側連結產生 Token，權限只勾 gist，貼上後按「儲存 Token」。','warn'); $('githubToken')?.focus(); return; }
+    if(!getGitHubToken()){ openCloudModal(); setCloudStatus('<strong>第一次同步需要 GitHub Token。</strong><br>設定只要一次：產生 Token，權限只勾 gist，貼上後按「儲存並同步」。','warn'); return; }
     setCloudStatus('<strong>同步中…</strong><br>正在比較本機與雲端資料。');
     const file = cloudFileName();
     const gist = await findOrCreateGist(file, true);
@@ -1015,7 +1027,7 @@ function applyShareInputs(data){
   return true;
 }
 function encodeShareData(data){
-  const json = JSON.stringify({v:18,t:Date.now(),inputs:data});
+  const json = JSON.stringify({v:20,t:Date.now(),inputs:data});
   return btoa(unescape(encodeURIComponent(json))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 }
 function decodeShareData(token){
@@ -1078,8 +1090,8 @@ function clearShareHash(){
   setShareStatus('<strong>已清除網址參數。</strong><br>目前仍保留本機已套用的數字。', 'warn');
 }
 
-loadInputs(); loadCloudSetup(); applyShareFromHash(); Object.keys(defaults).forEach(k=>$(k).addEventListener('input',()=>{saveInputs(); calc();})); document.querySelectorAll('.portfolioInput').forEach(el=>el.addEventListener('input',()=>{saveInputs(); calc();})); $('cloudPlanId')?.addEventListener('input',()=>{try{localStorage.setItem(CLOUD_PLAN_KEY,getPlanId())}catch(e){}}); window.addEventListener('resize',calc); calc();
-$('createShareLinkBtn')?.addEventListener('click', createShareLink); $('copyShareLinkBtn')?.addEventListener('click', copyShareLink); $('clearShareLinkBtn')?.addEventListener('click', clearShareHash); window.addEventListener('hashchange', applyShareFromHash); $('saveGitHubTokenBtn')?.addEventListener('click', saveGitHubToken); $('cloudSyncBtn')?.addEventListener('click', cloudSync); $('cloudDownloadBtn')?.addEventListener('click', ()=>downloadFromCloud().catch(err=>setCloudStatus('<strong>下載失敗：</strong><br>'+String(err.message||err),'danger'))); $('cloudUploadBtn')?.addEventListener('click', ()=>uploadToCloud().catch(err=>setCloudStatus('<strong>上傳失敗：</strong><br>'+String(err.message||err),'danger'))); $('testGitHubTokenBtn')?.addEventListener('click', testGitHubToken); $('cloudClearBtn')?.addEventListener('click', clearCloudSetup);
+loadInputs(); loadCloudSetup(); setCloudMini(getGitHubToken()?'<strong>Token 已設定，可同步</strong>':'<strong>未同步</strong>'); applyShareFromHash(); Object.keys(defaults).forEach(k=>$(k).addEventListener('input',()=>{saveInputs(); calc();})); document.querySelectorAll('.portfolioInput').forEach(el=>el.addEventListener('input',()=>{saveInputs(); calc();})); $('cloudPlanId')?.addEventListener('input',()=>{try{localStorage.setItem(CLOUD_PLAN_KEY,getPlanId())}catch(e){}}); window.addEventListener('resize',calc); calc();
+$('createShareLinkBtn')?.addEventListener('click', createShareLink); $('copyShareLinkBtn')?.addEventListener('click', copyShareLink); $('clearShareLinkBtn')?.addEventListener('click', clearShareHash); window.addEventListener('hashchange', applyShareFromHash); $('saveGitHubTokenBtn')?.addEventListener('click', ()=>{ if(saveGitHubToken()) cloudSync().then(()=>closeCloudModal()); }); $('cloudSyncBtn')?.addEventListener('click', cloudSync); $('cloudDownloadBtn')?.addEventListener('click', ()=>downloadFromCloud().then(()=>closeCloudModal()).catch(err=>setCloudStatus('<strong>下載失敗：</strong><br>'+String(err.message||err),'danger'))); $('testGitHubTokenBtn')?.addEventListener('click', testGitHubToken); $('cloudClearBtn')?.addEventListener('click', clearCloudSetup); $('cloudModalClose')?.addEventListener('click', closeCloudModal); $('cloudModal')?.addEventListener('click', e=>{ if(e.target.id==='cloudModal') closeCloudModal(); });
 </script>
 
 
