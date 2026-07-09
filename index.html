@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CR-V 6 Prestige → Foxtron CAVIRA Emerge 十年換車成本、家充回收、真實電費與投資回本分析 V20 Clean One Button GitHub Gist Sync</title>
+  <title>CR-V 6 Prestige → Foxtron CAVIRA Emerge 十年換車成本、家充回收、真實電費與投資回本分析 V21 Auto GitHub Gist Sync</title>
   <style>
     :root{
       --bg:#07111f; --panel:#101d30; --panel2:#0c1728; --card:#13233a; --line:#263d5d;
@@ -109,7 +109,7 @@
     <div class="wrap">
       <div class="eyebrow">十年總持有成本・貸款利息・家充回收・單筆投資回本模型｜月支出拆解可視化・真實台電帳單預估</div>
       <h1>CR-V 6 Prestige → Foxtron CAVIRA Emerge<br/>換車成本分析</h1>
-      <p class="subtitle">以目前里程 75,000 km、CAVIRA Emerge 預估購車價 127 萬、家充安裝 11.5 萬、房屋增貸金額與單筆投資金額均可調整，建立可重算的十年現金流模型，並加入你提供的台電帳單歷史資料，推估改為簡易型時間電價（二段式）且加入 CAVIRA 家充後，每一期可能出現的總電費。此 V20 版把雲端同步做成真正乾淨的一鍵式介面：平常只看到「☁ 雲端同步」；第一次需要 GitHub Token 時才彈出設定視窗。</p>
+      <p class="subtitle">以目前里程 75,000 km、CAVIRA Emerge 預估購車價 127 萬、家充安裝 11.5 萬、房屋增貸金額與單筆投資金額均可調整，建立可重算的十年現金流模型，並加入你提供的台電帳單歷史資料，推估改為簡易型時間電價（二段式）且加入 CAVIRA 家充後，每一期可能出現的總電費。此 V21 版加入自動雲端同步：第一次設定 Token 後，頁面開啟會自動讀取雲端，修改數字後約 2 秒自動上傳；右上角「☁ 雲端同步」仍保留作為手動立即同步。</p>
       <div class="topgrid">
         <div class="heroCard">
           <div class="carline">
@@ -472,6 +472,11 @@ const CLOUD_GIST_MAP_KEY = 'crv_cavira_gist_map_v19';
 const CLOUD_LOCAL_UPDATED_KEY = 'crv_cavira_local_updated_v19';
 const CLOUD_DESC = 'CRV_CAVIRA_COST_ANALYSIS_SYNC';
 let suppressLocalTimestamp = false;
+let autoSyncTimer = null;
+let autoSyncInFlight = false;
+let lastAutoSyncAt = 0;
+const AUTO_SYNC_DEBOUNCE_MS = 1800;
+const AUTO_SYNC_LOAD_DELAY_MS = 900;
 function resetDefaults(){
   localStorage.removeItem(STORAGE_KEY);
   Object.keys(defaults).forEach(k=>{ if($(k)) $(k).value=defaults[k]; });
@@ -913,7 +918,7 @@ async function ghApi(path, opts={}){
   return await res.json();
 }
 function buildCloudPayload(){
-  return {app:'crv-cavira-cost-analysis', version:20, planId:getPlanId(), updatedAt:Date.now(), inputs:collectShareInputs()};
+  return {app:'crv-cavira-cost-analysis', version:21, planId:getPlanId(), updatedAt:Date.now(), inputs:collectShareInputs()};
 }
 function applyCloudPayload(payload){
   if(!payload || !payload.inputs) throw new Error('雲端資料格式不正確');
@@ -1006,6 +1011,33 @@ function clearCloudSetup(){
   setCloudStatus('<strong>已清除本機雲端設定。</strong><br>Gist 雲端資料不會被刪除；下次貼回 Token 還可以再讀取。','warn');
 }
 
+function hasCloudToken(){ return !!getGitHubToken(); }
+function scheduleAutoSync(reason='input'){
+  if(!hasCloudToken()) return;
+  if(autoSyncTimer) clearTimeout(autoSyncTimer);
+  setCloudMini('<strong>自動同步排程中…</strong>', 'normal');
+  autoSyncTimer = setTimeout(()=>autoCloudSync(reason), AUTO_SYNC_DEBOUNCE_MS);
+}
+async function autoCloudSync(reason='auto'){
+  if(!hasCloudToken()) return;
+  if(document.hidden) return;
+  if(autoSyncInFlight) return;
+  autoSyncInFlight = true;
+  try{
+    await cloudSync();
+    lastAutoSyncAt = Date.now();
+  }catch(e){
+    setCloudMini('<strong>自動同步失敗，請手動同步</strong>', 'warn');
+  }finally{
+    autoSyncInFlight = false;
+  }
+}
+function bootAutoSync(){
+  if(!hasCloudToken()) return;
+  setCloudMini('<strong>自動同步已啟用</strong>', 'ok');
+  setTimeout(()=>autoCloudSync('load'), AUTO_SYNC_LOAD_DELAY_MS);
+}
+
 function collectShareInputs(){
   const data = {};
   document.querySelectorAll('input').forEach(el=>{
@@ -1027,7 +1059,7 @@ function applyShareInputs(data){
   return true;
 }
 function encodeShareData(data){
-  const json = JSON.stringify({v:20,t:Date.now(),inputs:data});
+  const json = JSON.stringify({v:21,t:Date.now(),inputs:data});
   return btoa(unescape(encodeURIComponent(json))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 }
 function decodeShareData(token){
@@ -1090,7 +1122,7 @@ function clearShareHash(){
   setShareStatus('<strong>已清除網址參數。</strong><br>目前仍保留本機已套用的數字。', 'warn');
 }
 
-loadInputs(); loadCloudSetup(); setCloudMini(getGitHubToken()?'<strong>Token 已設定，可同步</strong>':'<strong>未同步</strong>'); applyShareFromHash(); Object.keys(defaults).forEach(k=>$(k).addEventListener('input',()=>{saveInputs(); calc();})); document.querySelectorAll('.portfolioInput').forEach(el=>el.addEventListener('input',()=>{saveInputs(); calc();})); $('cloudPlanId')?.addEventListener('input',()=>{try{localStorage.setItem(CLOUD_PLAN_KEY,getPlanId())}catch(e){}}); window.addEventListener('resize',calc); calc();
+loadInputs(); loadCloudSetup(); setCloudMini(getGitHubToken()?'<strong>Token 已設定，自動同步待啟用</strong>':'<strong>未同步</strong>'); applyShareFromHash(); Object.keys(defaults).forEach(k=>$(k)?.addEventListener('input',()=>{saveInputs(); calc(); scheduleAutoSync('input');})); document.querySelectorAll('.portfolioInput').forEach(el=>el.addEventListener('input',()=>{saveInputs(); calc(); scheduleAutoSync('portfolio');})); $('cloudPlanId')?.addEventListener('input',()=>{try{localStorage.setItem(CLOUD_PLAN_KEY,getPlanId())}catch(e){} scheduleAutoSync('plan');}); window.addEventListener('resize',calc); window.addEventListener('focus',()=>autoCloudSync('focus')); document.addEventListener('visibilitychange',()=>{ if(!document.hidden) autoCloudSync('visible'); }); window.addEventListener('online',()=>autoCloudSync('online')); calc(); bootAutoSync();
 $('createShareLinkBtn')?.addEventListener('click', createShareLink); $('copyShareLinkBtn')?.addEventListener('click', copyShareLink); $('clearShareLinkBtn')?.addEventListener('click', clearShareHash); window.addEventListener('hashchange', applyShareFromHash); $('saveGitHubTokenBtn')?.addEventListener('click', ()=>{ if(saveGitHubToken()) cloudSync().then(()=>closeCloudModal()); }); $('cloudSyncBtn')?.addEventListener('click', cloudSync); $('cloudDownloadBtn')?.addEventListener('click', ()=>downloadFromCloud().then(()=>closeCloudModal()).catch(err=>setCloudStatus('<strong>下載失敗：</strong><br>'+String(err.message||err),'danger'))); $('testGitHubTokenBtn')?.addEventListener('click', testGitHubToken); $('cloudClearBtn')?.addEventListener('click', clearCloudSetup); $('cloudModalClose')?.addEventListener('click', closeCloudModal); $('cloudModal')?.addEventListener('click', e=>{ if(e.target.id==='cloudModal') closeCloudModal(); });
 </script>
 
