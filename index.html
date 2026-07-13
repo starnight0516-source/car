@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CR-V 6 Prestige → Foxtron CAVIRA Emerge 十年換車成本、家充回收、真實電費與投資回本分析 V21 Auto GitHub Gist Sync</title>
+  <title>CR-V 6 Prestige → Foxtron CAVIRA Emerge 十年換車成本、家充回收、真實電費、保養成本與投資回本分析 V23 Clear Final Conclusion Auto GitHub Gist Sync</title>
   <style>
     :root{
       --bg:#07111f; --panel:#101d30; --panel2:#0c1728; --card:#13233a; --line:#263d5d;
@@ -109,13 +109,13 @@
     <div class="wrap">
       <div class="eyebrow">十年總持有成本・貸款利息・家充回收・單筆投資回本模型｜月支出拆解可視化・真實台電帳單預估</div>
       <h1>CR-V 6 Prestige → Foxtron CAVIRA Emerge<br/>換車成本分析</h1>
-      <p class="subtitle">以目前里程 75,000 km、CAVIRA Emerge 預估購車價 127 萬、家充安裝 11.5 萬、房屋增貸金額與單筆投資金額均可調整，建立可重算的十年現金流模型，並加入你提供的台電帳單歷史資料，推估改為簡易型時間電價（二段式）且加入 CAVIRA 家充後，每一期可能出現的總電費。此 V21 版加入自動雲端同步：第一次設定 Token 後，頁面開啟會自動讀取雲端，修改數字後約 2 秒自動上傳；右上角「☁ 雲端同步」仍保留作為手動立即同步。</p>
+      <p class="subtitle">以目前里程 75,000 km、CAVIRA Emerge 預估購車價 127 萬、家充安裝 11.8 萬、房屋增貸金額與單筆投資金額均可調整，建立可重算的十年現金流模型，並加入你提供的台電帳單歷史資料，推估改為簡易型時間電價（二段式）且加入 CAVIRA 家充後，每一期可能出現的總電費。此 V22 版加入 CR-V 定保牌價/實際調整率模型與自動雲端同步：第一次設定 Token 後，頁面開啟會自動讀取雲端，修改數字後約 2 秒自動上傳；右上角「☁ 雲端同步」仍保留作為手動立即同步。</p>
       <div class="topgrid">
         <div class="heroCard">
           <div class="carline">
             <div class="car"><div class="label">原車</div><div class="name">Honda CR-V 6 Prestige</div><div class="label">2024.10 交車｜目前 75,000 km</div></div>
             <div class="arrow">→</div>
-            <div class="car"><div class="label">新車</div><div class="name">Foxtron CAVIRA Emerge</div><div class="label">預估車價 127 萬｜家充 11.5 萬</div></div>
+            <div class="car"><div class="label">新車</div><div class="name">Foxtron CAVIRA Emerge</div><div class="label">預估車價 127 萬｜家充 11.8 萬</div></div>
           </div>
           <div class="summary">
             <div class="kpi"><small>十年油費 vs 電費差額</small><b id="kpiEnergySaving">--</b><span class="unit">元</span></div>
@@ -137,7 +137,7 @@
     </div>
   </header>
 
-  <nav><div class="wrap"><a href="#inputs">參數設定</a><a href="#cost">成本比較</a><a href="#charger">家充回收</a><a href="#tou">每期電費預估</a><a href="#loan">貸款與投資</a><a href="#dca">每月定期定額</a><a href="#portfolio">台股投資組合</a><a href="#sensitivity">敏感度</a><a href="#strategy">結論建議</a><a href="#sources">資料來源</a></div></nav>
+  <nav><div class="wrap"><a href="#inputs">參數設定</a><a href="#cost">成本比較</a><a href="#charger">家充回收</a><a href="#tou">每期電費預估</a><a href="#loan">貸款與投資</a><a href="#dca">每月定期定額</a><a href="#portfolio">台股投資組合</a><a href="#sensitivity">敏感度</a><a href="#final">最終結論</a><a href="#strategy">操作建議</a><a href="#sources">資料來源</a></div></nav>
 
   <div class="modalOverlay" id="cloudModal" aria-hidden="true">
     <div class="syncModal" role="dialog" aria-modal="true" aria-labelledby="cloudModalTitle">
@@ -177,15 +177,18 @@
         <div class="field"><label>EV 離峰充電比例</label><input id="evOffpeakShare" type="number" step="1" value="100"><div class="suffix">%，預設全數半夜充電</div></div>
         <div class="field"><label>外充平均電價</label><input id="publicRate" type="number" step="0.1" value="7.5"><div class="suffix">元 / kWh，用來評估家充是否划算</div></div>
         <div class="field"><label>CAVIRA 車價</label><input id="newCarPrice" type="number" value="1270000"><div class="suffix">元</div></div>
-        <div class="field"><label>家充安裝費</label><input id="chargerCost" type="number" value="115000"><div class="suffix">元</div></div>
+        <div class="field"><label>家充安裝費</label><input id="chargerCost" type="number" value="118000"><div class="suffix">元</div></div>
         <div class="field"><label>房屋增貸 / 貸款金額</label><input id="loanPrincipal" type="number" step="10000" value="1400000"><div class="suffix">元；可改為實際增貸金額</div></div>
         <div class="field"><label>增貸年利率</label><input id="loanRate" type="number" step="0.01" value="3.6"><div class="suffix">% / 年，只繳利息</div></div>
         <div class="field"><label>中古車出售金額</label><input id="saleValue" type="number" step="10000" value="750000"><div class="suffix">元，預設取 70–80 萬中位數；作為行情參考</div></div>
         <div class="field"><label>單筆投資金額</label><input id="lumpInvestment" type="number" step="10000" value="750000"><div class="suffix">元；預設等於售車款，可改成實際投入金額</div></div>
         <div class="field"><label>單筆投資報酬率</label><input id="investRate" type="number" step="0.1" value="6.40"><div class="suffix">% / 年，預設同步台股組合</div></div>
         <div class="field"><label>定期定額月投入</label><input id="manualDca" type="number" step="100" value="0"><div class="suffix">元 / 月；0 = 自動採扣息後節省</div></div>
-        <div class="field"><label>CR-V 其他年成本</label><input id="crvOther" type="number" value="0"><div class="suffix">保養、稅金、維修，可自行填</div></div>
-        <div class="field"><label>CAVIRA 其他年成本</label><input id="evOther" type="number" value="0"><div class="suffix">保養、保險、輪胎，可自行填</div></div>
+        <div class="field"><label>CR-V 每萬公里定保</label><input id="crvMaintPer10k" type="number" step="100" value="4705"><div class="suffix">元 / 10,000 km；依新聞牌價 1–6 萬平均，不含初次</div></div>
+        <div class="field"><label>CR-V 實際保養調整率</label><input id="crvMaintFactor" type="number" step="5" value="110"><div class="suffix">%，實際帳單常與牌價不同，可用 90–130%</div></div>
+        <div class="field"><label>CAVIRA 年保養預估</label><input id="evMaintAnnual" type="number" step="1000" value="8000"><div class="suffix">元 / 年；未有長期實績前先用保守值</div></div>
+        <div class="field"><label>CR-V 其他年成本</label><input id="crvOther" type="number" value="0"><div class="suffix">稅金、輪胎、維修；不含定保，避免重複計算</div></div>
+        <div class="field"><label>CAVIRA 其他年成本</label><input id="evOther" type="number" value="0"><div class="suffix">保險、輪胎、維修；不含定保，避免重複計算</div></div>
         <button class="resetBtn" onclick="resetDefaults()">恢復預設值</button>
       </div>
     </div>
@@ -202,13 +205,18 @@
         <div class="metric"><span>CR-V 年油費</span><strong id="crvFuelAnnual">--</strong></div>
         <div class="metric"><span>CAVIRA 年電費</span><strong id="evElecAnnual">--</strong></div>
         <div class="metric"><span>每年油電成本節省</span><strong class="ok" id="energySavingAnnual">--</strong></div>
+        <div class="metric"><span>CR-V 年定保費，依牌價×調整率</span><strong id="crvMaintAnnualOut">--</strong></div>
+        <div class="metric"><span>CAVIRA 年保養預估</span><strong id="evMaintAnnualOut">--</strong></div>
+        <div class="metric"><span>每年保養成本節省</span><strong class="ok" id="maintSavingAnnual">--</strong></div>
+        <div class="metric"><span>每年能源 + 保養節省</span><strong class="ok" id="totalSavingAnnual">--</strong></div>
         <div class="metric"><span>每年貸款利息</span><strong class="warn" id="loanInterestAnnual">--</strong></div>
         <div class="metric"><span>扣除利息後每年現金流改善</span><strong id="netCashAnnual">--</strong></div>
         <div class="metric"><span>CR-V 每月油費</span><strong id="crvFuelMonthly">--</strong></div>
         <div class="metric"><span>CAVIRA 每月電費，含基本費</span><strong id="evElecMonthly">--</strong></div>
         <div class="metric"><span>每月貸款利息</span><strong class="warn" id="loanInterestMonthly">--</strong></div>
         <div class="metric"><span>換車後每月支出，電費 + 利息</span><strong id="evMonthlyOutflow">--</strong></div>
-        <div class="metric"><span>扣除電費與利息後，每月現金流改善</span><strong id="netCashMonthly">--</strong></div>
+        <div class="metric"><span>每月保養成本差額</span><strong class="ok" id="maintSavingMonthly">--</strong></div>
+        <div class="metric"><span>扣除電費、利息與保養後，每月現金流改善</span><strong id="netCashMonthly">--</strong></div>
       </div>
       <div class="panel">
         <h3>十年累計成本比較</h3>
@@ -222,8 +230,28 @@
     </div>
   </div></section>
 
+  <section id="maintenance"><div class="wrap">
+    <div class="sectionTitle"><h2>03-1｜CR-V 定期保養牌價與實際帳單調整</h2><p class="hint">你提供的新聞表格可當「牌價基準」，但實際每次進廠會因工資、耗材、活動券、店別與加做項目不同而變動。因此模型採「每萬公里牌價 × 實際調整率」計算，避免把 4,800 元硬當永久固定值。</p></div>
+    <div class="grid two">
+      <div class="panel">
+        <h3>牌價基準摘要</h3>
+        <div class="metric"><span>1–6 萬定保牌價合計，不含初次</span><strong>28,227 元</strong></div>
+        <div class="metric"><span>平均每萬公里定保牌價</span><strong>4,705 元</strong></div>
+        <div class="metric"><span>目前模型採用實際調整率</span><strong id="crvMaintFactorOut">--</strong></div>
+        <div class="metric"><span>模型換算每萬公里實際定保</span><strong id="crvMaintActualPer10kOut">--</strong></div>
+      </div>
+      <div class="panel">
+        <h3>高里程下的影響</h3>
+        <div class="metric"><span>依目前年里程估 CR-V 年定保</span><strong id="crvMaintAnnualOut2">--</strong></div>
+        <div class="metric"><span>依目前年里程估 CAVIRA 年保養</span><strong id="evMaintAnnualOut2">--</strong></div>
+        <div class="metric"><span>十年保養差額</span><strong class="ok" id="maintSavingTen">--</strong></div>
+        <p>建議把後續實際 Honda 保養發票持續回填到「CR-V 實際保養調整率」。若實際常比牌價高，CAVIRA 的總成本優勢會再放大。</p>
+      </div>
+    </div>
+  </div></section>
+
   <section id="charger"><div class="wrap">
-    <div class="sectionTitle"><h2>04｜家用充電樁 11.5 萬，是否划算？</h2><p class="hint">此區把家充安裝費視為一筆前期投資，跟「若沒有家充、主要靠外充」相比。外充平均電價可在上方調整；預設 7.5 元/kWh 是用來做保守中位數試算，實際依充電品牌、尖離峰、會員方案與停車費而變動。</p></div>
+    <div class="sectionTitle"><h2>04｜家用充電樁 11.8 萬，是否划算？</h2><p class="hint">此區把家充安裝費視為一筆前期投資，跟「若沒有家充、主要靠外充」相比。外充平均電價可在上方調整；預設 7.5 元/kWh 是用來做保守中位數試算，實際依充電品牌、尖離峰、會員方案與停車費而變動。</p></div>
     <div class="grid two">
       <div class="panel">
         <h3>家充 vs 外充年度成本</h3>
@@ -422,8 +450,44 @@
     </div>
   </div></section>
 
+  <section id="final"><div class="wrap">
+    <div class="sectionTitle"><h2>07｜最終結論：可直接拿去說明</h2><p class="hint">這一區會依目前輸入參數自動整理成「決策結論」、「財務證據」與「風險條件」，重點是讓人一看就知道到底該不該換。</p></div>
+    <div class="panel" style="background:linear-gradient(145deg,rgba(113,225,197,.13),rgba(129,169,255,.09)),rgba(16,29,48,.94);border-color:rgba(113,225,197,.22)">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:10px">
+        <h3 id="finalVerdictTitle" style="font-size:24px;margin:0">計算中…</h3>
+        <span class="portfolioBadge" id="finalVerdictBadge" style="font-size:13px;padding:7px 12px">--</span>
+      </div>
+      <p id="finalVerdictLead" style="font-size:17px;color:#d7e6ff;margin:10px 0 0">請調整參數，系統會自動產出結論。</p>
+    </div>
+    <div class="grid four" style="margin-top:18px">
+      <div class="panel"><h3>十年能源 + 保養節省</h3><div class="metric"><span>相較繼續開 CR-V</span><strong class="ok" id="finalSaving10">--</strong></div><p class="smallText">含油電差與 CR-V / CAVIRA 保養差額。</p></div>
+      <div class="panel"><h3>扣貸款利息後</h3><div class="metric"><span>十年現金流改善</span><strong id="finalNetCash10">--</strong></div><p class="smallText">利息已在此扣除，後面投資還本不再重複扣息。</p></div>
+      <div class="panel"><h3>投資還本結果</h3><div class="metric"><span>還掉本金後餘額</span><strong id="finalAfterLoan">--</strong></div><p class="smallText">單筆投資 + 每月定期定額，十年後扣除貸款本金。</p></div>
+      <div class="panel"><h3>家充划算度</h3><div class="metric"><span>安裝費回收期</span><strong id="finalChargerPayback">--</strong></div><p class="smallText" id="finalChargerText">以家充 vs 外充價差估算。</p></div>
+    </div>
+    <div class="grid two" style="margin-top:18px">
+      <div class="panel">
+        <h3>白話說明版</h3>
+        <div class="noteList">
+          <div class="noteItem" id="finalExplain1">--</div>
+          <div class="noteItem" id="finalExplain2">--</div>
+          <div class="noteItem" id="finalExplain3">--</div>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>太座審核版一句話</h3>
+        <p id="finalSpouseLine" style="font-size:18px;color:#eef5ff;font-weight:900;line-height:1.65">--</p>
+        <div class="noteList" style="margin-top:14px">
+          <div class="noteItem" id="finalRisk1">--</div>
+          <div class="noteItem" id="finalRisk2">--</div>
+          <div class="noteItem" id="finalRisk3">--</div>
+        </div>
+      </div>
+    </div>
+  </div></section>
+
   <section id="strategy"><div class="wrap">
-    <div class="sectionTitle"><h2>07｜策略結論</h2><p class="hint">模型不是叫你閉著眼睛衝，是幫你知道哪幾顆螺絲要鎖緊。車很香，帳也要漂亮，才不會回家被太座查帳查到冒汗。</p></div>
+    <div class="sectionTitle"><h2>08｜操作建議</h2><p class="hint">模型不是叫你閉著眼睛衝，是幫你知道哪幾顆螺絲要鎖緊。車很香，帳也要漂亮，才不會回家被太座查帳查到冒汗。</p></div>
     <div class="grid two">
       <div class="panel">
         <h3>目前預設值下的判斷</h3>
@@ -451,14 +515,14 @@
     U-CAR Foxtron CAVIRA Emerge 試駕資料：車價區間、82.7 kWh LFP、Emerge 能耗與實測效率。<br/>
     台灣中油 / 油價查詢結果：95 無鉛汽油預設採 31.3 元/L。<br/>
     台灣證券交易所 ETF e添富：0050、006208 為大型權值核心；0052、00881 為科技主題型 ETF；00981A、00982A、00991A 為主動式台股成長 ETF。個股衛星參考 AI / 半導體 / AI 伺服器供應鏈與 2026 年最新市場資訊，包含 2330、2308、2382、2317。高股息 ETF 00878、0056、00919 已從預設組合移除。<br/><br/>
-    使用者提供之台電 App 帳單截圖：113/11～115/05 共 10 期，每期用電度數與金額已整理於「真實家用電費」區塊。
-    <br/>重要限制：本網頁預設未納入保險、保養、輪胎、停車、事故維修、稅金政策變動與十年後殘值。上述項目可填入「其他年成本」欄位做保守估算。本模型為財務試算工具，不構成投資建議。
+    使用者提供之台電 App 帳單截圖：113/11～115/05 共 10 期，每期用電度數與金額已整理於「真實家用電費」區塊。使用者提供之 Honda CR-V 6 萬公里定期保養牌價表：1–6 萬公里定保合計 28,227 元，平均每萬公里約 4,705 元；實際帳單可用調整率修正。
+    <br/>重要限制：本網頁已納入可調整的 CR-V / CAVIRA 定保模型，但仍未納入保險、輪胎、停車、事故維修、稅金政策變動與十年後殘值；上述項目可填入「其他年成本」欄位做保守估算。本模型為財務試算工具，不構成投資建議。
   </div></footer>
 
 <script>
 const defaults = {
   annualKm:43000, years:10, fuelEff:12, fuelPrice:31.3, evEff:5.37, chargeLoss:10, elecRate:2.013, basicFee:75, homePeakShare:55, evOffpeakShare:100, publicRate:7.5,
-  newCarPrice:1270000, chargerCost:115000, loanPrincipal:1400000, loanRate:3.6, saleValue:750000, lumpInvestment:750000, investRate:8.60, manualDca:0, crvOther:0, evOther:0
+  newCarPrice:1270000, chargerCost:118000, loanPrincipal:1400000, loanRate:3.6, saleValue:750000, lumpInvestment:750000, investRate:8.60, manualDca:0, crvMaintPer10k:4705, crvMaintFactor:110, evMaintAnnual:8000, crvOther:0, evOther:0
 };
 const $ = id => document.getElementById(id);
 const money = n => new Intl.NumberFormat('zh-TW',{maximumFractionDigits:0}).format(Math.round(n));
@@ -531,7 +595,7 @@ function applyMobileTableLabels(){
 
 function calc(){
   const annualKm=val('annualKm'), years=val('years'), fuelEff=val('fuelEff'), fuelPrice=val('fuelPrice'), evEff=val('evEff'), chargeLoss=val('chargeLoss')/100, elecRate=val('elecRate'), basicFee=val('basicFee'), homePeakShare=val('homePeakShare')/100, evOffpeakShare=val('evOffpeakShare')/100, publicRate=val('publicRate');
-  const loanPrincipal=val('loanPrincipal'), loanRate=val('loanRate')/100, saleValue=val('saleValue'), lumpInvestment=val('lumpInvestment'), crvOther=val('crvOther'), evOther=val('evOther'), chargerCost=val('chargerCost');
+  const newCarPrice=val('newCarPrice'), loanPrincipal=val('loanPrincipal'), loanRate=val('loanRate')/100, saleValue=val('saleValue'), lumpInvestment=val('lumpInvestment'), crvMaintPer10k=val('crvMaintPer10k'), crvMaintFactor=val('crvMaintFactor')/100, evMaintAnnual=val('evMaintAnnual'), crvOther=val('crvOther'), evOther=val('evOther'), chargerCost=val('chargerCost');
   const portfolioRates = getPortfolioRates();
   const portfolioRateRaw = portfolioRates.lumpRate;
   const portfolioDcaRateRaw = portfolioRates.dcaRate;
@@ -542,6 +606,9 @@ function calc(){
   const crvFuelAnnual = annualKm / fuelEff * fuelPrice;
   const evGridKwhAnnual = annualKm / evEff * (1+chargeLoss);
   const evElecAnnual = evGridKwhAnnual * elecRate + basicFee*12;
+  const crvMaintAnnual = annualKm / 10000 * crvMaintPer10k * crvMaintFactor;
+  const evMaintAnnualUsed = evMaintAnnual;
+  const maintSavingAnnual = crvMaintAnnual - evMaintAnnualUsed;
   const publicChargeAnnual = evGridKwhAnnual * publicRate;
   const homeVsPublicSaving = publicChargeAnnual - evElecAnnual;
   const chargerPayback = homeVsPublicSaving > 0 ? chargerCost / homeVsPublicSaving : Infinity;
@@ -551,10 +618,11 @@ function calc(){
   const rateGap = publicRate - elecRate;
   const chargerBreakEvenKm = rateGap > 0 ? ((chargerCost / years) + basicFee*12) / (((1+chargeLoss) / evEff) * rateGap) : Infinity;
   const energySavingAnnual = crvFuelAnnual - evElecAnnual;
+  const totalSavingAnnual = energySavingAnnual + maintSavingAnnual;
   const loanInterestAnnual = loanPrincipal * loanRate;
-  const netCashAnnual = energySavingAnnual - loanInterestAnnual + (crvOther - evOther);
-  const crvTenCost = (crvFuelAnnual + crvOther) * years;
-  const evTenCost = (evElecAnnual + evOther) * years;
+  const netCashAnnual = totalSavingAnnual - loanInterestAnnual + (crvOther - evOther);
+  const crvTenCost = (crvFuelAnnual + crvMaintAnnual + crvOther) * years;
+  const evTenCost = (evElecAnnual + evMaintAnnualUsed + evOther) * years;
   const interestTotal = loanInterestAnnual * years;
   const netTenSaving = crvTenCost - evTenCost - interestTotal;
   const investmentFV = lumpInvestment * Math.pow(1+investRate, years);
@@ -594,6 +662,16 @@ function calc(){
     $('chargerJudgement').innerHTML = homeChargerNetTen>=0 ? `以目前年里程與外充平均電價 ${publicRate.toFixed(1)} 元/kWh 估算，家充約 <strong>${chargerPayback.toFixed(1)} 年</strong>回收，十年扣除安裝費後仍多省 <strong>${money(homeChargerNetTen)} 元</strong>。結論：財務上划算，而且便利性也加分。` : `以目前條件估算，十年扣除安裝費後仍為 <strong>${moneySigned(homeChargerNetTen)} 元</strong>，代表家充純財務回收不足；除非外充比例高、外充價格較貴，或把便利性列入價值。`;
   }
   $('energySavingAnnual').textContent = money(energySavingAnnual)+' 元';
+  if($('crvMaintAnnualOut')) $('crvMaintAnnualOut').textContent = money(crvMaintAnnual)+' 元';
+  if($('evMaintAnnualOut')) $('evMaintAnnualOut').textContent = money(evMaintAnnualUsed)+' 元';
+  if($('maintSavingAnnual')) $('maintSavingAnnual').textContent = moneySigned(maintSavingAnnual)+' 元';
+  if($('totalSavingAnnual')) $('totalSavingAnnual').textContent = moneySigned(totalSavingAnnual)+' 元';
+  if($('maintSavingMonthly')) $('maintSavingMonthly').textContent = moneySigned(maintSavingAnnual/12)+' 元 / 月';
+  if($('crvMaintFactorOut')) $('crvMaintFactorOut').textContent = (crvMaintFactor*100).toFixed(0)+'%';
+  if($('crvMaintActualPer10kOut')) $('crvMaintActualPer10kOut').textContent = money(crvMaintPer10k*crvMaintFactor)+' 元 / 萬公里';
+  if($('crvMaintAnnualOut2')) $('crvMaintAnnualOut2').textContent = money(crvMaintAnnual)+' 元 / 年';
+  if($('evMaintAnnualOut2')) $('evMaintAnnualOut2').textContent = money(evMaintAnnualUsed)+' 元 / 年';
+  if($('maintSavingTen')) $('maintSavingTen').textContent = moneySigned(maintSavingAnnual*years)+' 元';
   $('loanInterestAnnual').textContent = money(loanInterestAnnual)+' 元';
   $('netCashAnnual').textContent = moneySigned(netCashAnnual)+' 元';
   $('netCashAnnual').className = netCashAnnual>=0?'ok':'danger';
@@ -639,6 +717,44 @@ function calc(){
   $('strategy1').innerHTML = `以年里程 <strong>${money(annualKm)} km</strong>、CR-V 油耗 <strong>${fuelEff.toFixed(1)} km/L</strong>、CAVIRA 家充為主估算，十年油電差額約 <strong>${money(energySavingAnnual*years)} 元</strong>。`;
   $('strategy2').innerHTML = `房屋增貸 / 貸款金額 <strong>${money(loanPrincipal)} 元</strong>，採只繳利息估算；年利率 <strong>${(loanRate*100).toFixed(2)}%</strong> 時，十年利息約 <strong>${money(interestTotal)} 元</strong>。這筆利息已在年度現金流中扣除；每月利息約 <strong>${money(loanInterestAnnual/12)} 元</strong>，CAVIRA 每月電費約 <strong>${money(evElecAnnual/12)} 元</strong>，扣除後十年現金流約 <strong>${moneySigned(netTenSaving)} 元</strong>。`;
   $('strategy3').innerHTML = `中古車出售行情目前輸入 <strong>${money(saleValue)} 元</strong>；本模型採用單筆投資金額 <strong>${money(lumpInvestment)} 元</strong>，需年化約 <strong>${pct(breakEvenRate)}</strong> 才能十年後剛好償還貸款本金。若每月再把設定投入金額 <strong>${money(monthlyDca)} 元</strong> 定期定額投入，十年後合計資產約 <strong>${money(combinedFV)} 元</strong>，扣本金後為 <strong>${moneySigned(combinedGap)} 元</strong>。目前單筆投資估算年化為 <strong>${pct(investRate)}</strong>，定期定額估算年化為 <strong>${pct(dcaInvestRate)}</strong>。`;
+  if($('finalVerdictTitle')){
+    const purchaseTotal = newCarPrice + chargerCost;
+    const netPurchaseAfterSale = purchaseTotal - saleValue;
+    const savingTen = totalSavingAnnual * years;
+    const costOnlyBenefit = savingTen - netPurchaseAfterSale;
+    const finalStatusGood = combinedGap >= 0 && netCashAnnual >= 0;
+    const finalStatusCaution = combinedGap >= 0 || netCashAnnual >= 0;
+    $('finalSaving10').textContent = moneySigned(savingTen)+' 元';
+    $('finalNetCash10').textContent = moneySigned(netTenSaving)+' 元';
+    $('finalNetCash10').className = netTenSaving>=0?'ok':'danger';
+    $('finalAfterLoan').textContent = moneySigned(combinedGap)+' 元';
+    $('finalAfterLoan').className = combinedGap>=0?'ok':'danger';
+    $('finalChargerPayback').textContent = isFinite(chargerPayback) ? chargerPayback.toFixed(1)+' 年' : '無法回收';
+    $('finalChargerPayback').className = (isFinite(chargerPayback) && chargerPayback<=years)?'ok':'danger';
+    $('finalChargerText').textContent = homeChargerNetTen>=0 ? `十年扣除安裝費後，家充相較外充約多省 ${money(homeChargerNetTen)} 元。` : `以目前外充價差估算，十年仍差 ${money(Math.abs(homeChargerNetTen))} 元才回收。`;
+    if(finalStatusGood){
+      $('finalVerdictTitle').textContent='結論：以目前參數，換 CAVIRA 財務上成立';
+      $('finalVerdictBadge').textContent='建議：可執行';
+      $('finalVerdictLead').innerHTML=`關鍵不是「新車比較便宜」，而是你的年里程夠高，讓油電差與保養差額形成穩定現金流。十年能源 + 保養約省 <strong>${money(savingTen)} 元</strong>，投資資產十年後還掉 <strong>${money(loanPrincipal)} 元</strong>本金後，仍約 <strong>${money(combinedGap)} 元</strong>餘額。`;
+    }else if(finalStatusCaution){
+      $('finalVerdictTitle').textContent='結論：方向可行，但要鎖住投資與現金流條件';
+      $('finalVerdictBadge').textContent='建議：保守執行';
+      $('finalVerdictLead').innerHTML=`換車本身有成本優勢，但安全墊還不夠厚。十年能源 + 保養約省 <strong>${money(savingTen)} 元</strong>，投資還本後結果為 <strong>${moneySigned(combinedGap)} 元</strong>；建議提高單筆投入、月投入，或降低貸款本金。`;
+    }else{
+      $('finalVerdictTitle').textContent='結論：目前參數不建議直接執行';
+      $('finalVerdictBadge').textContent='建議：先調整條件';
+      $('finalVerdictLead').innerHTML=`目前試算下，扣息後現金流或十年投資還本結果不夠漂亮。建議先重新談舊車出售金額、貸款利率、家充條件或投資月投入，避免變成用薪水硬扛新車。`;
+    }
+    $('finalExplain1').innerHTML=`<strong>車價與家充：</strong>CAVIRA 車價 ${money(newCarPrice)} 元 + 家充 ${money(chargerCost)} 元，合計 <strong>${money(purchaseTotal)} 元</strong>；若 CR-V 賣出 ${money(saleValue)} 元，淨投入約 <strong>${money(netPurchaseAfterSale)} 元</strong>。`;
+    $('finalExplain2').innerHTML=`<strong>用車成本：</strong>CR-V 年油費約 ${money(crvFuelAnnual)} 元，CAVIRA 年電費約 ${money(evElecAnnual)} 元；加上保養差額後，每年總節省約 <strong>${money(totalSavingAnnual)} 元</strong>，十年約 <strong>${money(savingTen)} 元</strong>。`;
+    $('finalExplain3').innerHTML=`<strong>貸款與投資：</strong>貸款只繳息時，每年利息約 ${money(loanInterestAnnual)} 元；扣利息後每月可改善約 <strong>${money(netCashAnnual/12)} 元</strong>。單筆投資 + 定期定額十年後約 <strong>${money(combinedFV)} 元</strong>，還本金後為 <strong>${moneySigned(combinedGap)} 元</strong>。`;
+    $('finalSpouseLine').innerHTML = finalStatusGood
+      ? `這不是用薪水硬買車，而是把原本會燒掉的油錢與高里程保養費，轉成電費、利息與投資資產；十年後有機會還掉本金，車還在，資產還有剩。`
+      : `這個案子要成立，不能只看車很香；必須讓每月扣息後現金流維持正數，並讓投資十年後足夠還本金。`;
+    $('finalRisk1').innerHTML=`<strong>成立條件 1：</strong>年里程要維持在高水準，目前輸入為 ${money(annualKm)} km / 年；里程越低，油電差優勢越小。`;
+    $('finalRisk2').innerHTML=`<strong>成立條件 2：</strong>家充要盡量離峰，且外充只能當輔助；如果大量快充，能源成本會明顯上升。`;
+    $('finalRisk3').innerHTML=`<strong>成立條件 3：</strong>投資報酬不是保證，建議保留安全墊；若市場不好，至少每月現金流仍要能正向支撐。`;
+  }
   drawCostChart(crvTenCost, evTenCost, interestTotal);
   drawFVChart(lumpInvestment, investRate, years, loanPrincipal, monthlyDca, dcaInvestRate);
   drawDcaTable(lumpInvestment, investRate, years, loanPrincipal, monthlyDca, dcaInvestRate);
