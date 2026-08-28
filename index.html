@@ -1,329 +1,261 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-Hant-TW">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="theme-color" content="#0b5cff" />
-<title>CAVIRA 換車成本帳本</title>
+<title>CAVIRA 購車費用帳本</title>
 <style>
 :root{
-  --bg:#f4f7fb;--card:#ffffff;--ink:#10213a;--muted:#6d7b90;--line:#dfe7f2;
-  --blue:#0b5cff;--blue2:#26a7ff;--green:#18a66a;--orange:#f39a24;--red:#df4d4d;
-  --navy:#0f213c;--shadow:0 14px 40px rgba(25,57,102,.10);--radius:22px;
+  --bg:#f5f8fc; --card:#ffffff; --ink:#10223f; --muted:#6c7a90; --line:#dbe4f0;
+  --blue:#0b5cff; --blue2:#16a3ff; --green:#1aa86f; --orange:#ff9f1a; --red:#e64a52;
+  --shadow:0 12px 32px rgba(15,43,77,.09); --radius:22px;
 }
-*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","Microsoft JhengHei",sans-serif;background:linear-gradient(180deg,#eaf4ff 0,#f7f9fd 280px,#f4f7fb 100%);color:var(--ink)}
-button,input,select,textarea{font:inherit} button{cursor:pointer}.app{max-width:1480px;margin:auto;padding:18px 20px 80px}
-.hero{background:linear-gradient(135deg,#082756 0%,#0b5cff 52%,#24b0ff 100%);border-radius:28px;color:#fff;padding:26px 28px;box-shadow:0 20px 55px rgba(11,92,255,.26);position:relative;overflow:hidden}
-.hero:after{content:"";position:absolute;right:-90px;top:-120px;width:390px;height:390px;border:70px solid rgba(255,255,255,.08);border-radius:50%}.heroRow{display:flex;gap:18px;justify-content:space-between;align-items:center;position:relative;z-index:2}.eyebrow{font-weight:800;letter-spacing:.08em;opacity:.8;font-size:13px}.hero h1{font-size:clamp(30px,5vw,54px);margin:5px 0 8px;line-height:1.05}.hero p{margin:0;max-width:800px;opacity:.9;line-height:1.65}.heroActions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}.btn{border:0;border-radius:14px;padding:12px 16px;font-weight:800;transition:.18s;display:inline-flex;align-items:center;justify-content:center;gap:7px}.btn:hover{transform:translateY(-1px)}.btnPrimary{background:#fff;color:#0b5cff}.btnGlass{background:rgba(255,255,255,.13);color:#fff;border:1px solid rgba(255,255,255,.2)}.btnDark{background:var(--navy);color:#fff}.btnBlue{background:var(--blue);color:#fff}.btnSoft{background:#edf4ff;color:#144d99;border:1px solid #d6e6ff}.btnDanger{background:#fff0f0;color:#b92e2e;border:1px solid #ffd3d3}.btnSmall{padding:8px 11px;border-radius:10px;font-size:13px}
-.syncStatus{font-size:12px;margin-top:8px;text-align:right;opacity:.78}
-.tabs{position:sticky;top:0;z-index:20;margin:16px 0;background:rgba(244,247,251,.88);backdrop-filter:blur(15px);padding:8px;border-radius:18px;display:flex;gap:7px;overflow:auto;box-shadow:0 8px 30px rgba(20,50,90,.08)}.tabs button{flex:0 0 auto;border:0;border-radius:12px;padding:10px 13px;color:#4c617d;background:transparent;font-weight:800}.tabs button.active{background:#fff;color:var(--blue);box-shadow:0 5px 18px rgba(31,74,130,.10)}
-.metrics{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin:16px 0}.metric{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:17px;box-shadow:var(--shadow);min-width:0}.metric .label{font-size:13px;color:var(--muted);font-weight:700;margin-bottom:8px}.metric .value{font-size:clamp(21px,2.2vw,31px);font-weight:900;letter-spacing:-.03em}.metric .sub{font-size:12px;color:var(--muted);margin-top:5px}.positive{color:var(--green)!important}.warning{color:var(--orange)!important}.negative{color:var(--red)!important}.blue{color:var(--blue)!important}
-.section{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin:15px 0;box-shadow:var(--shadow)}.sectionHead{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin-bottom:18px}.section h2{font-size:23px;margin:0}.sectionHead p{margin:5px 0 0;color:var(--muted);font-size:14px;line-height:1.55}.sectionActions{display:flex;gap:8px;flex-wrap:wrap}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.fields{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.field{min-width:0}.field label{display:block;font-size:12px;color:#5b6b81;font-weight:800;margin:0 0 6px}.field input,.field select,.field textarea{width:100%;border:1px solid #d5dfeb;background:#fbfdff;border-radius:12px;padding:11px 12px;color:var(--ink);outline:none}.field input:focus,.field select:focus,.field textarea:focus{border-color:#78aaff;box-shadow:0 0 0 3px #e8f1ff}.field textarea{min-height:82px;resize:vertical}.hint{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.45}
-.tableWrap{overflow:auto;border:1px solid var(--line);border-radius:16px}.table{width:100%;border-collapse:collapse;min-width:860px}.table th{background:#f2f6fb;color:#536781;text-align:left;font-size:12px;padding:11px 10px;white-space:nowrap;position:sticky;top:0}.table td{padding:10px;border-top:1px solid #edf1f6;vertical-align:middle;font-size:14px}.table tbody tr:hover{background:#fbfdff}.table input,.table select{width:100%;min-width:80px;border:1px solid #d7e1ed;border-radius:9px;padding:8px;background:#fff}.money{text-align:right;font-variant-numeric:tabular-nums;font-weight:800}.nowrap{white-space:nowrap}.checkbox{width:18px!important;height:18px;accent-color:var(--blue)}
-.totalBar{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}.totalPill{background:#f6f9fd;border:1px solid var(--line);border-radius:14px;padding:12px}.totalPill b{display:block;font-size:21px;margin-top:4px}.totalPill span{font-size:12px;color:var(--muted)}
-.kpiCard{border:1px solid var(--line);border-radius:18px;padding:17px;background:linear-gradient(180deg,#fff,#fafcff)}.kpiCard h3{margin:0 0 13px;font-size:15px}.kv{display:flex;justify-content:space-between;gap:20px;border-top:1px dashed #dfe6ef;padding:10px 0;font-size:14px}.kv:first-of-type{border-top:0}.kv span{color:var(--muted)}.kv b{text-align:right}
-.compare{display:grid;grid-template-columns:1fr 70px 1fr;align-items:stretch;gap:10px}.vehicle{border-radius:20px;padding:20px;border:1px solid var(--line);background:#fff}.vehicle.ev{background:linear-gradient(145deg,#effcf7,#fff);border-color:#ccebdc}.vehicle.ice{background:linear-gradient(145deg,#fff8ef,#fff);border-color:#f5dfbf}.vehicle h3{margin:0 0 14px;font-size:21px}.vs{display:flex;align-items:center;justify-content:center;font-weight:900;color:#8ca0b8}.bigNum{font-size:32px;font-weight:900;margin:8px 0}.miniGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.mini{background:rgba(255,255,255,.7);border:1px solid rgba(160,180,205,.28);border-radius:12px;padding:10px}.mini small{display:block;color:var(--muted)}.mini b{display:block;margin-top:4px}
-.barBox{margin:12px 0}.barLabel{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px}.bar{height:12px;background:#eef2f7;border-radius:999px;overflow:hidden}.bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#0b5cff,#34b1ff)}
-.conclusion{background:linear-gradient(135deg,#081f43,#123e79);color:#fff;border:0}.conclusion h2{font-size:28px}.verdict{display:inline-flex;align-items:center;gap:8px;border-radius:999px;background:#dffbed;color:#087a4a;padding:9px 13px;font-weight:900;margin-bottom:14px}.conclusionGrid{display:grid;grid-template-columns:1.35fr 1fr;gap:18px}.story{font-size:17px;line-height:1.9;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);padding:18px;border-radius:18px}.story strong{color:#7ff0be}.riskBox{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);padding:18px;border-radius:18px}.riskBox h3{margin-top:0}.riskBox ul{margin:0;padding-left:20px;line-height:1.8;color:#d9e6fa}
-.chart{height:245px;border:1px solid var(--line);border-radius:16px;padding:10px;background:#fbfdff}.chart canvas{width:100%;height:100%}
-.tag{display:inline-flex;align-items:center;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:800;background:#e8f1ff;color:#225eae}.note{padding:12px 14px;border-radius:13px;background:#f7f9fc;color:#60728a;font-size:13px;line-height:1.55;border:1px solid #e4eaf1}.note strong{color:#30445f}
-.modalBack{position:fixed;inset:0;background:rgba(7,20,42,.55);display:none;align-items:center;justify-content:center;padding:18px;z-index:100}.modalBack.open{display:flex}.modal{background:#fff;width:min(620px,100%);border-radius:22px;padding:22px;box-shadow:0 30px 90px rgba(0,0,0,.28)}.modal h3{margin:0 0 8px}.modal p{color:var(--muted);font-size:14px;line-height:1.6}.modalActions{display:flex;justify-content:flex-end;gap:8px;margin-top:15px;flex-wrap:wrap}.tokenBox{width:100%;border:1px solid #d6e1ef;border-radius:12px;padding:11px}.footer{text-align:center;color:#8491a4;font-size:12px;margin-top:24px;line-height:1.7}.link{color:var(--blue);text-decoration:none;font-weight:700}
-.mobileCards{display:none}
-@media(max-width:1100px){.metrics{grid-template-columns:repeat(3,1fr)}.fields{grid-template-columns:repeat(2,1fr)}.grid3{grid-template-columns:1fr 1fr}.heroRow{align-items:flex-start}.conclusionGrid{grid-template-columns:1fr}}
-@media(max-width:760px){.app{padding:10px 10px 55px}.hero{padding:20px 17px;border-radius:22px}.heroRow{display:block}.heroActions{justify-content:flex-start;margin-top:15px}.syncStatus{text-align:left}.metrics{grid-template-columns:1fr 1fr;gap:8px}.metric{padding:13px;border-radius:15px}.metric .value{font-size:22px}.section{padding:15px;border-radius:18px}.sectionHead{display:block}.sectionActions{margin-top:11px}.fields,.grid2,.grid3{grid-template-columns:1fr}.totalBar{grid-template-columns:1fr 1fr}.compare{grid-template-columns:1fr}.vs{height:25px}.tableWrap.mobileFriendly .table{min-width:0}.tableWrap.mobileFriendly thead{display:none}.tableWrap.mobileFriendly .table,.tableWrap.mobileFriendly tbody,.tableWrap.mobileFriendly tr,.tableWrap.mobileFriendly td{display:block;width:100%}.tableWrap.mobileFriendly tr{padding:10px;border-top:1px solid var(--line)}.tableWrap.mobileFriendly tr:first-child{border-top:0}.tableWrap.mobileFriendly td{border:0;padding:5px 0;display:grid;grid-template-columns:120px 1fr;gap:8px;align-items:center}.tableWrap.mobileFriendly td:before{content:attr(data-label);color:#6c7c91;font-size:12px;font-weight:800}.tableWrap.mobileFriendly .actionsCell{display:flex;justify-content:flex-end!important}.tableWrap.mobileFriendly .actionsCell:before{display:none}.tabs{border-radius:14px;margin:10px 0}.tabs button{padding:9px 11px}.chart{height:220px}.conclusion h2{font-size:24px}.story{font-size:15px}.totalPill b{font-size:18px}}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:linear-gradient(180deg,#eff6ff 0,#f8fbff 340px,#f5f8fc 100%);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;line-height:1.55}
+button,input,select,textarea{font:inherit} button{cursor:pointer}
+.container{max-width:1440px;margin:auto;padding:22px}
+.hero{background:linear-gradient(135deg,#082f72 0%,#0b5cff 55%,#12a8ff 100%);color:#fff;border-radius:28px;padding:26px 28px;box-shadow:0 18px 55px rgba(11,92,255,.22);position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:430px;height:430px;border-radius:50%;right:-140px;top:-220px;background:rgba(255,255,255,.10)}
+.heroTop{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;position:relative;z-index:1}
+.hero h1{margin:0;font-size:clamp(28px,4vw,46px);letter-spacing:.5px}.hero p{margin:8px 0 0;color:#dfeaff;font-size:16px}
+.heroActions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}.heroActions button{border:0;border-radius:14px;padding:12px 16px;font-weight:800;background:#fff;color:#0b4bcc;box-shadow:0 6px 18px rgba(0,0,0,.12)}
+.heroActions .secondary{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.34);color:#fff;box-shadow:none}
+.statusDot{width:10px;height:10px;border-radius:50%;display:inline-block;background:#fff;margin-right:7px;box-shadow:0 0 0 4px rgba(255,255,255,.16)}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.tab{border:1px solid var(--line);background:#fff;color:#3c4c63;border-radius:14px;padding:11px 16px;font-weight:800;box-shadow:0 4px 14px rgba(20,54,90,.04)}.tab.active{background:#12233d;color:#fff;border-color:#12233d}
+.panel{display:none}.panel.active{display:block}
+.gridCards{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}.metric{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:var(--shadow)}.metric .label{color:var(--muted);font-weight:700;font-size:14px}.metric .value{font-size:clamp(24px,3vw,34px);font-weight:900;margin-top:6px}.metric .sub{font-size:13px;color:var(--muted);margin-top:4px}.metric.blue .value{color:var(--blue)}.metric.green .value{color:var(--green)}.metric.orange .value{color:var(--orange)}.metric.red .value{color:var(--red)}
+.section{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-top:16px;box-shadow:var(--shadow)}.sectionTitle{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}.sectionTitle h2{font-size:20px;margin:0}.sectionTitle .hint{color:var(--muted);font-size:13px}
+.twoCol{display:grid;grid-template-columns:1.25fr .75fr;gap:16px}.formGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.field{display:flex;flex-direction:column;gap:6px}.field label{font-size:13px;font-weight:800;color:#43546b}.field input,.field select,.field textarea{width:100%;border:1px solid #cfd9e7;background:#fbfdff;border-radius:12px;padding:11px 12px;color:#172a46;outline:none}.field input:focus,.field select:focus,.field textarea:focus{border-color:#5d9cff;box-shadow:0 0 0 3px rgba(11,92,255,.09)}.field.span2{grid-column:span 2}.field.span4{grid-column:span 4}
+.primaryBtn,.ghostBtn,.dangerBtn{border:0;border-radius:13px;padding:11px 16px;font-weight:900}.primaryBtn{background:var(--blue);color:#fff}.ghostBtn{background:#eef4fc;color:#24415f}.dangerBtn{background:#fff0f1;color:#c7313a}.btnRow{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}
+.filterBar{display:grid;grid-template-columns:2fr repeat(4,1fr) auto;gap:10px;margin-bottom:12px}.filterBar input,.filterBar select{border:1px solid var(--line);border-radius:12px;padding:10px 11px;background:#fbfdff}
+.tableWrap{overflow:auto;border:1px solid var(--line);border-radius:16px}.table{width:100%;border-collapse:collapse;min-width:1080px}.table th{position:sticky;top:0;background:#eef4fb;color:#42536b;text-align:left;padding:12px 10px;font-size:13px;white-space:nowrap}.table td{padding:12px 10px;border-top:1px solid #edf2f8;vertical-align:middle}.table tr:hover td{background:#fbfdff}.money{text-align:right;font-variant-numeric:tabular-nums;font-weight:800}.tag{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:800;background:#eef3f9;color:#3b4d64}.tag.paid{background:#e7f8f0;color:#138357}.tag.partial{background:#fff4dd;color:#a86600}.tag.unpaid{background:#ffebed;color:#c5343d}.actionBtns{display:flex;gap:7px}.mini{border:1px solid var(--line);background:#fff;border-radius:10px;padding:7px 9px;font-weight:800;color:#31506e}
+.chartBox{height:280px;position:relative}.chartBox canvas{width:100%;height:100%}.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;color:#56657a;font-size:13px}
+.progressTrack{height:14px;border-radius:999px;background:#eaf0f7;overflow:hidden}.progressFill{height:100%;background:linear-gradient(90deg,#1c9cff,#0b5cff)}.budgetList{display:grid;gap:12px}.budgetItem{border:1px solid var(--line);border-radius:15px;padding:13px}.budgetTop{display:flex;justify-content:space-between;gap:10px;margin-bottom:7px}.budgetTop strong{font-size:14px}.budgetTop span{font-size:13px;color:var(--muted)}
+.checkGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.checkCard{border:1px solid var(--line);border-radius:16px;padding:14px;background:#fbfdff}.checkCard h3{font-size:16px;margin:0 0 9px}.checkItem{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-top:1px dashed #dce5ef}.checkItem:first-of-type{border-top:0}.checkItem input{margin-top:4px;transform:scale(1.15)}.checkItem label{flex:1}.checkItem small{color:var(--muted);display:block}
+.warrantyGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.wCard{border:1px solid var(--line);border-radius:17px;padding:14px}.wCard .days{font-size:28px;font-weight:900;color:var(--blue)}.wCard.overdue .days{color:var(--red)}
+.settingsGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.settingCard{border:1px solid var(--line);border-radius:16px;padding:15px;background:#fbfdff}.settingCard h3{margin:0 0 8px;font-size:16px}.settingCard p{color:var(--muted);font-size:13px}.settingCard input{width:100%;border:1px solid var(--line);border-radius:11px;padding:10px;background:#fff}
+.empty{padding:28px;text-align:center;color:var(--muted)}
+.modal{position:fixed;inset:0;background:rgba(7,19,38,.45);display:none;align-items:center;justify-content:center;padding:18px;z-index:99}.modal.show{display:flex}.modalCard{width:min(560px,100%);background:#fff;border-radius:22px;padding:20px;box-shadow:0 30px 80px rgba(0,0,0,.28)}.modalCard h3{margin:0 0 10px}.modalCard p{color:var(--muted);font-size:14px}.modalCard textarea,.modalCard input{width:100%;border:1px solid var(--line);border-radius:12px;padding:11px;margin-top:8px}.modalActions{display:flex;justify-content:flex-end;gap:9px;margin-top:14px}
+.toast{position:fixed;right:20px;bottom:20px;background:#10233f;color:#fff;padding:12px 16px;border-radius:13px;opacity:0;transform:translateY(10px);pointer-events:none;transition:.25s;z-index:120}.toast.show{opacity:1;transform:none}
+@media(max-width:1100px){.gridCards{grid-template-columns:repeat(3,1fr)}.twoCol{grid-template-columns:1fr}.formGrid{grid-template-columns:repeat(2,1fr)}.filterBar{grid-template-columns:1fr 1fr 1fr}.checkGrid,.warrantyGrid,.settingsGrid{grid-template-columns:1fr 1fr}}
+@media(max-width:720px){.container{padding:12px}.hero{padding:20px 18px;border-radius:22px}.heroTop{display:block}.heroActions{justify-content:flex-start;margin-top:16px}.gridCards{grid-template-columns:1fr 1fr}.metric:last-child{grid-column:span 2}.tabs{overflow:auto;flex-wrap:nowrap;padding-bottom:4px}.tab{white-space:nowrap}.section{padding:15px;border-radius:18px}.formGrid{grid-template-columns:1fr}.field.span2,.field.span4{grid-column:span 1}.filterBar{grid-template-columns:1fr 1fr}.filterBar input:first-child{grid-column:span 2}.checkGrid,.warrantyGrid,.settingsGrid{grid-template-columns:1fr}.tableWrap{border:0;overflow:visible}.table{min-width:0}.table thead{display:none}.table,.table tbody,.table tr,.table td{display:block;width:100%}.table tr{border:1px solid var(--line);border-radius:15px;margin-bottom:10px;background:#fff;padding:8px}.table td{border:0;padding:6px 9px;display:flex;justify-content:space-between;gap:12px}.table td::before{content:attr(data-label);color:var(--muted);font-size:12px;font-weight:800}.actionBtns{justify-content:flex-end}.money{text-align:right}}
 </style>
 </head>
 <body>
-<div class="app">
-  <header class="hero">
-    <div class="heroRow">
+<div class="container">
+  <section class="hero">
+    <div class="heroTop">
       <div>
-        <div class="eyebrow">FOXTRON CAVIRA · VEHICLE COST LEDGER</div>
-        <h1>換車成本帳本</h1>
-        <p>從「換車划不划算」升級成可以一路記到交車後的完整帳本：車價、家充、保險、配件、鍍膜、隔熱紙、後續採購都能持續新增，並自動連動十年成本、貸款與投資還本試算。</p>
+        <h1>🚙 CAVIRA 購車費用帳本</h1>
+        <p>從車價、保險、領牌、家充到交車後配件，所有支出一次記清楚；支援手機、GitHub Pages、本機儲存與雲端同步。</p>
       </div>
-      <div>
-        <div class="heroActions">
-          <button class="btn btnPrimary" id="syncBtn">☁ 雲端同步</button>
-          <button class="btn btnGlass" id="exportBtn">⇩ 匯出備份</button>
-          <button class="btn btnGlass" id="printBtn">🖨 列印 / PDF</button>
-        </div>
-        <div class="syncStatus" id="syncStatus">本機資料已就緒</div>
+      <div class="heroActions">
+        <button id="syncBtn"><span class="statusDot"></span>☁ 雲端同步</button>
+        <button class="secondary" id="quickAddBtn">＋ 快速新增</button>
       </div>
     </div>
-  </header>
+  </section>
 
   <nav class="tabs" id="tabs">
-    <button class="active" data-target="overview">總覽</button>
-    <button data-target="ledger">採購帳本</button>
-    <button data-target="cost">十年成本</button>
-    <button data-target="electricity">家充電費</button>
-    <button data-target="loan">貸款</button>
-    <button data-target="investment">投資還本</button>
-    <button data-target="conclusion">最終結論</button>
+    <button class="tab active" data-tab="overview">總覽</button>
+    <button class="tab" data-tab="ledger">費用清單</button>
+    <button class="tab" data-tab="budget">預算／分類</button>
+    <button class="tab" data-tab="delivery">交車檢查</button>
+    <button class="tab" data-tab="warranty">保固／到期提醒</button>
+    <button class="tab" data-tab="backup">備份／設定</button>
   </nav>
 
-  <section id="overview">
-    <div class="metrics">
-      <div class="metric"><div class="label">目前購車總投入</div><div class="value blue" id="mGross">—</div><div class="sub">納入換車成本的採購項目</div></div>
-      <div class="metric"><div class="label">已付款金額</div><div class="value" id="mPaid">—</div><div class="sub">實際已支出</div></div>
-      <div class="metric"><div class="label">CR-V 預估售價</div><div class="value" id="mSale">—</div><div class="sub">可隨時調整行情</div></div>
-      <div class="metric"><div class="label">換車實際淨投入</div><div class="value warning" id="mNet">—</div><div class="sub">總投入 − 舊車售價</div></div>
-      <div class="metric"><div class="label">每月現金流改善</div><div class="value positive" id="mMonthly">—</div><div class="sub">能源 + 保養 − 利息</div></div>
-      <div class="metric"><div class="label">10 年投資還本後</div><div class="value positive" id="mAfterLoan">—</div><div class="sub">投資資產 − 貸款本金</div></div>
+  <section class="panel active" id="overview">
+    <div class="gridCards">
+      <div class="metric blue"><div class="label">目前購車總投入</div><div class="value" id="mTotal">$0</div><div class="sub">所有納入成本的項目</div></div>
+      <div class="metric green"><div class="label">已付款</div><div class="value" id="mPaid">$0</div><div class="sub">實際已付金額</div></div>
+      <div class="metric orange"><div class="label">待付款</div><div class="value" id="mUnpaid">$0</div><div class="sub">尚未支付的餘額</div></div>
+      <div class="metric"><div class="label">費用筆數</div><div class="value" id="mCount">0</div><div class="sub">目前已建立紀錄</div></div>
+      <div class="metric red"><div class="label">近 30 天待付款</div><div class="value" id="mDueSoon">$0</div><div class="sub">含已逾期與即將到期</div></div>
+    </div>
+
+    <div class="twoCol">
+      <div class="section">
+        <div class="sectionTitle"><h2>📊 支出分類</h2><div class="hint">依目前已建立的費用自動統計</div></div>
+        <div class="chartBox"><canvas id="catChart"></canvas></div>
+        <div class="legend" id="catLegend"></div>
+      </div>
+      <div class="section">
+        <div class="sectionTitle"><h2>⏰ 最近付款提醒</h2><div class="hint">依付款期限排序</div></div>
+        <div id="dueList"></div>
+      </div>
     </div>
 
     <div class="section">
-      <div class="sectionHead"><div><h2>核心參數</h2><p>所有數字都可調，修改後整份網頁會立即重算並自動保存。</p></div><div class="sectionActions"><button class="btn btnSoft btnSmall" id="resetBtn">恢復預設值</button></div></div>
-      <div class="fields">
-        <div class="field"><label>年行駛里程 km</label><input type="number" id="annualKm" /></div>
-        <div class="field"><label>CR-V 油耗 km/L</label><input type="number" step="0.1" id="fuelEfficiency" /></div>
-        <div class="field"><label>95 無鉛 元/L</label><input type="number" step="0.1" id="gasPrice" /></div>
-        <div class="field"><label>CAVIRA 能效 km/kWh</label><input type="number" step="0.01" id="evEfficiency" /></div>
-        <div class="field"><label>充電損耗加成 %</label><input type="number" step="0.1" id="chargeLoss" /></div>
-        <div class="field"><label>CR-V 中古估值 元</label><input type="number" step="10000" id="saleValue" /></div>
-        <div class="field"><label>分析年數</label><input type="number" min="1" max="20" id="years" /></div>
-        <div class="field"><label>外充平均電價 元/kWh</label><input type="number" step="0.1" id="publicChargePrice" /></div>
+      <div class="sectionTitle"><h2>🧾 最近新增紀錄</h2><button class="ghostBtn" onclick="switchTab('ledger')">查看全部</button></div>
+      <div class="tableWrap"><table class="table"><thead><tr><th>日期</th><th>分類</th><th>品項</th><th>店家</th><th>總額</th><th>已付</th><th>狀態</th></tr></thead><tbody id="recentBody"></tbody></table></div>
+    </div>
+  </section>
+
+  <section class="panel" id="ledger">
+    <div class="section" id="entrySection">
+      <div class="sectionTitle"><h2>➕ 新增／編輯費用</h2><div class="hint">每筆可記錄付款進度、店家、期限、單據與備註</div></div>
+      <div class="formGrid">
+        <div class="field"><label>日期</label><input type="date" id="fDate"></div>
+        <div class="field"><label>分類</label><select id="fCategory"></select></div>
+        <div class="field span2"><label>費用品項</label><input id="fItem" placeholder="例如：CAVIRA Emerge 車價"></div>
+        <div class="field"><label>店家／供應商</label><input id="fVendor" placeholder="例如：Foxtron 展間"></div>
+        <div class="field"><label>階段</label><select id="fStage"><option>訂車</option><option>交車前</option><option>交車日</option><option>交車後</option><option>長期使用</option></select></div>
+        <div class="field"><label>總金額</label><input id="fAmount" type="number" min="0" step="1" placeholder="0"></div>
+        <div class="field"><label>已付金額</label><input id="fPaid" type="number" min="0" step="1" placeholder="0"></div>
+        <div class="field"><label>付款方式</label><select id="fMethod"><option>現金</option><option>信用卡</option><option>轉帳</option><option>貸款</option><option>刷卡分期</option><option>其他</option></select></div>
+        <div class="field"><label>付款期限</label><input type="date" id="fDue"></div>
+        <div class="field span2"><label>發票／收據／訂單號</label><input id="fDoc" placeholder="可輸入發票號碼、訂單編號或單據連結"></div>
+        <div class="field"><label>納入購車總成本</label><select id="fInclude"><option value="yes">是</option><option value="no">否</option></select></div>
+        <div class="field"><label>保固到期日</label><input type="date" id="fWarranty"></div>
+        <div class="field span4"><label>備註</label><textarea id="fNote" rows="2" placeholder="例如：業務贈品、折扣條件、待補文件、安裝內容等"></textarea></div>
+        <div class="btnRow span4"><button class="primaryBtn" id="saveEntryBtn">儲存紀錄</button><button class="ghostBtn" id="clearEntryBtn">清除表單</button><span id="editHint" style="color:var(--muted);font-size:13px"></span></div>
       </div>
     </div>
-  </section>
 
-  <section class="section" id="ledger">
-    <div class="sectionHead">
-      <div><h2>購車與後續採購帳本</h2><p>之後買任何 CAVIRA 相關項目都可以一直新增。可決定是否納入「換車總投入」，也能區分已付款 / 未付款。</p></div>
-      <div class="sectionActions"><button class="btn btnBlue" id="addExpense">＋ 新增成本項目</button></div>
-    </div>
-    <div class="tableWrap mobileFriendly">
-      <table class="table" id="expenseTable">
-        <thead><tr><th>日期</th><th>分類</th><th>品項</th><th>店家 / 對象</th><th>金額</th><th>付款</th><th>納入總投入</th><th>備註</th><th></th></tr></thead>
-        <tbody></tbody>
-      </table>
-    </div>
-    <div class="totalBar">
-      <div class="totalPill"><span>採購紀錄筆數</span><b id="expCount">0</b></div>
-      <div class="totalPill"><span>納入換車成本</span><b id="expIncluded">$0</b></div>
-      <div class="totalPill"><span>其中已付款</span><b id="expPaid">$0</b></div>
-      <div class="totalPill"><span>待付款 / 待採購</span><b id="expPending">$0</b></div>
+    <div class="section">
+      <div class="sectionTitle"><h2>📋 購車費用清單</h2><div class="hint" id="ledgerSummary">0 筆</div></div>
+      <div class="filterBar">
+        <input id="qSearch" placeholder="搜尋品項、店家、備註…">
+        <select id="qCategory"><option value="">全部分類</option></select>
+        <select id="qStatus"><option value="">全部付款狀態</option><option value="paid">已付款</option><option value="partial">部分付款</option><option value="unpaid">待付款</option></select>
+        <select id="qStage"><option value="">全部階段</option><option>訂車</option><option>交車前</option><option>交車日</option><option>交車後</option><option>長期使用</option></select>
+        <select id="qSort"><option value="dateDesc">日期：新→舊</option><option value="dateAsc">日期：舊→新</option><option value="amountDesc">金額：高→低</option><option value="amountAsc">金額：低→高</option></select>
+        <button class="ghostBtn" id="resetFilter">重設</button>
+      </div>
+      <div class="tableWrap"><table class="table"><thead><tr><th>日期</th><th>分類</th><th>品項</th><th>店家</th><th>總額</th><th>已付</th><th>未付</th><th>付款期限</th><th>狀態</th><th>納入成本</th><th>操作</th></tr></thead><tbody id="ledgerBody"></tbody></table></div>
     </div>
   </section>
 
-  <section class="section" id="cost">
-    <div class="sectionHead"><div><h2>CR-V vs CAVIRA 十年總成本</h2><p>能源與定期保養採分開計算，避免只看油電差而低估高里程燃油車的保養成本。</p></div></div>
-    <div class="fields" style="margin-bottom:16px">
-      <div class="field"><label>CR-V 每萬公里定保基準 元</label><input type="number" id="crvMaintBase" /></div>
-      <div class="field"><label>實際保養調整率 %</label><input type="number" id="crvMaintFactor" /></div>
-      <div class="field"><label>CAVIRA 年保養預估 元</label><input type="number" id="evMaintAnnual" /></div>
-      <div class="field"><label>其他 CR-V 年維修預備金 元</label><input type="number" id="crvRepairReserve" /></div>
-    </div>
-    <div class="compare">
-      <div class="vehicle ice"><span class="tag">燃油車基準</span><h3>Honda CR-V 6 Prestige</h3><div class="bigNum" id="crvAnnualTotal">—</div><div class="miniGrid"><div class="mini"><small>年油費</small><b id="crvFuelAnnual">—</b></div><div class="mini"><small>年保養 / 維修</small><b id="crvMaintAnnual">—</b></div></div></div>
-      <div class="vs">VS</div>
-      <div class="vehicle ev"><span class="tag">電動車方案</span><h3>FOXTRON CAVIRA Emerge</h3><div class="bigNum positive" id="evAnnualTotal">—</div><div class="miniGrid"><div class="mini"><small>年家充電費</small><b id="evPowerAnnual">—</b></div><div class="mini"><small>年保養預估</small><b id="evMaintShow">—</b></div></div></div>
-    </div>
-    <div class="grid3" style="margin-top:15px">
-      <div class="kpiCard"><h3>每年成本節省</h3><div class="kv"><span>能源差</span><b id="annualEnergySaving">—</b></div><div class="kv"><span>保養 / 維修差</span><b id="annualMaintSaving">—</b></div><div class="kv"><span>合計</span><b class="positive" id="annualTotalSaving">—</b></div></div>
-      <div class="kpiCard"><h3>十年成本節省</h3><div class="kv"><span>能源差</span><b id="tenEnergySaving">—</b></div><div class="kv"><span>保養 / 維修差</span><b id="tenMaintSaving">—</b></div><div class="kv"><span>合計</span><b class="positive" id="tenTotalSaving">—</b></div></div>
-      <div class="kpiCard"><h3>換車效益</h3><div class="kv"><span>換車淨投入</span><b id="netInitialCost">—</b></div><div class="kv"><span>不含利息之十年淨效益</span><b id="tenNetBenefit">—</b></div><div class="kv"><span>估計回收年數</span><b id="paybackYears">—</b></div></div>
-    </div>
-  </section>
-
-  <section class="section" id="electricity">
-    <div class="sectionHead"><div><h2>家充電費與台電簡易型時間電價</h2><p>已帶入目前公告的二段式簡易時間電價；歷史家庭帳單也保留在模型中，用來估算換方案後的每期電費。</p></div></div>
-    <div class="grid2">
-      <div>
-        <div class="fields">
-          <div class="field"><label>夏月離峰 元/kWh</label><input type="number" step="0.01" id="summerOffpeak" /></div>
-          <div class="field"><label>非夏月離峰 元/kWh</label><input type="number" step="0.01" id="winterOffpeak" /></div>
-          <div class="field"><label>夏月尖峰 元/kWh</label><input type="number" step="0.01" id="summerPeak" /></div>
-          <div class="field"><label>非夏月尖峰 元/kWh</label><input type="number" step="0.01" id="winterPeak" /></div>
-          <div class="field"><label>每月基本電費 元</label><input type="number" id="touBaseFee" /></div>
-          <div class="field"><label>原家庭用電尖峰占比 %</label><input type="number" id="homePeakShare" /></div>
-          <div class="field"><label>EV 離峰充電率 %</label><input type="number" id="evOffpeakShare" /></div>
-          <div class="field"><label>家充功率 kW</label><input type="number" step="0.1" id="chargerKw" /></div>
+  <section class="panel" id="budget">
+    <div class="twoCol">
+      <div class="section">
+        <div class="sectionTitle"><h2>🎯 總預算</h2><div class="hint">可用來控制整體購車＋配件支出</div></div>
+        <div class="formGrid">
+          <div class="field span2"><label>整體預算</label><input id="overallBudget" type="number" min="0" step="1000"></div>
+          <div class="btnRow span2"><button class="primaryBtn" id="saveBudgetBtn">儲存預算</button></div>
         </div>
-        <div class="note" style="margin-top:12px"><strong>最新時段：</strong>夏月週一至週五離峰 00:00–09:00；非夏月離峰 00:00–06:00、11:00–14:00；週六、週日及離峰日全日離峰。每月總度數超過 2,000 度的部分每度加 1.04 元。</div>
+        <div style="margin-top:16px"><div class="budgetTop"><strong>目前使用比例</strong><span id="overallBudgetText">$0 / $0</span></div><div class="progressTrack"><div class="progressFill" id="overallBudgetBar" style="width:0%"></div></div></div>
       </div>
-      <div class="kpiCard">
-        <h3>5 kW 家充能力與回收</h3>
-        <div class="kv"><span>年充電需求（含損耗）</span><b id="annualGridKwh">—</b></div>
-        <div class="kv"><span>平均每天補電</span><b id="dailyKwh">—</b></div>
-        <div class="kv"><span>平均每天充電時間</span><b id="dailyHours">—</b></div>
-        <div class="kv"><span>家充有效年成本</span><b id="homeChargeCost">—</b></div>
-        <div class="kv"><span>相較外充每年節省</span><b id="chargerAnnualSaving">—</b></div>
-        <div class="kv"><span>家充安裝費回收期</span><b class="positive" id="chargerPayback">—</b></div>
+      <div class="section">
+        <div class="sectionTitle"><h2>🧩 分類管理</h2><div class="hint">新增你自己的採購分類</div></div>
+        <div class="btnRow"><input id="newCategory" placeholder="新增分類名稱" style="flex:1;border:1px solid var(--line);border-radius:12px;padding:11px"><button class="primaryBtn" id="addCategoryBtn">新增分類</button></div>
+        <div id="categoryChips" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"></div>
       </div>
     </div>
-    <h3 style="margin:22px 0 10px">實際家庭帳單紀錄與未來六期估算</h3>
-    <div class="tableWrap"><table class="table" style="min-width:780px"><thead><tr><th>帳單月份</th><th>原用電度數</th><th>原帳單</th><th>估計 EV 新增度數</th><th>TOU 後估計總電費</th><th>增加金額</th></tr></thead><tbody id="billBody"></tbody></table></div>
-    <div class="note" style="margin-top:10px">估算依現有帳單度數、家庭尖峰比例與 EV 離峰比例計算。實際每期帳單會受讀表日期、季節跨月、家中用電時段與台電計費規則影響，因此此區適合作為預算，不應視為精準帳單預測。</div>
-  </section>
-
-  <section class="section" id="loan">
-    <div class="sectionHead"><div><h2>房屋增貸與每月現金流</h2><p>貸款只繳利息、本金後償。利息已在每月現金流中扣除，因此投資還本區不會再把十年利息重複扣一次。</p></div></div>
-    <div class="fields">
-      <div class="field"><label>貸款本金 元</label><input type="number" step="10000" id="loanPrincipal" /></div>
-      <div class="field"><label>年利率 %</label><input type="number" step="0.01" id="loanRate" /></div>
-      <div class="field"><label>只繳利息</label><select id="interestOnly"><option value="yes">是</option><option value="no">否（本模型仍以利息比較）</option></select></div>
-      <div class="field"><label>每月定期定額</label><input type="number" step="100" id="dcaMonthly" /><div class="hint">填 0 代表自動使用「扣息後每月現金流改善」</div></div>
-    </div>
-    <div class="grid3" style="margin-top:15px">
-      <div class="kpiCard"><h3>利息負擔</h3><div class="kv"><span>每月利息</span><b id="monthlyInterest">—</b></div><div class="kv"><span>每年利息</span><b id="annualInterest">—</b></div><div class="kv"><span>分析期總利息</span><b id="totalInterest">—</b></div></div>
-      <div class="kpiCard"><h3>換車後月支出</h3><div class="kv"><span>CR-V 原每月油費</span><b id="monthlyFuel">—</b></div><div class="kv"><span>CAVIRA 每月電費</span><b id="monthlyPower">—</b></div><div class="kv"><span>電費 + 貸款利息</span><b id="monthlyNewOutflow">—</b></div></div>
-      <div class="kpiCard"><h3>現金流改善</h3><div class="kv"><span>能源 + 保養每月節省</span><b id="monthlyGrossSaving">—</b></div><div class="kv"><span>扣貸款利息</span><b id="monthlyInterest2">—</b></div><div class="kv"><span>可投入定期定額</span><b class="positive" id="autoDca">—</b></div></div>
+    <div class="section">
+      <div class="sectionTitle"><h2>📦 各分類預算使用狀況</h2><div class="hint">點分類預算即可直接修改</div></div>
+      <div class="budgetList" id="budgetList"></div>
     </div>
   </section>
 
-  <section class="section" id="investment">
-    <div class="sectionHead"><div><h2>投資還本規劃</h2><p>ETF 為主、個股為輔；單筆投資與定期定額的權重分開調整，總權重會即時計算。年化報酬只是模型假設，不代表未來保證。</p></div><div class="sectionActions"><button class="btn btnBlue btnSmall" id="addAsset">＋ 新增標的</button></div></div>
-    <div class="fields" style="margin-bottom:15px">
-      <div class="field"><label>單筆投資金額 元</label><input type="number" step="10000" id="lumpSum" /></div>
-      <div class="field"><label>投資年數</label><input type="number" id="investYears" min="1" max="30" /></div>
-      <div class="field"><label>單筆權重總計</label><input id="lumpWeightTotal" readonly /></div>
-      <div class="field"><label>定期定額權重總計</label><input id="dcaWeightTotal" readonly /></div>
-    </div>
-    <div class="tableWrap mobileFriendly"><table class="table" id="assetTable"><thead><tr><th>標的</th><th>類型</th><th>單筆權重 %</th><th>定期定額權重 %</th><th>預估年化 %</th><th>單筆投入</th><th>每月定期定額</th><th></th></tr></thead><tbody></tbody></table></div>
-    <div class="totalBar">
-      <div class="totalPill"><span>單筆組合加權年化</span><b id="lumpReturn">—</b></div>
-      <div class="totalPill"><span>定期定額加權年化</span><b id="dcaReturn">—</b></div>
-      <div class="totalPill"><span>十年預估總資產</span><b id="investFuture">—</b></div>
-      <div class="totalPill"><span>還本金後預估餘額</span><b id="afterPrincipal">—</b></div>
-    </div>
-    <div class="grid2" style="margin-top:15px">
-      <div><h3>資產成長曲線</h3><div class="chart"><canvas id="growthChart" width="800" height="400"></canvas></div></div>
-      <div><h3>逐年獲利表</h3><div class="tableWrap"><table class="table" style="min-width:660px"><thead><tr><th>年度</th><th>累積投入</th><th>單筆資產</th><th>DCA 資產</th><th>總資產</th><th>累積投資獲利</th></tr></thead><tbody id="yearBody"></tbody></table></div></div>
+  <section class="panel" id="delivery">
+    <div class="section">
+      <div class="sectionTitle"><h2>✅ 交車前／交車日檢查表</h2><div class="hint" id="deliveryProgress">0 / 0</div></div>
+      <div class="checkGrid" id="checkGrid"></div>
+      <div style="margin-top:14px" class="btnRow"><input id="newCheck" placeholder="新增自訂檢查項目" style="flex:1;border:1px solid var(--line);border-radius:12px;padding:11px"><select id="newCheckGroup" style="border:1px solid var(--line);border-radius:12px;padding:11px"><option>文件</option><option>車況</option><option>配件</option><option>付款</option><option>其他</option></select><button class="primaryBtn" id="addCheckBtn">加入</button></div>
     </div>
   </section>
 
-  <section class="section conclusion" id="conclusion">
-    <div class="sectionHead"><div><div class="verdict" id="verdict">✓ 模型計算中</div><h2>最終結論</h2><p style="color:#cbdaf0">依目前帳本、里程、電價、貸款與投資參數自動產生。</p></div></div>
-    <div class="conclusionGrid">
-      <div class="story" id="story">—</div>
-      <div class="riskBox"><h3>這個換車方案成立的前提</h3><ul><li>維持目前偏高的年行駛里程，油電差才有足夠效果。</li><li>家充盡量使用離峰時段，並持續紀錄實際帳單修正模型。</li><li>投資報酬率存在波動，還本計畫應保留安全邊際，不能把預估報酬當保證。</li><li>未來新增保險、配件、施工或其他購車成本，記得加入採購帳本，模型會自動反映。</li></ul></div>
+  <section class="panel" id="warranty">
+    <div class="section">
+      <div class="sectionTitle"><h2>🛡️ 保固／到期提醒</h2><div class="hint">自動從費用紀錄中的「保固到期日」抓出</div></div>
+      <div class="warrantyGrid" id="warrantyGrid"></div>
     </div>
   </section>
 
-  <div class="footer">台電簡易型時間電價預設值依台灣電力公司「114 年 10 月 1 日起實施」電價表建立，可於本頁自行更新。<br>本工具為個人財務規劃模型，不構成投資建議或報酬保證。</div>
+  <section class="panel" id="backup">
+    <div class="settingsGrid">
+      <div class="settingCard"><h3>☁ GitHub Gist 雲端同步</h3><p>第一次貼入 GitHub Token，之後可一鍵同步；Token 只存在目前裝置瀏覽器。</p><button class="primaryBtn" id="openSyncSettings">設定同步</button></div>
+      <div class="settingCard"><h3>📤 匯出 JSON</h3><p>完整備份費用紀錄、分類、預算、檢查表與設定。</p><button class="ghostBtn" id="exportJsonBtn">匯出完整備份</button></div>
+      <div class="settingCard"><h3>📥 匯入 JSON</h3><p>從先前備份檔完整還原資料。</p><input type="file" id="importJsonInput" accept="application/json"></div>
+      <div class="settingCard"><h3>📊 匯出 CSV</h3><p>把購車費用清單匯出成 Excel 可開啟的 CSV。</p><button class="ghostBtn" id="exportCsvBtn">匯出費用 CSV</button></div>
+      <div class="settingCard"><h3>🖨️ 列印／存 PDF</h3><p>直接使用瀏覽器列印功能，可另存 PDF。</p><button class="ghostBtn" onclick="window.print()">列印目前頁面</button></div>
+      <div class="settingCard"><h3>🧹 清除全部資料</h3><p>會刪除這台裝置上的帳本資料，請先備份。</p><button class="dangerBtn" id="clearAllBtn">清除全部</button></div>
+    </div>
+  </section>
 </div>
 
-<div class="modalBack" id="syncModal"><div class="modal"><h3>☁ GitHub Gist 雲端同步</h3><p>第一次只要貼入 GitHub Personal Access Token（需具 Gist 權限）。Token 僅保存在這台裝置的瀏覽器，不會寫進公開的 GitHub Pages HTML；設定後，頁面會在開啟與修改資料時自動同步。</p><input class="tokenBox" type="password" id="tokenInput" placeholder="github_pat_... 或 ghp_..." /><div class="modalActions"><button class="btn btnSoft" id="closeModal">取消</button><button class="btn btnDanger" id="clearToken">清除 Token</button><button class="btn btnBlue" id="saveToken">儲存並同步</button></div></div></div>
-<input type="file" id="importFile" accept="application/json" hidden />
+<div class="modal" id="syncModal"><div class="modalCard"><h3>☁ 雲端同步設定</h3><p>使用 GitHub Gist。第一次設定後，電腦與手機都可用同一個 GitHub 帳號的 Token 同步。</p><label style="font-weight:800">GitHub Token</label><input id="syncToken" type="password" placeholder="ghp_... 或 github_pat_..."><label style="font-weight:800;display:block;margin-top:10px">Gist ID（可留空，第一次會自動建立）</label><input id="syncGist" placeholder="留空即可"><div class="modalActions"><button class="ghostBtn" id="closeSync">取消</button><button class="primaryBtn" id="saveSync">儲存並同步</button></div></div></div>
+<div class="toast" id="toast"></div>
+
 <script>
-const DEFAULT_STATE={
-  updatedAt:0,
-  settings:{annualKm:43000,fuelEfficiency:12,gasPrice:31.3,evEfficiency:5.37,chargeLoss:10,saleValue:750000,years:10,publicChargePrice:7.5,crvMaintBase:4705,crvMaintFactor:110,evMaintAnnual:8000,crvRepairReserve:0,summerOffpeak:2.06,winterOffpeak:1.99,summerPeak:5.16,winterPeak:4.93,touBaseFee:75,homePeakShare:55,evOffpeakShare:98,chargerKw:5,loanPrincipal:1388000,loanRate:3.6,interestOnly:'yes',dcaMonthly:0,lumpSum:750000,investYears:10},
-  expenses:[
-    {id:'car',date:'2026-08-28',category:'車價',item:'FOXTRON CAVIRA Emerge',vendor:'FOXTRON / 經銷商',amount:1270000,paid:false,include:true,note:'預計購車價'},
-    {id:'charger',date:'2026-08-28',category:'家充',item:'家用充電樁安裝',vendor:'',amount:118000,paid:false,include:true,note:'台電核定 5 kW 情境'}
-  ],
-  assets:[
-    {id:'a1',name:'0050 元大台灣50',type:'ETF核心',lumpWeight:30,dcaWeight:25,ret:7.2},
-    {id:'a2',name:'0052 富邦科技',type:'科技ETF',lumpWeight:18,dcaWeight:20,ret:9.0},
-    {id:'a3',name:'00881 國泰台灣科技龍頭',type:'科技ETF',lumpWeight:15,dcaWeight:15,ret:8.8},
-    {id:'a4',name:'00981A 主動統一台股增長',type:'主動ETF',lumpWeight:15,dcaWeight:15,ret:9.5},
-    {id:'a5',name:'2330 台積電',type:'個股',lumpWeight:10,dcaWeight:10,ret:9.0},
-    {id:'a6',name:'2308 台達電',type:'個股',lumpWeight:6,dcaWeight:8,ret:9.0},
-    {id:'a7',name:'2317 鴻海',type:'個股',lumpWeight:6,dcaWeight:7,ret:8.0}
-  ]
-};
-const BILLS=[
- {m:'113/11',kwh:750,cost:2344},{m:'114/01',kwh:610,cost:1889},{m:'114/03',kwh:618,cost:1869},{m:'114/05',kwh:697,cost:2119},{m:'114/07',kwh:984,cost:3394},{m:'114/09',kwh:1046,cost:3843},{m:'114/11',kwh:967,cost:3257},{m:'115/01',kwh:607,cost:1839},{m:'115/03',kwh:644,cost:1989},{m:'115/05',kwh:699,cost:2183}
+const KEY='caviraPurchaseLedgerV1';
+const SYNC_TOKEN_KEY='caviraGistTokenV1';
+const SYNC_GIST_KEY='caviraGistIdV1';
+const GIST_FILE='cavira_purchase_ledger.json';
+const defaultCategories=['車價','保險','稅費／領牌','家用充電','原廠配件','外廠配件','隔熱紙','鍍膜／美容','行車記錄器','停車／充電周邊','其他'];
+const defaultChecks=[
+  ['文件','確認車主資料與領牌資料'],['文件','確認保險生效日與保單內容'],['文件','取得車主手冊／保固文件'],['付款','確認車價尾款與付款證明'],['付款','確認各項配件／加購金額'],
+  ['車況','外觀烤漆與鈑件檢查'],['車況','輪圈／輪胎／胎壓檢查'],['車況','燈具、螢幕、空調、喇叭功能'],['車況','充電孔與隨車充電配件確認'],['車況','里程數與電量紀錄'],
+  ['配件','行車記錄器型號與錄影確認'],['配件','隔熱紙施工狀況確認'],['配件','腳踏墊／後廂墊／贈品確認'],['其他','設定 App／數位鑰匙／遠端功能'],['其他','拍照留存交車當下車況']
 ];
-const NEXT_BASE=[{m:'115/07',base:BILLS[4]},{m:'115/09',base:BILLS[5]},{m:'115/11',base:BILLS[6]},{m:'116/01',base:BILLS[7]},{m:'116/03',base:BILLS[8]},{m:'116/05',base:BILLS[9]}];
-let state=loadLocal(); let saveTimer=null; let cloudTimer=null; let isApplying=false;
-const $=id=>document.getElementById(id); const num=v=>Number(v)||0; const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
-const money=v=>new Intl.NumberFormat('zh-TW',{style:'currency',currency:'TWD',maximumFractionDigits:0}).format(Math.round(v||0));
-const nfmt=(v,d=0)=>new Intl.NumberFormat('zh-TW',{maximumFractionDigits:d}).format(v||0);
-const pct=v=>`${nfmt(v,2)}%`;
-function deepClone(v){return JSON.parse(JSON.stringify(v))}
-function loadLocal(){try{const x=JSON.parse(localStorage.getItem('caviraCostLedgerV1'));if(x&&x.settings&&x.expenses&&x.assets)return x}catch(e){} return deepClone(DEFAULT_STATE)}
-function saveLocal(mark=true){if(mark)state.updatedAt=Date.now();localStorage.setItem('caviraCostLedgerV1',JSON.stringify(state)); if(mark&&localStorage.getItem('caviraGistToken')) scheduleCloudUpload()}
-function settingIds(){return Object.keys(DEFAULT_STATE.settings)}
-function bindSettings(){settingIds().forEach(id=>{const el=$(id); if(!el)return; el.value=state.settings[id]; el.addEventListener('input',()=>{if(isApplying)return; state.settings[id]=el.type==='number'?num(el.value):el.value; scheduleRecalc()}); el.addEventListener('change',()=>{if(isApplying)return; state.settings[id]=el.type==='number'?num(el.value):el.value; scheduleRecalc()})})}
-function applySettings(){isApplying=true; settingIds().forEach(id=>{if($(id))$(id).value=state.settings[id]}); isApplying=false}
-function scheduleRecalc(){clearTimeout(saveTimer); recalc(); saveTimer=setTimeout(()=>saveLocal(true),350)}
-function expenseTotals(){const included=state.expenses.filter(x=>x.include).reduce((a,x)=>a+num(x.amount),0);const paid=state.expenses.filter(x=>x.include&&x.paid).reduce((a,x)=>a+num(x.amount),0);return{included,paid,pending:included-paid,count:state.expenses.length}}
-function chargerInstallCost(){return state.expenses.filter(x=>x.include&&(x.category==='家充'||x.category==='充電設備')).reduce((a,x)=>a+num(x.amount),0)}
-function calc(){
- const s=state.settings, ex=expenseTotals(); const years=Math.max(1,num(s.years));
- const fuelAnnual=s.annualKm/s.fuelEfficiency*s.gasPrice;
- const gridKwh=s.annualKm/s.evEfficiency*(1+s.chargeLoss/100);
- const avgOff=s.summerOffpeak*(4/12)+s.winterOffpeak*(8/12);
- const avgPeak=s.summerPeak*(4/12)+s.winterPeak*(8/12);
- const evPowerAnnual=gridKwh*((s.evOffpeakShare/100)*avgOff+(1-s.evOffpeakShare/100)*avgPeak)+s.touBaseFee*12;
- const crvMaint=s.annualKm/10000*s.crvMaintBase*(s.crvMaintFactor/100)+s.crvRepairReserve;
- const evMaint=s.evMaintAnnual;
- const energySaving=fuelAnnual-evPowerAnnual, maintSaving=crvMaint-evMaint, totalSaving=energySaving+maintSaving;
- const netInitial=ex.included-s.saleValue;
- const annualInterest=s.loanPrincipal*s.loanRate/100, monthlyInterest=annualInterest/12;
- const monthlyGross=totalSaving/12, monthlyImprove=monthlyGross-monthlyInterest;
- const actualDca=s.dcaMonthly>0?s.dcaMonthly:Math.max(0,monthlyImprove);
- const lumpTotal=state.assets.reduce((a,x)=>a+num(x.lumpWeight),0); const dcaTotal=state.assets.reduce((a,x)=>a+num(x.dcaWeight),0);
- const lumpR=lumpTotal?state.assets.reduce((a,x)=>a+num(x.lumpWeight)*num(x.ret),0)/lumpTotal:0;
- const dcaR=dcaTotal?state.assets.reduce((a,x)=>a+num(x.dcaWeight)*num(x.ret),0)/dcaTotal:0;
- const investYears=Math.max(1,num(s.investYears));
- let lump=s.lumpSum,dca=0,rows=[]; const rm=Math.pow(1+dcaR/100,1/12)-1;
- for(let y=1;y<=investYears;y++){
-   lump*=1+lumpR/100; for(let m=0;m<12;m++) dca=(dca+actualDca)*(1+rm);
-   const contributed=s.lumpSum+actualDca*12*y; rows.push({y,lump,dca,total:lump+dca,contributed,profit:lump+dca-contributed});
- }
- const future=lump+dca, afterPrincipal=future-s.loanPrincipal;
- const chargerCost=chargerInstallCost(); const publicAnnual=gridKwh*s.publicChargePrice; const chargerAnnualSaving=publicAnnual-evPowerAnnual; const chargerPayback=chargerAnnualSaving>0?chargerCost/chargerAnnualSaving:Infinity;
- return {s,ex,years,fuelAnnual,gridKwh,avgOff,avgPeak,evPowerAnnual,crvMaint,evMaint,energySaving,maintSaving,totalSaving,netInitial,annualInterest,monthlyInterest,monthlyGross,monthlyImprove,actualDca,lumpTotal,dcaTotal,lumpR,dcaR,investYears,rows,future,afterPrincipal,chargerCost,publicAnnual,chargerAnnualSaving,chargerPayback};
-}
-function renderExpenses(){const tb=$('expenseTable').querySelector('tbody');tb.innerHTML='';state.expenses.forEach((x,i)=>{const tr=document.createElement('tr');tr.innerHTML=`
-<td data-label="日期"><input type="date" data-k="date" value="${x.date||''}"></td>
-<td data-label="分類"><select data-k="category">${['車價','家充','保險','稅費','原廠配件','外廠配件','隔熱紙','鍍膜美容','行車記錄器','充電設備','其他'].map(v=>`<option ${v===x.category?'selected':''}>${v}</option>`).join('')}</select></td>
-<td data-label="品項"><input data-k="item" value="${esc(x.item||'')}"></td>
-<td data-label="店家 / 對象"><input data-k="vendor" value="${esc(x.vendor||'')}"></td>
-<td data-label="金額"><input type="number" data-k="amount" value="${num(x.amount)}"></td>
-<td data-label="付款" style="text-align:center"><input class="checkbox" type="checkbox" data-k="paid" ${x.paid?'checked':''}></td>
-<td data-label="納入總投入" style="text-align:center"><input class="checkbox" type="checkbox" data-k="include" ${x.include?'checked':''}></td>
-<td data-label="備註"><input data-k="note" value="${esc(x.note||'')}"></td>
-<td class="actionsCell"><button class="btn btnDanger btnSmall" data-del="${i}">刪除</button></td>`;tb.appendChild(tr)});
- tb.querySelectorAll('input,select').forEach(el=>el.addEventListener('change',e=>{const tr=e.target.closest('tr');const idx=[...tb.children].indexOf(tr);const k=e.target.dataset.k;if(!k)return;state.expenses[idx][k]=e.target.type==='checkbox'?e.target.checked:(e.target.type==='number'?num(e.target.value):e.target.value);scheduleRecalc()}));
- tb.querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click',()=>{state.expenses.splice(num(b.dataset.del),1);renderExpenses();scheduleRecalc()}));
-}
-function renderAssets(c){const tb=$('assetTable').querySelector('tbody');tb.innerHTML='';state.assets.forEach((x,i)=>{const lw=c.lumpTotal?x.lumpWeight/c.lumpTotal:0, dw=c.dcaTotal?x.dcaWeight/c.dcaTotal:0;const tr=document.createElement('tr');tr.innerHTML=`
-<td data-label="標的"><input data-k="name" value="${esc(x.name||'')}"></td><td data-label="類型"><input data-k="type" value="${esc(x.type||'')}"></td>
-<td data-label="單筆權重 %"><input type="number" step="0.1" data-k="lumpWeight" value="${num(x.lumpWeight)}"></td><td data-label="定期定額權重 %"><input type="number" step="0.1" data-k="dcaWeight" value="${num(x.dcaWeight)}"></td><td data-label="預估年化 %"><input type="number" step="0.1" data-k="ret" value="${num(x.ret)}"></td>
-<td data-label="單筆投入" class="money">${money(c.s.lumpSum*lw)}</td><td data-label="每月定期定額" class="money">${money(c.actualDca*dw)}</td><td class="actionsCell"><button class="btn btnDanger btnSmall" data-del="${i}">刪除</button></td>`;tb.appendChild(tr)});
- tb.querySelectorAll('input').forEach(el=>el.addEventListener('change',e=>{const idx=[...tb.children].indexOf(e.target.closest('tr'));const k=e.target.dataset.k;state.assets[idx][k]=e.target.type==='number'?num(e.target.value):e.target.value;scheduleRecalc()}));
- tb.querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click',()=>{state.assets.splice(num(b.dataset.del),1);scheduleRecalc()}));
-}
-function renderBills(c){const tb=$('billBody');tb.innerHTML='';const peakShare=c.s.homePeakShare/100, evOff=c.s.evOffpeakShare/100, evPerPeriod=c.gridKwh/6;NEXT_BASE.forEach((p,i)=>{const summer=[0,1].includes(i);const peak=summer?c.s.summerPeak:c.s.winterPeak,off=summer?c.s.summerOffpeak:c.s.winterOffpeak;const baseCost=p.base.kwh*(peakShare*peak+(1-peakShare)*off)+c.s.touBaseFee*2;const evCost=evPerPeriod*(evOff*off+(1-evOff)*peak);const total=baseCost+evCost;const tr=document.createElement('tr');tr.innerHTML=`<td>${p.m}</td><td class="money">${nfmt(p.base.kwh)} 度</td><td class="money">${money(p.base.cost)}</td><td class="money">${nfmt(evPerPeriod)} 度</td><td class="money">${money(total)}</td><td class="money ${total-p.base.cost>=0?'warning':'positive'}">${money(total-p.base.cost)}</td>`;tb.appendChild(tr)})}
-function drawChart(c){const canvas=$('growthChart'),ctx=canvas.getContext('2d');const dpr=window.devicePixelRatio||1;const w=canvas.clientWidth,h=canvas.clientHeight;canvas.width=w*dpr;canvas.height=h*dpr;ctx.scale(dpr,dpr);ctx.clearRect(0,0,w,h);const pad={l:48,r:18,t:18,b:32},cw=w-pad.l-pad.r,ch=h-pad.t-pad.b;const vals=[c.s.lumpSum,...c.rows.map(r=>r.total)],max=Math.max(...vals,1)*1.08;ctx.strokeStyle='#dfe7f2';ctx.fillStyle='#718198';ctx.font='11px sans-serif';for(let i=0;i<=4;i++){const y=pad.t+ch*i/4;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();ctx.fillText(nfmt(max*(1-i/4)/10000,0)+'萬',4,y+4)}ctx.strokeStyle='#0b5cff';ctx.lineWidth=3;ctx.beginPath();vals.forEach((v,i)=>{const x=pad.l+cw*i/(vals.length-1),y=pad.t+ch*(1-v/max);i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke();ctx.fillStyle='#0b5cff';vals.forEach((v,i)=>{const x=pad.l+cw*i/(vals.length-1),y=pad.t+ch*(1-v/max);ctx.beginPath();ctx.arc(x,y,3.5,0,Math.PI*2);ctx.fill()});ctx.fillStyle='#718198';const step=Math.ceil(c.investYears/5);for(let y=0;y<=c.investYears;y+=step){const x=pad.l+cw*y/c.investYears;ctx.fillText(y+'年',x-8,h-8)}}
-function recalc(){const c=calc();
- $('mGross').textContent=money(c.ex.included);$('mPaid').textContent=money(c.ex.paid);$('mSale').textContent=money(c.s.saleValue);$('mNet').textContent=money(c.netInitial);$('mMonthly').textContent=money(c.monthlyImprove);$('mAfterLoan').textContent=money(c.afterPrincipal);
- $('expCount').textContent=c.ex.count;$('expIncluded').textContent=money(c.ex.included);$('expPaid').textContent=money(c.ex.paid);$('expPending').textContent=money(c.ex.pending);
- $('crvFuelAnnual').textContent=money(c.fuelAnnual);$('crvMaintAnnual').textContent=money(c.crvMaint);$('evPowerAnnual').textContent=money(c.evPowerAnnual);$('evMaintShow').textContent=money(c.evMaint);$('crvAnnualTotal').textContent=money(c.fuelAnnual+c.crvMaint)+' / 年';$('evAnnualTotal').textContent=money(c.evPowerAnnual+c.evMaint)+' / 年';$('annualEnergySaving').textContent=money(c.energySaving);$('annualMaintSaving').textContent=money(c.maintSaving);$('annualTotalSaving').textContent=money(c.totalSaving);$('tenEnergySaving').textContent=money(c.energySaving*c.years);$('tenMaintSaving').textContent=money(c.maintSaving*c.years);$('tenTotalSaving').textContent=money(c.totalSaving*c.years);$('netInitialCost').textContent=money(c.netInitial);const tenNet=c.totalSaving*c.years-c.netInitial;$('tenNetBenefit').textContent=money(tenNet);$('tenNetBenefit').className=tenNet>=0?'positive':'negative';$('paybackYears').textContent=c.totalSaving>0?nfmt(c.netInitial/c.totalSaving,1)+' 年':'—';
- $('annualGridKwh').textContent=nfmt(c.gridKwh)+' 度';$('dailyKwh').textContent=nfmt(c.gridKwh/365,1)+' 度';$('dailyHours').textContent=nfmt((c.gridKwh/365)/Math.max(c.s.chargerKw,.1),1)+' 小時';$('homeChargeCost').textContent=money(c.evPowerAnnual);$('chargerAnnualSaving').textContent=money(c.chargerAnnualSaving);$('chargerPayback').textContent=isFinite(c.chargerPayback)?nfmt(c.chargerPayback,1)+' 年':'無法回收';
- $('monthlyInterest').textContent=money(c.monthlyInterest);$('annualInterest').textContent=money(c.annualInterest);$('totalInterest').textContent=money(c.annualInterest*c.years);$('monthlyFuel').textContent=money(c.fuelAnnual/12);$('monthlyPower').textContent=money(c.evPowerAnnual/12);$('monthlyNewOutflow').textContent=money(c.evPowerAnnual/12+c.monthlyInterest);$('monthlyGrossSaving').textContent=money(c.monthlyGross);$('monthlyInterest2').textContent='− '+money(c.monthlyInterest);$('autoDca').textContent=money(c.actualDca)+' / 月';
- $('lumpWeightTotal').value=nfmt(c.lumpTotal,1)+'%';$('dcaWeightTotal').value=nfmt(c.dcaTotal,1)+'%';$('lumpReturn').textContent=pct(c.lumpR);$('dcaReturn').textContent=pct(c.dcaR);$('investFuture').textContent=money(c.future);$('afterPrincipal').textContent=money(c.afterPrincipal);
- renderAssets(c);renderBills(c);const yb=$('yearBody');yb.innerHTML='';c.rows.forEach(r=>{const tr=document.createElement('tr');tr.innerHTML=`<td>第 ${r.y} 年</td><td class="money">${money(r.contributed)}</td><td class="money">${money(r.lump)}</td><td class="money">${money(r.dca)}</td><td class="money">${money(r.total)}</td><td class="money ${r.profit>=0?'positive':'negative'}">${money(r.profit)}</td>`;yb.appendChild(tr)});drawChart(c);renderConclusion(c);
-}
-function renderConclusion(c){const benefitBeforeInvestment=c.totalSaving*c.years-c.annualInterest*c.years-c.netInitial;const verdictGood=c.afterPrincipal>0&&c.monthlyImprove>0;const v=$('verdict');v.textContent=verdictGood?'✓ 目前模型：財務上具可行性':'⚠ 目前模型：需要再留安全邊際';v.style.background=verdictGood?'#dffbed':'#fff1d8';v.style.color=verdictGood?'#087a4a':'#9a6500';$('story').innerHTML=`依目前帳本，CAVIRA 與已納入的相關採購成本合計 <strong>${money(c.ex.included)}</strong>，扣除 CR-V 估計售價 ${money(c.s.saleValue)} 後，換車淨投入約 <strong>${money(c.netInitial)}</strong>。<br><br>以每年 ${nfmt(c.s.annualKm)} km 使用量估算，CR-V 的油費與保養 / 維修一年約 ${money(c.fuelAnnual+c.crvMaint)}，CAVIRA 的家充電費與保養一年約 ${money(c.evPowerAnnual+c.evMaint)}，每年可改善約 <strong>${money(c.totalSaving)}</strong>。扣掉增貸年利息 ${money(c.annualInterest)} 後，每月仍約有 <strong>${money(c.monthlyImprove)}</strong> 的正向現金流可投入定期定額。<br><br>若單筆投入 ${money(c.s.lumpSum)}，並將每月 ${money(c.actualDca)} 持續投資 ${c.investYears} 年，以目前配置假設的加權報酬率計算，期末投資資產約 <strong>${money(c.future)}</strong>；償還 ${money(c.s.loanPrincipal)} 貸款本金後，預估剩餘 <strong>${money(c.afterPrincipal)}</strong>。${verdictGood?'在目前假設下，換車不是單純增加消費，而是把高里程燃油成本轉成較低的能源成本與可累積的投資資產。':'目前仍有缺口，建議調整購車總投入、貸款金額、投資投入或報酬假設，不要只靠樂觀報酬率補足。'}`}
-function esc(s){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
-function addExpense(){state.expenses.push({id:'e'+Date.now(),date:new Date().toISOString().slice(0,10),category:'其他',item:'',vendor:'',amount:0,paid:false,include:true,note:''});renderExpenses();saveLocal(true);recalc()}
-function addAsset(){state.assets.push({id:'a'+Date.now(),name:'新標的',type:'ETF',lumpWeight:0,dcaWeight:0,ret:7});saveLocal(true);recalc()}
-function exportData(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='CAVIRA_換車成本帳本_'+new Date().toISOString().slice(0,10)+'.json';a.click();URL.revokeObjectURL(a.href)}
-function importData(file){const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d.settings||!d.expenses||!d.assets)throw 0;state=d;saveLocal(false);applySettings();renderExpenses();recalc();alert('備份匯入完成')}catch(e){alert('備份格式不正確')}};r.readAsText(file)}
+const today=()=>new Date().toISOString().slice(0,10);
+let state=loadState();
+let editingId=null;
+function seedEntries(){return [
+  {id:uid(),date:'2026-08-28',category:'車價',item:'FOXTRON CAVIRA Emerge 車價',vendor:'FOXTRON',stage:'交車前',amount:1270000,paid:0,method:'貸款',due:'',doc:'',include:true,warranty:'',note:'預設起始資料，可依實際付款進度修改。',createdAt:Date.now()-1000},
+  {id:uid(),date:'2026-08-28',category:'家用充電',item:'家用充電樁安裝',vendor:'',stage:'交車前',amount:118000,paid:0,method:'轉帳',due:'',doc:'',include:true,warranty:'',note:'預設起始資料，可依最終實際金額修改。',createdAt:Date.now()}
+]}
+function initialState(){return {entries:seedEntries(),categories:[...defaultCategories],categoryBudgets:{},overallBudget:1500000,checks:defaultChecks.map((x,i)=>({id:'c'+i,group:x[0],text:x[1],done:false,custom:false})),updatedAt:Date.now()}}
+function loadState(){try{const s=JSON.parse(localStorage.getItem(KEY));return s&&s.entries?s:initialState()}catch(e){return initialState()}}
+function persist(sync=true){state.updatedAt=Date.now();localStorage.setItem(KEY,JSON.stringify(state));renderAll();if(sync&&localStorage.getItem(SYNC_TOKEN_KEY)) debounceAutoSync()}
+function uid(){return 'e'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function money(n){return new Intl.NumberFormat('zh-TW',{style:'currency',currency:'TWD',maximumFractionDigits:0}).format(Number(n||0))}
+function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function statusOf(e){if(Number(e.paid)>=Number(e.amount)&&Number(e.amount)>0)return 'paid';if(Number(e.paid)>0)return 'partial';return 'unpaid'}
+function statusText(s){return s==='paid'?'已付款':s==='partial'?'部分付款':'待付款'}
+function daysUntil(date){if(!date)return null;const a=new Date(today()+'T00:00:00'),b=new Date(date+'T00:00:00');return Math.ceil((b-a)/86400000)}
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2200)}
+function switchTab(id){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===id));document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===id));if(id==='ledger')setTimeout(()=>document.getElementById('entrySection').scrollIntoView({behavior:'smooth',block:'start'}),30)}
+window.switchTab=switchTab;
+document.getElementById('tabs').addEventListener('click',e=>{const b=e.target.closest('.tab');if(b)switchTab(b.dataset.tab)});
+
+function categoryTotals(){const m={};state.entries.filter(e=>e.include!==false).forEach(e=>m[e.category]=(m[e.category]||0)+Number(e.amount||0));return m}
+function renderMetrics(){const inc=state.entries.filter(e=>e.include!==false),total=inc.reduce((s,e)=>s+Number(e.amount||0),0),paid=inc.reduce((s,e)=>s+Math.min(Number(e.paid||0),Number(e.amount||0)),0),unpaid=Math.max(0,total-paid);const dueSoon=inc.filter(e=>statusOf(e)!=='paid'&&e.due&&daysUntil(e.due)<=30).reduce((s,e)=>s+Math.max(0,Number(e.amount)-Number(e.paid)),0);mTotal.textContent=money(total);mPaid.textContent=money(paid);mUnpaid.textContent=money(unpaid);mCount.textContent=state.entries.length;mDueSoon.textContent=money(dueSoon)}
+function renderRecent(){const rows=[...state.entries].sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).slice(0,6);recentBody.innerHTML=rows.length?rows.map(e=>`<tr><td data-label="日期">${e.date||'-'}</td><td data-label="分類">${esc(e.category)}</td><td data-label="品項"><strong>${esc(e.item)}</strong></td><td data-label="店家">${esc(e.vendor||'-')}</td><td data-label="總額" class="money">${money(e.amount)}</td><td data-label="已付" class="money">${money(e.paid)}</td><td data-label="狀態"><span class="tag ${statusOf(e)}">${statusText(statusOf(e))}</span></td></tr>`).join(''):`<tr><td colspan="7"><div class="empty">尚無紀錄</div></td></tr>`}
+function renderDue(){const list=state.entries.filter(e=>statusOf(e)!=='paid'&&e.due).sort((a,b)=>new Date(a.due)-new Date(b.due)).slice(0,8);dueList.innerHTML=list.length?list.map(e=>{const d=daysUntil(e.due),cls=d<0?'unpaid':d<=7?'partial':'';return `<div style="display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid #edf2f8"><div><strong>${esc(e.item)}</strong><div style="font-size:12px;color:var(--muted)">${esc(e.category)}｜期限 ${e.due}</div></div><div style="text-align:right"><strong>${money(Math.max(0,e.amount-e.paid))}</strong><div><span class="tag ${cls}">${d<0?`逾期 ${Math.abs(d)} 天`:`剩 ${d} 天`}</span></div></div></div>`}).join(''):'<div class="empty">目前沒有設定付款期限的待付款項目 👍</div>'}
+function renderChart(){const totals=categoryTotals(),arr=Object.entries(totals).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]),c=catChart,ctx=c.getContext('2d'),dpr=devicePixelRatio||1;const rect=c.getBoundingClientRect();c.width=rect.width*dpr;c.height=rect.height*dpr;ctx.scale(dpr,dpr);const w=rect.width,h=rect.height;ctx.clearRect(0,0,w,h);if(!arr.length){ctx.fillStyle='#7a8798';ctx.font='14px sans-serif';ctx.fillText('尚無支出資料',20,40);catLegend.innerHTML='';return}const max=Math.max(...arr.map(x=>x[1]));const left=105,right=25,top=18,row=Math.min(38,(h-30)/arr.length),barW=w-left-right;arr.slice(0,7).forEach(([name,val],i)=>{const y=top+i*row;ctx.fillStyle='#e8eef7';ctx.fillRect(left,y+5,barW,18);const grad=ctx.createLinearGradient(left,0,left+barW,0);grad.addColorStop(0,'#18a7ff');grad.addColorStop(1,'#0b5cff');ctx.fillStyle=grad;ctx.fillRect(left,y+5,barW*(val/max),18);ctx.fillStyle='#41516a';ctx.font='12px sans-serif';ctx.fillText(name,8,y+18);ctx.fillStyle='#153152';ctx.font='700 12px sans-serif';ctx.fillText(money(val),left+6,y+18)});catLegend.innerHTML=`<span>共 ${arr.length} 個有支出的分類</span><span>最大支出：${esc(arr[0][0])} ${money(arr[0][1])}</span>`}
+function populateCategories(){const opts=state.categories.map(c=>`<option>${esc(c)}</option>`).join('');fCategory.innerHTML=opts;qCategory.innerHTML='<option value="">全部分類</option>'+opts;categoryChips.innerHTML=state.categories.map(c=>`<span class="tag">${esc(c)} <button onclick="removeCategory('${encodeURIComponent(c)}')" style="border:0;background:transparent;color:#7c8ca3;font-weight:900">×</button></span>`).join('')}
+function removeCategory(enc){const c=decodeURIComponent(enc);if(state.entries.some(e=>e.category===c)){toast('這個分類仍有費用紀錄，不能刪除');return}state.categories=state.categories.filter(x=>x!==c);delete state.categoryBudgets[c];persist(false)} window.removeCategory=removeCategory;
+
+function filteredEntries(){let arr=[...state.entries],q=qSearch.value.trim().toLowerCase();if(q)arr=arr.filter(e=>[e.item,e.vendor,e.note,e.doc].join(' ').toLowerCase().includes(q));if(qCategory.value)arr=arr.filter(e=>e.category===qCategory.value);if(qStatus.value)arr=arr.filter(e=>statusOf(e)===qStatus.value);if(qStage.value)arr=arr.filter(e=>e.stage===qStage.value);const s=qSort.value;arr.sort((a,b)=>s==='dateAsc'?String(a.date).localeCompare(String(b.date)):s==='amountDesc'?b.amount-a.amount:s==='amountAsc'?a.amount-b.amount:String(b.date).localeCompare(String(a.date)));return arr}
+function renderLedger(){const arr=filteredEntries();ledgerSummary.textContent=`${arr.length} 筆｜合計 ${money(arr.reduce((s,e)=>s+Number(e.amount||0),0))}`;ledgerBody.innerHTML=arr.length?arr.map(e=>{const bal=Math.max(0,Number(e.amount)-Number(e.paid)),s=statusOf(e);return `<tr><td data-label="日期">${e.date||'-'}</td><td data-label="分類"><span class="tag">${esc(e.category)}</span></td><td data-label="品項"><strong>${esc(e.item)}</strong><div style="font-size:12px;color:var(--muted)">${esc(e.stage||'')}</div></td><td data-label="店家">${esc(e.vendor||'-')}</td><td data-label="總額" class="money">${money(e.amount)}</td><td data-label="已付" class="money">${money(e.paid)}</td><td data-label="未付" class="money">${money(bal)}</td><td data-label="期限">${e.due||'-'}</td><td data-label="狀態"><span class="tag ${s}">${statusText(s)}</span></td><td data-label="納入成本">${e.include!==false?'✅':'—'}</td><td data-label="操作"><div class="actionBtns"><button class="mini" onclick="editEntry('${e.id}')">編輯</button><button class="mini" onclick="dupEntry('${e.id}')">複製</button><button class="mini" onclick="deleteEntry('${e.id}')">刪除</button></div></td></tr>`}).join(''):'<tr><td colspan="11"><div class="empty">沒有符合條件的紀錄</div></td></tr>'}
+function clearForm(){editingId=null;fDate.value=today();fCategory.value=state.categories[0]||'';fItem.value='';fVendor.value='';fStage.value='交車前';fAmount.value='';fPaid.value='';fMethod.value='轉帳';fDue.value='';fDoc.value='';fInclude.value='yes';fWarranty.value='';fNote.value='';editHint.textContent=''}
+function saveEntry(){const amount=Number(fAmount.value||0),paid=Math.min(Number(fPaid.value||0),amount);if(!fItem.value.trim()||amount<0){toast('請至少輸入品項與金額');return}const old=state.entries.find(e=>e.id===editingId);const rec={id:editingId||uid(),date:fDate.value||today(),category:fCategory.value,item:fItem.value.trim(),vendor:fVendor.value.trim(),stage:fStage.value,amount,paid,method:fMethod.value,due:fDue.value,doc:fDoc.value.trim(),include:fInclude.value==='yes',warranty:fWarranty.value,note:fNote.value.trim(),createdAt:old?.createdAt||Date.now()};if(editingId)state.entries=state.entries.map(e=>e.id===editingId?rec:e);else state.entries.push(rec);persist();toast(editingId?'已更新費用紀錄':'已新增費用紀錄');clearForm()}
+function editEntry(id){const e=state.entries.find(x=>x.id===id);if(!e)return;editingId=id;fDate.value=e.date||today();fCategory.value=e.category;fItem.value=e.item;fVendor.value=e.vendor||'';fStage.value=e.stage||'交車前';fAmount.value=e.amount;fPaid.value=e.paid;fMethod.value=e.method||'轉帳';fDue.value=e.due||'';fDoc.value=e.doc||'';fInclude.value=e.include!==false?'yes':'no';fWarranty.value=e.warranty||'';fNote.value=e.note||'';editHint.textContent='目前正在編輯既有紀錄';switchTab('ledger');setTimeout(()=>entrySection.scrollIntoView({behavior:'smooth'}),50)} window.editEntry=editEntry;
+function dupEntry(id){const e=state.entries.find(x=>x.id===id);if(!e)return;state.entries.push({...e,id:uid(),date:today(),paid:0,createdAt:Date.now(),note:(e.note?e.note+'｜':'')+'由既有紀錄複製'});persist();toast('已複製一筆新紀錄')} window.dupEntry=dupEntry;
+function deleteEntry(id){if(!confirm('確定刪除這筆費用嗎？'))return;state.entries=state.entries.filter(e=>e.id!==id);persist();toast('已刪除')} window.deleteEntry=deleteEntry;
+
+function renderBudget(){overallBudget.value=state.overallBudget||0;const total=state.entries.filter(e=>e.include!==false).reduce((s,e)=>s+Number(e.amount||0),0),b=Number(state.overallBudget||0),pct=b?Math.min(100,total/b*100):0;overallBudgetText.textContent=`${money(total)} / ${money(b)}`;overallBudgetBar.style.width=pct+'%';overallBudgetBar.style.background=total>b?'linear-gradient(90deg,#ff9f1a,#e64a52)':'linear-gradient(90deg,#1c9cff,#0b5cff)';const totals=categoryTotals();budgetList.innerHTML=state.categories.map(c=>{const used=totals[c]||0,cb=Number(state.categoryBudgets[c]||0),p=cb?Math.min(100,used/cb*100):0;return `<div class="budgetItem"><div class="budgetTop"><strong>${esc(c)}</strong><span>${money(used)} / <button onclick="setCatBudget('${encodeURIComponent(c)}')" style="border:0;background:transparent;color:var(--blue);font-weight:900">${cb?money(cb):'設定預算'}</button></span></div><div class="progressTrack"><div class="progressFill" style="width:${p}%;${cb&&used>cb?'background:linear-gradient(90deg,#ff9f1a,#e64a52)':''}"></div></div></div>`}).join('')}
+function setCatBudget(enc){const c=decodeURIComponent(enc),v=prompt(`設定「${c}」分類預算`,state.categoryBudgets[c]||'');if(v===null)return;state.categoryBudgets[c]=Number(v||0);persist(false)} window.setCatBudget=setCatBudget;
+
+function renderChecks(){const groups=[...new Set(state.checks.map(x=>x.group))];checkGrid.innerHTML=groups.map(g=>`<div class="checkCard"><h3>${esc(g)}</h3>${state.checks.filter(x=>x.group===g).map(x=>`<div class="checkItem"><input type="checkbox" ${x.done?'checked':''} onchange="toggleCheck('${x.id}',this.checked)"><label>${esc(x.text)}${x.custom?`<small><button onclick="deleteCheck('${x.id}')" style="border:0;background:transparent;color:#c8454f;padding:0">刪除此自訂項目</button></small>`:''}</label></div>`).join('')}</div>`).join('');const done=state.checks.filter(x=>x.done).length;deliveryProgress.textContent=`${done} / ${state.checks.length} 已完成（${state.checks.length?Math.round(done/state.checks.length*100):0}%）`}
+function toggleCheck(id,v){const x=state.checks.find(i=>i.id===id);if(x)x.done=v;persist(false)} window.toggleCheck=toggleCheck;
+function deleteCheck(id){state.checks=state.checks.filter(x=>x.id!==id);persist(false)} window.deleteCheck=deleteCheck;
+function renderWarranty(){const arr=state.entries.filter(e=>e.warranty).sort((a,b)=>new Date(a.warranty)-new Date(b.warranty));warrantyGrid.innerHTML=arr.length?arr.map(e=>{const d=daysUntil(e.warranty);return `<div class="wCard ${d<0?'overdue':''}"><div style="font-size:13px;color:var(--muted)">${esc(e.category)}</div><strong>${esc(e.item)}</strong><div class="days">${d<0?'已過期':d+' 天'}</div><div style="font-size:13px;color:var(--muted)">到期日：${e.warranty}</div><div style="font-size:13px;margin-top:7px">${esc(e.vendor||'')}</div></div>`}).join(''):'<div class="empty" style="grid-column:1/-1">尚未設定任何保固到期日</div>'}
+function renderAll(){populateCategories();renderMetrics();renderRecent();renderDue();renderLedger();renderBudget();renderChecks();renderWarranty();requestAnimationFrame(renderChart)}
+
+saveEntryBtn.onclick=saveEntry;clearEntryBtn.onclick=clearForm;quickAddBtn.onclick=()=>{switchTab('ledger');clearForm()};
+[qSearch,qCategory,qStatus,qStage,qSort].forEach(el=>el.addEventListener('input',renderLedger));resetFilter.onclick=()=>{qSearch.value='';qCategory.value='';qStatus.value='';qStage.value='';qSort.value='dateDesc';renderLedger()};
+saveBudgetBtn.onclick=()=>{state.overallBudget=Number(overallBudget.value||0);persist(false);toast('預算已更新')};
+addCategoryBtn.onclick=()=>{const c=newCategory.value.trim();if(!c)return;if(!state.categories.includes(c))state.categories.push(c);newCategory.value='';persist(false)};
+addCheckBtn.onclick=()=>{const t=newCheck.value.trim();if(!t)return;state.checks.push({id:uid(),group:newCheckGroup.value,text:t,done:false,custom:true});newCheck.value='';persist(false)};
+
+function download(name,content,type='application/octet-stream'){const blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),500)}
+exportJsonBtn.onclick=()=>download(`CAVIRA購車帳本_${today()}.json`,JSON.stringify(state,null,2),'application/json;charset=utf-8');
+importJsonInput.onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const s=JSON.parse(await f.text());if(!s.entries)throw 0;state=s;persist(false);toast('備份已匯入')}catch(_){alert('備份檔格式不正確')}};
+exportCsvBtn.onclick=()=>{const heads=['日期','分類','階段','品項','店家','總金額','已付金額','未付金額','付款方式','付款期限','納入購車成本','保固到期','單據/訂單號','備註'];const lines=[heads,...state.entries.map(e=>[e.date,e.category,e.stage,e.item,e.vendor,e.amount,e.paid,Math.max(0,e.amount-e.paid),e.method,e.due,e.include!==false?'是':'否',e.warranty,e.doc,e.note])].map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(','));download(`CAVIRA購車費用_${today()}.csv`,'\ufeff'+lines.join('\n'),'text/csv;charset=utf-8')};
+clearAllBtn.onclick=()=>{if(confirm('確定清除全部帳本資料？此動作無法復原。')){localStorage.removeItem(KEY);state=initialState();persist(false);toast('已恢復成全新帳本')}};
+
 // Gist sync
-const GIST_FILE='cavira_cost_ledger.json',GIST_DESC='CAVIRA Cost Ledger Cloud Sync';
-function token(){return localStorage.getItem('caviraGistToken')||''}function setStatus(t){$('syncStatus').textContent=t}
-async function gh(path,opt={}){const res=await fetch('https://api.github.com'+path,{...opt,headers:{Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28',Authorization:'Bearer '+token(),...(opt.headers||{})}});if(!res.ok)throw new Error((await res.text())||res.statusText);return res.status===204?null:res.json()}
-async function findGist(){const list=await gh('/gists?per_page=100');return list.find(g=>g.files&&g.files[GIST_FILE])||null}
-async function createGist(){return gh('/gists',{method:'POST',body:JSON.stringify({description:GIST_DESC,public:false,files:{[GIST_FILE]:{content:JSON.stringify(state)}}})})}
-async function cloudSync(forceUpload=false){if(!token()){$('syncModal').classList.add('open');return}try{setStatus('雲端同步中…');let g=await findGist();if(!g){g=await createGist();setStatus('已建立私人 Gist 並完成同步');return}const full=await gh('/gists/'+g.id);const raw=full.files[GIST_FILE]?.content;let remote=raw?JSON.parse(raw):null;if(forceUpload||!remote||num(state.updatedAt)>=num(remote.updatedAt)){await gh('/gists/'+g.id,{method:'PATCH',body:JSON.stringify({files:{[GIST_FILE]:{content:JSON.stringify(state)}}})});setStatus('✓ 已同步至雲端 · '+new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'}))}else{state=remote;saveLocal(false);applySettings();renderExpenses();recalc();setStatus('✓ 已讀取雲端最新資料 · '+new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'}))}}catch(e){console.error(e);setStatus('同步失敗：請檢查 Token / 網路');}}
-function scheduleCloudUpload(){clearTimeout(cloudTimer);cloudTimer=setTimeout(()=>cloudSync(true),1800)}
-// Tabs
-$('tabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#tabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(b.dataset.target).scrollIntoView({behavior:'smooth',block:'start'})});
-$('addExpense').onclick=addExpense;$('addAsset').onclick=addAsset;$('exportBtn').onclick=exportData;$('printBtn').onclick=()=>window.print();$('syncBtn').onclick=()=>cloudSync(false);$('resetBtn').onclick=()=>{if(confirm('確定恢復預設值？目前本機資料會被重設。')){state=deepClone(DEFAULT_STATE);state.updatedAt=Date.now();saveLocal(false);applySettings();renderExpenses();recalc();scheduleCloudUpload()}};
-$('closeModal').onclick=()=>$('syncModal').classList.remove('open');$('clearToken').onclick=()=>{localStorage.removeItem('caviraGistToken');$('tokenInput').value='';setStatus('已清除雲端 Token')};$('saveToken').onclick=()=>{const v=$('tokenInput').value.trim();if(!v)return alert('請貼入 GitHub Token');localStorage.setItem('caviraGistToken',v);$('syncModal').classList.remove('open');cloudSync(false)};$('syncModal').onclick=e=>{if(e.target===$('syncModal'))$('syncModal').classList.remove('open')};
-$('exportBtn').insertAdjacentHTML('afterend','<button class="btn btnGlass" id="importBtn">⇧ 匯入備份</button>');$('importBtn').onclick=()=>$('importFile').click();$('importFile').onchange=e=>e.target.files[0]&&importData(e.target.files[0]);
-window.addEventListener('resize',()=>drawChart(calc()));window.addEventListener('online',()=>token()&&cloudSync(false));document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&token())cloudSync(false)});
-// init
-bindSettings();renderExpenses();recalc();if(token())setTimeout(()=>cloudSync(false),600);
+const syncModal=document.getElementById('syncModal');function openSync(){syncToken.value=localStorage.getItem(SYNC_TOKEN_KEY)||'';syncGist.value=localStorage.getItem(SYNC_GIST_KEY)||'';syncModal.classList.add('show')}syncBtn.onclick=()=>{if(localStorage.getItem(SYNC_TOKEN_KEY))gistSync();else openSync()};openSyncSettings.onclick=openSync;closeSync.onclick=()=>syncModal.classList.remove('show');saveSync.onclick=()=>{if(!syncToken.value.trim()){toast('請輸入 GitHub Token');return}localStorage.setItem(SYNC_TOKEN_KEY,syncToken.value.trim());if(syncGist.value.trim())localStorage.setItem(SYNC_GIST_KEY,syncGist.value.trim());syncModal.classList.remove('show');gistSync()};
+let syncTimer;function debounceAutoSync(){clearTimeout(syncTimer);syncTimer=setTimeout(()=>gistSync(true),2500)}
+async function gh(url,opt={}){const token=localStorage.getItem(SYNC_TOKEN_KEY);const r=await fetch(url,{...opt,headers:{'Authorization':'Bearer '+token,'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28','Content-Type':'application/json',...(opt.headers||{})}});if(!r.ok)throw new Error(await r.text());return r.json()}
+async function gistSync(silent=false){const token=localStorage.getItem(SYNC_TOKEN_KEY);if(!token){if(!silent)openSync();return}try{let id=localStorage.getItem(SYNC_GIST_KEY),cloud=null;if(id){cloud=await gh('https://api.github.com/gists/'+id)}else{const created=await gh('https://api.github.com/gists',{method:'POST',body:JSON.stringify({description:'CAVIRA 購車費用帳本雲端同步',public:false,files:{[GIST_FILE]:{content:JSON.stringify(state)}}})});id=created.id;localStorage.setItem(SYNC_GIST_KEY,id);if(!silent)toast('已建立雲端帳本');return}const file=cloud.files?.[GIST_FILE];if(file?.content){const remote=JSON.parse(file.content);if(Number(remote.updatedAt||0)>Number(state.updatedAt||0)){state=remote;localStorage.setItem(KEY,JSON.stringify(state));renderAll();if(!silent)toast('已從雲端取得最新資料');return}}await gh('https://api.github.com/gists/'+id,{method:'PATCH',body:JSON.stringify({files:{[GIST_FILE]:{content:JSON.stringify(state)}}})});if(!silent)toast('雲端同步完成')}catch(e){console.error(e);if(!silent){toast('同步失敗，請檢查 Token / Gist 權限');openSync()}}}
+window.addEventListener('focus',()=>{if(localStorage.getItem(SYNC_TOKEN_KEY))gistSync(true)});window.addEventListener('online',()=>{if(localStorage.getItem(SYNC_TOKEN_KEY))gistSync(true)});
+
+clearForm();renderAll();if(localStorage.getItem(SYNC_TOKEN_KEY))setTimeout(()=>gistSync(true),800);
 </script>
 </body>
 </html>
