@@ -11,25 +11,25 @@
   --blue:#0b5cff; --blue2:#16a3ff; --green:#1aa86f; --orange:#ff9f1a; --red:#e64a52;
   --shadow:0 12px 32px rgba(15,43,77,.09); --radius:22px;
 }
-*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:linear-gradient(180deg,#eff6ff 0,#f8fbff 340px,#f5f8fc 100%);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;line-height:1.55}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:linear-gradient(180deg,#eff6ff 0,#f8fbff 340px,#f5f8fc 100%);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;line-height:1.65;font-size:18px}
 button,input,select,textarea{font:inherit} button{cursor:pointer}
 .container{max-width:1440px;margin:auto;padding:22px}
 .hero{background:linear-gradient(135deg,#082f72 0%,#0b5cff 55%,#12a8ff 100%);color:#fff;border-radius:28px;padding:26px 28px;box-shadow:0 18px 55px rgba(11,92,255,.22);position:relative;overflow:hidden}
 .hero:after{content:"";position:absolute;width:430px;height:430px;border-radius:50%;right:-140px;top:-220px;background:rgba(255,255,255,.10)}
 .heroTop{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;position:relative;z-index:1}
-.hero h1{margin:0;font-size:clamp(28px,4vw,46px);letter-spacing:.5px}.hero p{margin:8px 0 0;color:#dfeaff;font-size:16px}
-.heroActions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}.heroActions button{border:0;border-radius:14px;padding:12px 16px;font-weight:800;background:#fff;color:#0b4bcc;box-shadow:0 6px 18px rgba(0,0,0,.12)}
+.hero h1{margin:0;font-size:clamp(34px,4.6vw,56px);letter-spacing:.5px}.hero p{margin:10px 0 0;color:#dfeaff;font-size:20px}
+.heroActions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}.heroActions button{border:0;border-radius:16px;padding:14px 20px;font-size:18px;font-weight:900;background:#fff;color:#0b4bcc;box-shadow:0 6px 18px rgba(0,0,0,.12)}
 .heroActions .secondary{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.34);color:#fff;box-shadow:none}
 .statusDot{width:10px;height:10px;border-radius:50%;display:inline-block;background:#fff;margin-right:7px;box-shadow:0 0 0 4px rgba(255,255,255,.16)}
-.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.tab{border:1px solid var(--line);background:#fff;color:#3c4c63;border-radius:14px;padding:11px 16px;font-weight:800;box-shadow:0 4px 14px rgba(20,54,90,.04)}.tab.active{background:#12233d;color:#fff;border-color:#12233d}
+.tabs{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0}.tab{border:1px solid var(--line);background:#fff;color:#3c4c63;border-radius:16px;padding:14px 20px;font-size:18px;font-weight:900;box-shadow:0 4px 14px rgba(20,54,90,.04)}.tab.active{background:#12233d;color:#fff;border-color:#12233d}
 .panel{display:none}.panel.active{display:block}
-.gridCards{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}.metric{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:var(--shadow)}.metric .label{color:var(--muted);font-weight:700;font-size:14px}.metric .value{font-size:clamp(24px,3vw,34px);font-weight:900;margin-top:6px}.metric .sub{font-size:13px;color:var(--muted);margin-top:4px}.metric.blue .value{color:var(--blue)}.metric.green .value{color:var(--green)}.metric.orange .value{color:var(--orange)}.metric.red .value{color:var(--red)}
-.section{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-top:16px;box-shadow:var(--shadow)}.sectionTitle{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}.sectionTitle h2{font-size:20px;margin:0}.sectionTitle .hint{color:var(--muted);font-size:13px}
-.twoCol{display:grid;grid-template-columns:1.25fr .75fr;gap:16px}.formGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.field{display:flex;flex-direction:column;gap:6px}.field label{font-size:13px;font-weight:800;color:#43546b}.field input,.field select,.field textarea{width:100%;border:1px solid #cfd9e7;background:#fbfdff;border-radius:12px;padding:11px 12px;color:#172a46;outline:none}.field input:focus,.field select:focus,.field textarea:focus{border-color:#5d9cff;box-shadow:0 0 0 3px rgba(11,92,255,.09)}.field.span2{grid-column:span 2}.field.span4{grid-column:span 4}
-.primaryBtn,.ghostBtn,.dangerBtn{border:0;border-radius:13px;padding:11px 16px;font-weight:900}.primaryBtn{background:var(--blue);color:#fff}.ghostBtn{background:#eef4fc;color:#24415f}.dangerBtn{background:#fff0f1;color:#c7313a}.btnRow{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}
-.filterBar{display:grid;grid-template-columns:2fr repeat(4,1fr) auto;gap:10px;margin-bottom:12px}.filterBar input,.filterBar select{border:1px solid var(--line);border-radius:12px;padding:10px 11px;background:#fbfdff}
-.tableWrap{overflow:auto;border:1px solid var(--line);border-radius:16px}.table{width:100%;border-collapse:collapse;min-width:1080px}.table th{position:sticky;top:0;background:#eef4fb;color:#42536b;text-align:left;padding:12px 10px;font-size:13px;white-space:nowrap}.table td{padding:12px 10px;border-top:1px solid #edf2f8;vertical-align:middle}.table tr:hover td{background:#fbfdff}.money{text-align:right;font-variant-numeric:tabular-nums;font-weight:800}.tag{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:800;background:#eef3f9;color:#3b4d64}.tag.paid{background:#e7f8f0;color:#138357}.tag.partial{background:#fff4dd;color:#a86600}.tag.unpaid{background:#ffebed;color:#c5343d}.actionBtns{display:flex;gap:7px}.mini{border:1px solid var(--line);background:#fff;border-radius:10px;padding:7px 9px;font-weight:800;color:#31506e}
-.chartBox{height:280px;position:relative}.chartBox canvas{width:100%;height:100%}.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;color:#56657a;font-size:13px}
+.gridCards{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}.metric{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:var(--shadow)}.metric .label{color:var(--muted);font-weight:800;font-size:20px}.metric .value{font-size:clamp(34px,3.2vw,52px);font-weight:900;margin-top:8px;line-height:1.15}.metric .sub{font-size:16px;color:var(--muted);margin-top:8px}.metric.blue .value{color:var(--blue)}.metric.green .value{color:var(--green)}.metric.orange .value{color:var(--orange)}.metric.red .value{color:var(--red)}
+.section{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin-top:18px;box-shadow:var(--shadow)}.sectionTitle{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}.sectionTitle h2{font-size:28px;margin:0}.sectionTitle .hint{color:var(--muted);font-size:16px}
+.twoCol{display:grid;grid-template-columns:1.25fr .75fr;gap:18px}.formGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.field{display:flex;flex-direction:column;gap:8px}.field label{font-size:16px;font-weight:900;color:#43546b}.field input,.field select,.field textarea{width:100%;border:1px solid #cfd9e7;background:#fbfdff;border-radius:14px;padding:14px 14px;font-size:17px;color:#172a46;outline:none}.field input:focus,.field select:focus,.field textarea:focus{border-color:#5d9cff;box-shadow:0 0 0 3px rgba(11,92,255,.09)}.field.span2{grid-column:span 2}.field.span4{grid-column:span 4}
+.primaryBtn,.ghostBtn,.dangerBtn{border:0;border-radius:14px;padding:13px 18px;font-size:17px;font-weight:900}.primaryBtn{background:var(--blue);color:#fff}.ghostBtn{background:#eef4fc;color:#24415f}.dangerBtn{background:#fff0f1;color:#c7313a}.btnRow{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}
+.filterBar{display:grid;grid-template-columns:2fr repeat(4,1fr) auto;gap:12px;margin-bottom:14px}.filterBar input,.filterBar select{border:1px solid var(--line);border-radius:14px;padding:13px 14px;font-size:16px;background:#fbfdff}
+.tableWrap{overflow:auto;border:1px solid var(--line);border-radius:18px}.table{width:100%;border-collapse:collapse;min-width:1180px}.table th{position:sticky;top:0;background:#eef4fb;color:#42536b;text-align:left;padding:14px 12px;font-size:15px;white-space:nowrap}.table td{padding:14px 12px;border-top:1px solid #edf2f8;vertical-align:middle;font-size:15px}.table tr:hover td{background:#fbfdff}.money{text-align:right;font-variant-numeric:tabular-nums;font-weight:900}.tag{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:999px;font-size:13px;font-weight:900;background:#eef3f9;color:#3b4d64}.tag.paid{background:#e7f8f0;color:#138357}.tag.partial{background:#fff4dd;color:#a86600}.tag.unpaid{background:#ffebed;color:#c5343d}.actionBtns{display:flex;gap:7px}.mini{border:1px solid var(--line);background:#fff;border-radius:11px;padding:8px 11px;font-size:14px;font-weight:900;color:#31506e}
+.chartBox{height:360px;position:relative}.chartBox canvas{width:100%;height:100%}.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:14px;color:#56657a;font-size:15px}.legendItem{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;background:#f7fbff;border:1px solid #e2eaf5;border-radius:14px}.legendLeft{display:flex;align-items:center;gap:10px;font-weight:800;color:#243b5c}.legendSwatch{width:14px;height:14px;border-radius:50%}.legendMeta{display:flex;flex-direction:column;align-items:flex-end}.legendMeta strong{font-size:16px;color:#123456}.legendMeta span{font-size:13px;color:#6c7a90}
 .progressTrack{height:14px;border-radius:999px;background:#eaf0f7;overflow:hidden}.progressFill{height:100%;background:linear-gradient(90deg,#1c9cff,#0b5cff)}.budgetList{display:grid;gap:12px}.budgetItem{border:1px solid var(--line);border-radius:15px;padding:13px}.budgetTop{display:flex;justify-content:space-between;gap:10px;margin-bottom:7px}.budgetTop strong{font-size:14px}.budgetTop span{font-size:13px;color:var(--muted)}
 .checkGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.checkCard{border:1px solid var(--line);border-radius:16px;padding:14px;background:#fbfdff}.checkCard h3{font-size:16px;margin:0 0 9px}.checkItem{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-top:1px dashed #dce5ef}.checkItem:first-of-type{border-top:0}.checkItem input{margin-top:4px;transform:scale(1.15)}.checkItem label{flex:1}.checkItem small{color:var(--muted);display:block}
 .warrantyGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.wCard{border:1px solid var(--line);border-radius:17px;padding:14px}.wCard .days{font-size:28px;font-weight:900;color:var(--blue)}.wCard.overdue .days{color:var(--red)}
@@ -76,7 +76,7 @@ button,input,select,textarea{font:inherit} button{cursor:pointer}
 
     <div class="twoCol">
       <div class="section">
-        <div class="sectionTitle"><h2>📊 支出分類</h2><div class="hint">依目前已建立的費用自動統計</div></div>
+        <div class="sectionTitle"><h2>📊 支出分類比例</h2><div class="hint">以圓環比例圖顯示各分類占比，閱讀更直覺</div></div>
         <div class="chartBox"><canvas id="catChart"></canvas></div>
         <div class="legend" id="catLegend"></div>
       </div>
@@ -215,7 +215,75 @@ function categoryTotals(){const m={};state.entries.filter(e=>e.include!==false).
 function renderMetrics(){const inc=state.entries.filter(e=>e.include!==false),total=inc.reduce((s,e)=>s+Number(e.amount||0),0),paid=inc.reduce((s,e)=>s+Math.min(Number(e.paid||0),Number(e.amount||0)),0),unpaid=Math.max(0,total-paid);const dueSoon=inc.filter(e=>statusOf(e)!=='paid'&&e.due&&daysUntil(e.due)<=30).reduce((s,e)=>s+Math.max(0,Number(e.amount)-Number(e.paid)),0);mTotal.textContent=money(total);mPaid.textContent=money(paid);mUnpaid.textContent=money(unpaid);mCount.textContent=state.entries.length;mDueSoon.textContent=money(dueSoon)}
 function renderRecent(){const rows=[...state.entries].sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).slice(0,6);recentBody.innerHTML=rows.length?rows.map(e=>`<tr><td data-label="日期">${e.date||'-'}</td><td data-label="分類">${esc(e.category)}</td><td data-label="品項"><strong>${esc(e.item)}</strong></td><td data-label="店家">${esc(e.vendor||'-')}</td><td data-label="總額" class="money">${money(e.amount)}</td><td data-label="已付" class="money">${money(e.paid)}</td><td data-label="狀態"><span class="tag ${statusOf(e)}">${statusText(statusOf(e))}</span></td></tr>`).join(''):`<tr><td colspan="7"><div class="empty">尚無紀錄</div></td></tr>`}
 function renderDue(){const list=state.entries.filter(e=>statusOf(e)!=='paid'&&e.due).sort((a,b)=>new Date(a.due)-new Date(b.due)).slice(0,8);dueList.innerHTML=list.length?list.map(e=>{const d=daysUntil(e.due),cls=d<0?'unpaid':d<=7?'partial':'';return `<div style="display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid #edf2f8"><div><strong>${esc(e.item)}</strong><div style="font-size:12px;color:var(--muted)">${esc(e.category)}｜期限 ${e.due}</div></div><div style="text-align:right"><strong>${money(Math.max(0,e.amount-e.paid))}</strong><div><span class="tag ${cls}">${d<0?`逾期 ${Math.abs(d)} 天`:`剩 ${d} 天`}</span></div></div></div>`}).join(''):'<div class="empty">目前沒有設定付款期限的待付款項目 👍</div>'}
-function renderChart(){const totals=categoryTotals(),arr=Object.entries(totals).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]),c=catChart,ctx=c.getContext('2d'),dpr=devicePixelRatio||1;const rect=c.getBoundingClientRect();c.width=rect.width*dpr;c.height=rect.height*dpr;ctx.scale(dpr,dpr);const w=rect.width,h=rect.height;ctx.clearRect(0,0,w,h);if(!arr.length){ctx.fillStyle='#7a8798';ctx.font='14px sans-serif';ctx.fillText('尚無支出資料',20,40);catLegend.innerHTML='';return}const max=Math.max(...arr.map(x=>x[1]));const left=105,right=25,top=18,row=Math.min(38,(h-30)/arr.length),barW=w-left-right;arr.slice(0,7).forEach(([name,val],i)=>{const y=top+i*row;ctx.fillStyle='#e8eef7';ctx.fillRect(left,y+5,barW,18);const grad=ctx.createLinearGradient(left,0,left+barW,0);grad.addColorStop(0,'#18a7ff');grad.addColorStop(1,'#0b5cff');ctx.fillStyle=grad;ctx.fillRect(left,y+5,barW*(val/max),18);ctx.fillStyle='#41516a';ctx.font='12px sans-serif';ctx.fillText(name,8,y+18);ctx.fillStyle='#153152';ctx.font='700 12px sans-serif';ctx.fillText(money(val),left+6,y+18)});catLegend.innerHTML=`<span>共 ${arr.length} 個有支出的分類</span><span>最大支出：${esc(arr[0][0])} ${money(arr[0][1])}</span>`}
+function renderChart(){
+  const totals=categoryTotals();
+  let arr=Object.entries(totals).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]);
+  const c=catChart,ctx=c.getContext('2d'),dpr=window.devicePixelRatio||1;
+  const rect=c.getBoundingClientRect();
+  c.width=Math.max(1,rect.width*dpr); c.height=Math.max(1,rect.height*dpr);
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  const w=rect.width,h=rect.height;
+  ctx.clearRect(0,0,w,h);
+  if(!arr.length){ctx.fillStyle='#7a8798';ctx.font='600 18px sans-serif';ctx.fillText('尚無支出資料',20,40);catLegend.innerHTML='';return}
+
+  const total=arr.reduce((s,[,v])=>s+v,0);
+  if(arr.length>8){
+    const top=arr.slice(0,7);
+    const rest=arr.slice(7).reduce((s,[,v])=>s+v,0);
+    if(rest>0) top.push(['其他',rest]);
+    arr=top;
+  }
+  const colors=['#0b5cff','#16a3ff','#19c2b1','#31b46b','#f7b32b','#ff8b2c','#ff5a6f','#8b5cf6'];
+
+  const mobile=w<560;
+  const centerX=mobile?w/2:w*0.30;
+  const centerY=mobile?h*0.34:h/2;
+  const radius=Math.min(mobile? w*0.26 : w*0.18, h*0.30);
+  const inner=radius*0.58;
+  let start=-Math.PI/2;
+  arr.forEach(([name,val],i)=>{
+    const angle=(val/total)*Math.PI*2;
+    ctx.beginPath();
+    ctx.moveTo(centerX,centerY);
+    ctx.arc(centerX,centerY,radius,start,start+angle);
+    ctx.closePath();
+    ctx.fillStyle=colors[i%colors.length];
+    ctx.fill();
+    start+=angle;
+  });
+  ctx.beginPath();
+  ctx.fillStyle='#ffffff';
+  ctx.arc(centerX,centerY,inner,0,Math.PI*2);
+  ctx.fill();
+  ctx.textAlign='center';
+  ctx.fillStyle='#6c7a90';
+  ctx.font='700 16px sans-serif';
+  ctx.fillText('總支出',centerX,centerY-10);
+  ctx.fillStyle='#13294b';
+  ctx.font='900 24px sans-serif';
+  ctx.fillText(money(total),centerX,centerY+22);
+
+  // side summary on desktop
+  if(!mobile){
+    const maxName=arr[0][0], maxVal=arr[0][1], maxPct=((maxVal/total)*100).toFixed(1)+'%';
+    ctx.textAlign='left';
+    ctx.fillStyle='#1d3354';
+    ctx.font='900 20px sans-serif';
+    ctx.fillText('分類占比摘要',w*0.56,54);
+    ctx.fillStyle='#627287';
+    ctx.font='600 15px sans-serif';
+    ctx.fillText('最大分類：'+maxName+'  ·  '+maxPct, w*0.56, 82);
+    ctx.fillText('共 '+arr.length+' 個分類（其餘已合併為「其他」）', w*0.56, 106);
+  }
+
+  catLegend.innerHTML=arr.map(([name,val],i)=>{
+    const pct=((val/total)*100).toFixed(1);
+    return `<div class="legendItem">
+      <div class="legendLeft"><span class="legendSwatch" style="background:${colors[i%colors.length]}"></span><span>${esc(name)}</span></div>
+      <div class="legendMeta"><strong>${money(val)}</strong><span>${pct}%</span></div>
+    </div>`;
+  }).join('');
+}
 function populateCategories(){const opts=state.categories.map(c=>`<option>${esc(c)}</option>`).join('');fCategory.innerHTML=opts;qCategory.innerHTML='<option value="">全部分類</option>'+opts;categoryChips.innerHTML=state.categories.map(c=>`<span class="tag">${esc(c)} <button onclick="removeCategory('${encodeURIComponent(c)}')" style="border:0;background:transparent;color:#7c8ca3;font-weight:900">×</button></span>`).join('')}
 function removeCategory(enc){const c=decodeURIComponent(enc);if(state.entries.some(e=>e.category===c)){toast('這個分類仍有費用紀錄，不能刪除');return}state.categories=state.categories.filter(x=>x!==c);delete state.categoryBudgets[c];persist(false)} window.removeCategory=removeCategory;
 
