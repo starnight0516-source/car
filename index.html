@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="theme-color" content="#0b5cff" />
 <title>CAVIRA 購車費用帳本</title>
+<!-- V8 Mobile UX redesign: data/sync keys unchanged -->
 <style>
 :root{
   --bg:#f5f8fc; --card:#ffffff; --ink:#10223f; --muted:#6c7a90; --line:#dbe4f0;
@@ -48,6 +49,137 @@ button,input,select,textarea{font:inherit} button{cursor:pointer}
 .tokenApplyBtn{display:inline-flex;align-items:center;gap:7px;text-decoration:none;background:#0b5cff;color:#fff;padding:11px 15px;border-radius:12px;font-weight:900;font-size:15px}
 .tokenDocBtn{display:inline-flex;align-items:center;text-decoration:none;background:#fff;color:#24415f;padding:11px 15px;border-radius:12px;border:1px solid #d8e3f1;font-weight:900;font-size:15px}
 .tokenSecurity{margin-top:10px;color:#a14d00;font-size:14px;font-weight:700}
+
+
+/* ===== V8 手機版重新設計：桌機版不變 ===== */
+@media (max-width:720px){
+  html{scroll-padding-top:76px}
+  body{font-size:17px;line-height:1.6;padding-bottom:max(24px,env(safe-area-inset-bottom));background:#f3f7fc}
+  .container{padding:0 12px 28px;max-width:none}
+
+  /* 手機 Hero：縮短高度、按鈕改成容易點擊的 2 欄工具列 */
+  .hero{margin-top:10px;padding:20px 16px 16px;border-radius:22px;box-shadow:0 12px 30px rgba(11,92,255,.18)}
+  .hero:after{width:260px;height:260px;right:-115px;top:-145px}
+  .heroTop{display:block}
+  .hero h1{font-size:30px;line-height:1.18;letter-spacing:0}
+  .hero p{font-size:15px;line-height:1.55;margin-top:8px;max-width:95%}
+  .heroActions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:16px;width:100%}
+  .heroActions button{width:100%;min-height:48px;padding:10px 11px;border-radius:14px;font-size:15px;line-height:1.25}
+  .heroActions #syncBtn{grid-column:1/-1}
+  .statusDot{width:8px;height:8px;margin-right:4px}
+  .shareBanner{margin:10px 0 0;padding:12px 14px;border-radius:16px;align-items:flex-start!important;flex-direction:column}
+  .shareBanner strong{font-size:17px}.shareBanner span{font-size:14px}.shareBanner button{width:100%}
+
+  /* 導覽列固定在頁面上方，橫向滑動但不擠壓內容 */
+  .tabs{position:sticky;top:0;z-index:45;display:flex;overflow-x:auto;flex-wrap:nowrap;gap:8px;margin:10px -12px 14px;padding:9px 12px;background:rgba(245,248,252,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(213,224,238,.9);scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:0 0 auto;white-space:nowrap;border-radius:999px;padding:10px 14px;font-size:15px;box-shadow:none}
+  .tab.active{background:#10233f}
+
+  /* 首頁 KPI：總投入獨占一列，其餘 2×2，不再出現超寬卡片 */
+  .gridCards{grid-template-columns:1fr 1fr;gap:10px}
+  .metric{padding:15px 14px;border-radius:18px;min-width:0;box-shadow:0 8px 22px rgba(15,43,77,.07)}
+  .metric:first-child{grid-column:1/-1;background:linear-gradient(135deg,#ffffff,#f3f7ff);border-color:#cfdcff}
+  .metric:last-child{grid-column:auto}
+  .metric .label{font-size:15px;line-height:1.35}
+  .metric .value{font-size:clamp(26px,8vw,36px);margin-top:6px;overflow-wrap:anywhere}
+  .metric:first-child .value{font-size:clamp(34px,10vw,44px)}
+  .metric .sub{font-size:12.5px;line-height:1.4;margin-top:5px}
+
+  /* 區塊改單欄，標題與提示分行 */
+  .twoCol{grid-template-columns:1fr;gap:0}
+  .section{padding:16px 14px;margin-top:12px;border-radius:18px;box-shadow:0 7px 22px rgba(15,43,77,.06)}
+  .sectionTitle{align-items:flex-start;flex-direction:column;gap:5px;margin-bottom:12px}
+  .sectionTitle:has(button){flex-direction:row;align-items:center}
+  .sectionTitle h2{font-size:22px;line-height:1.3}
+  .sectionTitle .hint{font-size:13.5px;line-height:1.45}
+  .sectionTitle button{font-size:14px;padding:9px 12px}
+
+  /* 圖表：手機上縮短高度、圖例變成直向易讀清單 */
+  .chartBox{height:310px}
+  .legend{grid-template-columns:1fr;gap:8px;margin-top:10px}
+  .legendItem{padding:10px 12px;border-radius:13px}
+  .legendLeft{font-size:15px}.legendMeta strong{font-size:15px}.legendMeta span{font-size:12.5px}
+
+  /* 表單：全部一欄；輸入框與按鈕符合手指點擊尺寸 */
+  .formGrid{grid-template-columns:1fr;gap:11px}
+  .field.span2,.field.span4{grid-column:span 1}
+  .field{gap:6px}.field label{font-size:15px}
+  .field input,.field select,.field textarea{min-height:50px;padding:12px 13px;font-size:17px;border-radius:13px;background:#fff}
+  .field textarea{min-height:88px}
+  .btnRow{display:grid;grid-template-columns:1fr 1fr;gap:9px;width:100%}
+  .btnRow .primaryBtn,.btnRow .ghostBtn,.btnRow .dangerBtn{width:100%;min-height:48px;padding:11px 12px}
+  .btnRow input,.btnRow select{grid-column:1/-1;width:100%!important;min-height:50px;font-size:17px}
+  #editHint{grid-column:1/-1;font-size:13px!important}
+
+  /* 篩選器手機改成直向，不再硬塞兩欄 */
+  .filterBar{grid-template-columns:1fr;gap:9px}
+  .filterBar input:first-child{grid-column:auto}
+  .filterBar input,.filterBar select,.filterBar button{width:100%;min-height:48px;font-size:16px}
+
+  /* 費用表改真正的資訊卡，而不是把桌機表格硬折行 */
+  .tableWrap{border:0;overflow:visible}
+  .table{min-width:0}
+  .table thead{display:none}
+  .table,.table tbody{display:block;width:100%}
+  .table tr{display:grid!important;grid-template-columns:1fr 1fr;gap:2px 8px;width:100%;border:1px solid #dce5f0;border-radius:18px;margin:0 0 11px;background:#fff;padding:11px;box-shadow:0 5px 16px rgba(15,43,77,.05)}
+  .table td{display:block!important;width:100%;border:0!important;padding:7px 8px!important;font-size:16px;line-height:1.42;min-width:0;text-align:left!important}
+  .table td::before{content:attr(data-label);display:block;color:#78869a;font-size:12.5px;font-weight:900;margin-bottom:3px;letter-spacing:.1px}
+  .table td[data-label="品項"]{grid-column:1/-1;background:#f6f9ff;border-radius:13px;padding:10px 11px!important;margin-bottom:3px}
+  .table td[data-label="品項"] strong{font-size:19px;color:#102d57;line-height:1.35}
+  .table td[data-label="總額"]{background:#eef5ff;border-radius:12px;padding:9px 10px!important}
+  .table td[data-label="總額"] .money,.table td[data-label="總額"]{color:#0b5cff;font-weight:900}
+  .table td[data-label="已付"]{background:#effaf5;border-radius:12px;padding:9px 10px!important}
+  .table td[data-label="未付"]{background:#fff7e8;border-radius:12px;padding:9px 10px!important}
+  .table td[data-label="操作"]{grid-column:1/-1;padding-top:10px!important;border-top:1px solid #eef2f7!important;margin-top:4px}
+  .table td[data-label="操作"]::before{display:none}
+  .table td[data-label="備註"],.table td[data-label="店家"]{overflow-wrap:anywhere}
+  .actionBtns{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;width:100%}
+  .mini{width:100%;min-height:42px;padding:8px 6px;font-size:14px}
+  .tag{font-size:13px;padding:5px 9px}
+
+  /* 付款提醒：每筆更像行動版通知卡 */
+  #dueList>div{padding:12px 0!important;align-items:flex-start}
+  #dueList strong{font-size:16px}
+
+  /* 預算／檢查／保固／設定：全部單欄、大字、大觸控區 */
+  .checkGrid,.warrantyGrid,.settingsGrid{grid-template-columns:1fr;gap:10px}
+  .checkCard,.wCard,.settingCard{padding:15px;border-radius:16px}
+  .checkCard h3,.settingCard h3{font-size:18px}
+  .checkItem{padding:11px 0;gap:12px}.checkItem input{transform:scale(1.35);margin:6px 3px 0}.checkItem label{font-size:16px;line-height:1.5}
+  .settingCard p{font-size:14px;line-height:1.55}.settingCard button{width:100%;min-height:46px}
+  .wCard .days{font-size:34px}
+  .budgetTop{flex-direction:column;align-items:flex-start;gap:3px}.budgetTop strong{font-size:16px}.budgetTop span{font-size:14px}
+  .budgetItem{padding:14px}
+
+  /* 分享與 Token 區塊 */
+  .shareGrid{grid-template-columns:1fr}
+  .shareCode{font-size:15px;word-break:break-all}
+  .tokenHelp{padding:12px}.tokenHelpTitle{font-size:16px}.tokenHelp ol{font-size:14px;margin-left:18px}.tokenLinks{display:grid;grid-template-columns:1fr}.tokenApplyBtn,.tokenDocBtn{justify-content:center;width:100%}
+
+  /* Modal 在手機改成底部抽屜，不遮住整頁又比較好操作 */
+  .modal{align-items:flex-end;padding:0;background:rgba(7,19,38,.5)}
+  .modalCard{width:100%;max-height:92dvh;overflow:auto;border-radius:24px 24px 0 0;padding:20px 16px calc(18px + env(safe-area-inset-bottom));box-shadow:0 -18px 55px rgba(0,0,0,.24)}
+  .modalCard h3{font-size:22px}.modalCard p{font-size:14px}
+  .modalCard input,.modalCard textarea{min-height:50px;font-size:16px}
+  .modalActions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .modalActions button{width:100%;min-height:46px}
+
+  .toast{left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));text-align:center;font-size:15px}
+}
+
+/* 超窄手機再做一層保護 */
+@media (max-width:390px){
+  .hero h1{font-size:27px}
+  .heroActions{grid-template-columns:1fr}
+  .heroActions #syncBtn{grid-column:auto}
+  .gridCards{grid-template-columns:1fr}
+  .metric:first-child,.metric:last-child{grid-column:auto}
+  .table tr{grid-template-columns:1fr}
+  .table td[data-label="品項"],.table td[data-label="操作"]{grid-column:auto}
+  .btnRow,.modalActions{grid-template-columns:1fr}
+  .actionBtns{grid-template-columns:1fr 1fr 1fr}
+}
 
 </style>
 </head>
