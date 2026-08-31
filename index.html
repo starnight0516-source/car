@@ -181,6 +181,9 @@ button,input,select,textarea{font:inherit} button{cursor:pointer}
   .actionBtns{grid-template-columns:1fr 1fr 1fr}
 }
 
+
+.recoveryBanner{margin:14px 0;padding:14px 16px;border:1px solid #ffd7a3;background:#fff8eb;border-radius:16px;color:#754515;font-size:15px;font-weight:700}
+.recoveryList{display:grid;gap:10px;margin-top:12px}.recoveryItem{border:1px solid #dce5f0;border-radius:14px;padding:13px;background:#fbfdff}.recoveryTop{display:flex;justify-content:space-between;gap:10px;align-items:center}.recoveryMeta{color:#6c7a90;font-size:13px;margin-top:5px}.safeBadge{display:inline-flex;padding:4px 8px;border-radius:999px;background:#e8f7ef;color:#15764f;font-size:12px;font-weight:900}.warnBadge{display:inline-flex;padding:4px 8px;border-radius:999px;background:#fff0df;color:#9a5700;font-size:12px;font-weight:900}
 </style>
 </head>
 <body>
@@ -311,6 +314,7 @@ button,input,select,textarea{font:inherit} button{cursor:pointer}
   <section class="panel" id="backup">
     <div class="settingsGrid">
       <div class="settingCard"><h3>☁ GitHub Gist 雲端同步</h3><p>給你自己的電腦／手機使用，可完整新增、修改與刪除資料。<strong>新版手機只要輸入同一組 Token，系統會自動尋找原本雲端帳本。</strong></p><button class="primaryBtn" id="openSyncSettings">設定同步</button></div>
+      <div class="settingCard"><h3>🛟 資料救援</h3><p>掃描這台裝置的舊備份與 GitHub Gist 歷史版本，先預覽筆數再決定是否還原。</p><button class="ghostBtn" id="openRecovery">開啟資料救援</button></div>
       <div class="settingCard"><h3>👥 家庭分享碼</h3><p>給太太或家人查看使用，不需要 GitHub Token，預設為唯讀。</p><button class="primaryBtn" id="openShareSettings">管理家庭分享</button></div>
       <div class="settingCard"><h3>📤 匯出 JSON</h3><p>完整備份費用紀錄、分類、預算、檢查表與設定。</p><button class="ghostBtn" id="exportJsonBtn">匯出完整備份</button></div>
       <div class="settingCard"><h3>📥 匯入 JSON</h3><p>從先前備份檔完整還原資料。</p><input type="file" id="importJsonInput" accept="application/json"></div>
@@ -323,6 +327,8 @@ button,input,select,textarea{font:inherit} button{cursor:pointer}
 
 <div class="modal" id="syncModal"><div class="modalCard"><h3>☁ 雲端同步設定（可編輯）</h3><p>給你自己的電腦與手機使用。兩台裝置設定同一個 GitHub Token 與 Gist ID 後，就能同步編輯同一本帳。</p><div class="tokenHelp"><div class="tokenHelpTitle">🔑 還沒有 GitHub Token？第一次申請約 1 分鐘</div><ol><li>先登入 GitHub，點下面「前往申請 Token」。</li><li>建立 Fine-grained personal access token。</li><li>在 <strong>Account permissions</strong> 將 <strong>Gists</strong> 設為 <strong>Read and write</strong>。</li><li>建立後立即複製 Token，貼到下方欄位即可。</li></ol><div class="tokenLinks"><a class="tokenApplyBtn" href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">↗ 前往 GitHub 申請 Token</a><a class="tokenDocBtn" href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens" target="_blank" rel="noopener noreferrer">GitHub 官方說明</a></div><div class="tokenSecurity">⚠️ Token 就像密碼，只貼在自己的裝置，不要傳給其他人或放進公開 GitHub Repository。</div></div><label style="font-weight:900">GitHub Token</label><input id="syncToken" type="password" placeholder="github_pat_...（建議）或 ghp_..."><label style="font-weight:900;display:block;margin-top:12px">Gist ID（可留空，第一次會自動建立）</label><input id="syncGist" placeholder="第一次使用請留空，系統會自動建立"><div class="modalActions"><button class="ghostBtn" id="closeSync">取消</button><button class="primaryBtn" id="saveSync">儲存並同步</button></div></div></div>
 <div class="modal" id="shareModal"><div class="modalCard"><h3>👥 家庭分享</h3><p>保留兩種模式：你自己的手機用「雲端同步」完整編輯；家人則用分享碼唯讀查看，不需要 GitHub Token。</p><div id="shareOwnerPanel"><div class="shareCodeBox"><strong>我的家庭分享碼</strong><div class="shareCode" id="ownerShareCode">尚未建立</div><div class="shareHint">建立後會同步一份唯讀快照。知道分享碼的人即可查看，請只提供給信任的家人。</div></div><div class="modalActions" style="justify-content:flex-start"><button class="primaryBtn" id="createShareBtn">建立／更新分享碼</button><button class="ghostBtn" id="copyShareCodeBtn">複製分享碼</button><button class="ghostBtn" id="copyShareLinkBtn">複製分享連結</button></div></div><hr style="border:0;border-top:1px solid #e5ebf3;margin:18px 0"><div><strong>使用分享碼查看帳本</strong><div class="shareGrid"><input id="shareCodeInput" placeholder="貼上家人提供的分享碼"><button class="primaryBtn" id="openShareCodeBtn">進入唯讀帳本</button></div><div class="shareHint">輸入一次後會記在這台裝置；之後重新開啟網站會自動讀取最新共享資料。</div></div><div class="modalActions"><button class="ghostBtn" id="refreshShareBtn">重新讀取</button><button class="dangerBtn" id="exitShareBtn">退出分享模式</button><button class="ghostBtn" id="closeShare">關閉</button></div></div></div>
+
+<div class="modal" id="recoveryModal"><div class="modalCard"><h3>🛟 資料救援中心</h3><div class="recoveryBanner">還原前不會自動覆蓋目前資料。系統會先列出本機備份與可找到的雲端版本，請以「筆數較多、日期較接近遺失前」的版本為優先。</div><div class="btnRow"><button class="ghostBtn" id="scanLocalBackups">掃描本機備份</button><button class="primaryBtn" id="scanCloudHistory">掃描雲端 Gist</button></div><div class="recoveryList" id="recoveryList"><div class="empty">尚未掃描</div></div><div class="modalActions"><button class="ghostBtn" id="closeRecovery">關閉</button></div></div></div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -332,6 +338,7 @@ const SYNC_GIST_KEY='caviraGistIdV1';
 const SYNC_DISCOVERY_KEY='caviraGistDiscoveryV7';
 const SYNC_LINKED_KEY='caviraCloudLinkedV7';
 const GIST_FILE='cavira_purchase_ledger.json';
+const BACKUP_KEY='caviraPurchaseLedgerBackupsV1';
 const SHARE_GIST_FILE='cavira_purchase_share.json';
 const SHARE_GIST_KEY='caviraFamilyShareGistV1';
 const SHARE_VIEW_KEY='caviraFamilyShareViewV1';
@@ -354,6 +361,21 @@ function seedEntries(){return [
 ]}
 function initialState(){return {entries:seedEntries(),categories:[...defaultCategories],categoryBudgets:{},overallBudget:1500000,checks:defaultChecks.map((x,i)=>({id:'c'+i,group:x[0],text:x[1],done:false,custom:false})),updatedAt:Date.now()}}
 function loadState(){try{const s=JSON.parse(localStorage.getItem(KEY));return s&&s.entries?s:initialState()}catch(e){return initialState()}}
+function snapshotState(label='自動備份',data=state){
+  try{
+    const list=JSON.parse(localStorage.getItem(BACKUP_KEY)||'[]');
+    const snap={id:'b'+Date.now()+Math.random().toString(36).slice(2,6),label,createdAt:Date.now(),entries:Array.isArray(data?.entries)?data.entries.length:0,data:JSON.parse(JSON.stringify(data))};
+    list.unshift(snap);
+    const trimmed=list.slice(0,20);
+    localStorage.setItem(BACKUP_KEY,JSON.stringify(trimmed));
+  }catch(e){console.warn('backup failed',e)}
+}
+function isDefaultLike(s){
+  if(!s||!Array.isArray(s.entries))return true;
+  if(s.entries.length===0)return true;
+  return s.entries.length<=2 && s.entries.every(e=>String(e.note||'').includes('預設起始資料'));
+}
+function safeEntryCount(s){return Array.isArray(s?.entries)?s.entries.length:0}
 function persist(sync=true){if(isShareView()){toast('家庭分享模式為唯讀，不能修改資料');return}state.updatedAt=Date.now();localStorage.setItem(KEY,JSON.stringify(state));renderAll();if(sync&&localStorage.getItem(SYNC_TOKEN_KEY)) debounceAutoSync();if((state.familyShareGistId||localStorage.getItem(SHARE_GIST_KEY))&&localStorage.getItem(SYNC_TOKEN_KEY)) debounceSharePublish()}
 function uid(){return 'e'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
 function money(n){return new Intl.NumberFormat('zh-TW',{style:'currency',currency:'TWD',maximumFractionDigits:0}).format(Number(n||0))}
@@ -526,6 +548,7 @@ async function discoverLedgerGist(){
   return best;
 }
 function applyRemoteLedger(remote,id){
+  snapshotState('套用雲端前的本機版本',state);
   state=remote;
   localStorage.setItem(KEY,JSON.stringify(state));
   localStorage.setItem(SYNC_GIST_KEY,id);
@@ -561,15 +584,19 @@ async function gistSync(silent=false){
     const remote=cloud?.remote;
     const firstLink=!localStorage.getItem(SYNC_LINKED_KEY);
     if(remote){
-      if(firstLink){
-        const rs=remoteScore(remote),ls=remoteScore(state);
-        if(scoreGreater(rs,ls)||(!scoreGreater(ls,rs)&&Number(remote.updatedAt||0)>=Number(state.updatedAt||0))){
-          applyRemoteLedger(remote,id);if(!silent)toast('已找到既有雲端帳本，手機資料已同步');return;
-        }
-      }else if(Number(remote.updatedAt||0)>Number(state.updatedAt||0)){
+      const rc=safeEntryCount(remote), lc=safeEntryCount(state);
+      // 安全原則：本機是空白／預設資料，或雲端筆數較多時，一律先取雲端，不准自動覆蓋。
+      if(isDefaultLike(state) || rc>lc){
+        applyRemoteLedger(remote,id);if(!silent)toast('已保護資料：優先載入較完整的雲端帳本');return;
+      }
+      // 筆數相同時才用更新時間判斷。
+      if(rc===lc && Number(remote.updatedAt||0)>Number(state.updatedAt||0)){
         applyRemoteLedger(remote,id);if(!silent)toast('已從雲端取得最新資料');return;
       }
+      // 雲端筆數比本機多的情況已處理；若本機筆數較少，禁止自動上傳。
+      if(lc<rc){ if(!silent)toast('安全鎖定：雲端資料較完整，已取消上傳'); return; }
     }
+    snapshotState('上傳雲端前的本機版本',state);
     await gh('https://api.github.com/gists/'+id,{method:'PATCH',body:JSON.stringify({files:{[GIST_FILE]:{content:JSON.stringify(state)}}})});
     localStorage.setItem(SYNC_GIST_KEY,id);localStorage.setItem(SYNC_DISCOVERY_KEY,localStorage.getItem(SYNC_DISCOVERY_KEY)||'auto');localStorage.setItem(SYNC_LINKED_KEY,'1');
     if(!silent)toast(firstLink?'已連結既有雲端帳本並完成同步':'雲端同步完成');
@@ -577,7 +604,59 @@ async function gistSync(silent=false){
 }
 window.addEventListener('focus',()=>{if(isShareView())fetchSharedState(currentShareCode(),false);else if(localStorage.getItem(SYNC_TOKEN_KEY))gistSync(true)});window.addEventListener('online',()=>{if(isShareView())fetchSharedState(currentShareCode(),false);else if(localStorage.getItem(SYNC_TOKEN_KEY))gistSync(true)});
 
-clearForm();if(state.familyShareGistId)localStorage.setItem(SHARE_GIST_KEY,state.familyShareGistId);renderAll();
+// 資料救援中心
+const recoveryModal=document.getElementById('recoveryModal');
+const recoveryList=document.getElementById('recoveryList');
+openRecovery.onclick=()=>{recoveryModal.classList.add('show');renderLocalRecovery()};
+closeRecovery.onclick=()=>recoveryModal.classList.remove('show');
+scanLocalBackups.onclick=renderLocalRecovery;
+function fmtTime(ts){try{return new Date(Number(ts||0)).toLocaleString('zh-TW')}catch(_){return '-'}}
+function restoreRecoveryData(encoded,label){
+  if(!confirm(`確定還原「${label}」？目前資料會先自動備份。`))return;
+  try{const data=JSON.parse(decodeURIComponent(encoded));snapshotState('還原前版本',state);state=data;localStorage.setItem(KEY,JSON.stringify(state));snapshotState('手動還原版本',state);renderAll();recoveryModal.classList.remove('show');toast(`已還原 ${safeEntryCount(state)} 筆資料`)}catch(e){alert('還原失敗：資料格式不正確')}
+}
+window.restoreRecoveryData=restoreRecoveryData;
+function recoveryCard(label,data,meta=''){
+  const count=safeEntryCount(data), when=fmtTime(data?.updatedAt);
+  const enc=encodeURIComponent(JSON.stringify(data));
+  return `<div class="recoveryItem"><div class="recoveryTop"><div><strong>${esc(label)}</strong><div class="recoveryMeta">${count} 筆｜更新 ${when}${meta?'｜'+esc(meta):''}</div></div><span class="${count>=4?'safeBadge':'warnBadge'}">${count} 筆</span></div><div style="margin-top:10px;text-align:right"><button class="primaryBtn" onclick='restoreRecoveryData("${enc}",${JSON.stringify(label)})'>還原這個版本</button></div></div>`;
+}
+function renderLocalRecovery(){
+  let items=[];
+  try{const cur=JSON.parse(localStorage.getItem(KEY)||'null');if(cur?.entries)items.push(recoveryCard('目前瀏覽器資料',cur,'本機'))}catch(_){}
+  try{const list=JSON.parse(localStorage.getItem(BACKUP_KEY)||'[]');items.push(...list.map(b=>recoveryCard(b.label||'本機備份',b.data,'備份 '+fmtTime(b.createdAt))))}catch(_){}
+  recoveryList.innerHTML=items.length?items.join(''):'<div class="empty">這台裝置目前沒有可用的本機備份</div>';
+}
+scanCloudHistory.onclick=async()=>{
+  const token=localStorage.getItem(SYNC_TOKEN_KEY);
+  if(!token){toast('請先設定 GitHub Token');openSync();return}
+  recoveryList.innerHTML='<div class="empty">正在掃描 GitHub Gist 與歷史版本…</div>';
+  try{
+    const list=await gh('https://api.github.com/gists?per_page=100');
+    const cands=(Array.isArray(list)?list:[]).filter(g=>g.files&&g.files[GIST_FILE]).slice(0,20);
+    let cards=[];
+    for(const g of cands){
+      try{
+        const full=await readLedgerGist(g.id);
+        if(full.remote) cards.push(recoveryCard('雲端帳本 '+g.id.slice(0,8),full.remote,'目前 Gist'));
+        const hist=await gh('https://api.github.com/gists/'+g.id+'/commits?per_page=30');
+        for(const h of (Array.isArray(hist)?hist:[]).slice(0,15)){
+          try{
+            const ver=await gh('https://api.github.com/gists/'+g.id+'/'+h.version);
+            const f=ver.files?.[GIST_FILE];
+            if(!f?.content)continue;
+            const d=JSON.parse(f.content);
+            if(d?.entries)cards.push(recoveryCard('Gist 歷史版本 '+String(h.version).slice(0,8),d,fmtTime(h.committed_at||h.updated_at)));
+          }catch(_){}
+        }
+      }catch(_){}
+    }
+    cards.sort((a,b)=>0);
+    recoveryList.innerHTML=cards.length?cards.join(''):'<div class="empty">沒有找到可還原的 CAVIRA Gist 版本</div>';
+  }catch(e){console.error(e);recoveryList.innerHTML='<div class="empty">掃描失敗，請確認 Token 具有 Gist 讀寫權限</div>'}
+};
+
+clearForm();if(!isDefaultLike(state))snapshotState('載入頁面時備份',state);if(state.familyShareGistId)localStorage.setItem(SHARE_GIST_KEY,state.familyShareGistId);renderAll();
 const shareParam=new URL(location.href).searchParams.get('share');
 if(shareParam){localStorage.setItem(SHARE_VIEW_KEY,normalizeShareCode(shareParam));history.replaceState({},'',location.pathname+location.hash);setTimeout(()=>fetchSharedState(shareParam,true),300)}
 else if(isShareView())setTimeout(()=>fetchSharedState(currentShareCode(),false),300);
