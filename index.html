@@ -245,7 +245,7 @@ button,input,select,textarea{font:inherit} button{cursor:pointer}
       <div class="sectionTitle"><h2>➕ 新增／編輯費用</h2><div class="hint">每筆可記錄付款進度、店家、期限、單據與備註</div></div>
       <div class="formGrid">
         <div class="field"><label>日期</label><input type="date" id="fDate"></div>
-        <div class="field"><label>分類</label><select id="fCategory"></select></div>
+        <div class="field"><label>分類</label><select id="fCategory"><option value="車價">車價</option><option value="保險">保險</option><option value="稅費／領牌">稅費／領牌</option><option value="家用充電">家用充電</option><option value="原廠配件">原廠配件</option><option value="外廠配件">外廠配件</option><option value="隔熱紙">隔熱紙</option><option value="鍍膜／美容">鍍膜／美容</option><option value="行車記錄器">行車記錄器</option><option value="停車／充電周邊">停車／充電周邊</option><option value="其他">其他</option></select></div>
         <div class="field span2"><label>費用品項</label><input id="fItem" placeholder="例如：CAVIRA Emerge 車價"></div>
         <div class="field"><label>店家／供應商</label><input id="fVendor" placeholder="例如：Foxtron 展間"></div>
         <div class="field"><label>階段</label><select id="fStage"><option>訂車</option><option>交車前</option><option>交車日</option><option>交車後</option><option>長期使用</option></select></div>
@@ -265,7 +265,7 @@ button,input,select,textarea{font:inherit} button{cursor:pointer}
       <div class="sectionTitle"><h2>📋 購車費用清單</h2><div class="hint" id="ledgerSummary">0 筆</div></div>
       <div class="filterBar">
         <input id="qSearch" placeholder="搜尋品項、店家、備註…">
-        <select id="qCategory"><option value="">全部分類</option></select>
+        <select id="qCategory"><option value="">全部分類</option><option value="車價">車價</option><option value="保險">保險</option><option value="稅費／領牌">稅費／領牌</option><option value="家用充電">家用充電</option><option value="原廠配件">原廠配件</option><option value="外廠配件">外廠配件</option><option value="隔熱紙">隔熱紙</option><option value="鍍膜／美容">鍍膜／美容</option><option value="行車記錄器">行車記錄器</option><option value="停車／充電周邊">停車／充電周邊</option><option value="其他">其他</option></select>
         <select id="qStatus"><option value="">全部付款狀態</option><option value="paid">已付款</option><option value="partial">部分付款</option><option value="unpaid">待付款</option></select>
         <select id="qStage"><option value="">全部階段</option><option>訂車</option><option>交車前</option><option>交車日</option><option>交車後</option><option>長期使用</option></select>
         <select id="qSort"><option value="dateDesc">日期：新→舊</option><option value="dateAsc">日期：舊→新</option><option value="amountDesc">金額：高→低</option><option value="amountAsc">金額：低→高</option></select>
@@ -477,10 +477,13 @@ function renderChart(){
 }
 function populateCategories(){
   state=normalizeState(state);
+  const categorySelect=document.getElementById('fCategory');
+  const filterCategorySelect=document.getElementById('qCategory');
+  const chips=document.getElementById('categoryChips');
   const opts=state.categories.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('');
-  fCategory.innerHTML=opts;
-  qCategory.innerHTML='<option value="">全部分類</option>'+opts;
-  categoryChips.innerHTML=state.categories.map(c=>`<span class="tag">${esc(c)} <button onclick="removeCategory('${encodeURIComponent(c)}')" style="border:0;background:transparent;color:#7c8ca3;font-weight:900">×</button></span>`).join('');
+  if(categorySelect) categorySelect.innerHTML=opts;
+  if(filterCategorySelect) filterCategorySelect.innerHTML='<option value="">全部分類</option>'+opts;
+  if(chips) chips.innerHTML=state.categories.map(c=>`<span class="tag">${esc(c)} <button onclick="removeCategory('${encodeURIComponent(c)}')" style="border:0;background:transparent;color:#7c8ca3;font-weight:900">×</button></span>`).join('');
 }
 function removeCategory(enc){
   const c=decodeURIComponent(enc);
@@ -491,9 +494,9 @@ function removeCategory(enc){
 
 function filteredEntries(){let arr=[...state.entries],q=qSearch.value.trim().toLowerCase();if(q)arr=arr.filter(e=>[e.item,e.vendor,e.note,e.doc].join(' ').toLowerCase().includes(q));if(qCategory.value)arr=arr.filter(e=>e.category===qCategory.value);if(qStatus.value)arr=arr.filter(e=>statusOf(e)===qStatus.value);if(qStage.value)arr=arr.filter(e=>e.stage===qStage.value);const s=qSort.value;arr.sort((a,b)=>s==='dateAsc'?String(a.date).localeCompare(String(b.date)):s==='amountDesc'?b.amount-a.amount:s==='amountAsc'?a.amount-b.amount:String(b.date).localeCompare(String(a.date)));return arr}
 function renderLedger(){const arr=filteredEntries();ledgerSummary.textContent=`${arr.length} 筆｜合計 ${money(arr.reduce((s,e)=>s+Number(e.amount||0),0))}`;ledgerBody.innerHTML=arr.length?arr.map(e=>{const bal=Math.max(0,Number(e.amount)-Number(e.paid)),s=statusOf(e);return `<tr><td data-label="日期">${e.date||'-'}</td><td data-label="分類"><span class="tag">${esc(e.category)}</span></td><td data-label="品項"><strong>${esc(e.item)}</strong><div style="font-size:16px;color:var(--muted);font-weight:700;margin-top:4px">${esc(e.stage||'')}</div></td><td data-label="店家">${esc(e.vendor||'-')}</td><td data-label="總額" class="money">${money(e.amount)}</td><td data-label="已付" class="money">${money(e.paid)}</td><td data-label="未付" class="money">${money(bal)}</td><td data-label="期限">${e.due||'-'}</td><td data-label="狀態"><span class="tag ${s}">${statusText(s)}</span></td><td data-label="納入成本">${e.include!==false?'✅':'—'}</td><td data-label="操作">${isShareView()?'—':`<div class="actionBtns"><button class="mini" onclick="editEntry('${e.id}')">編輯</button><button class="mini" onclick="dupEntry('${e.id}')">複製</button><button class="mini" onclick="deleteEntry('${e.id}')">刪除</button></div>`}</td></tr>`}).join(''):'<tr><td colspan="11"><div class="empty">沒有符合條件的紀錄</div></td></tr>'}
-function clearForm(){editingId=null;fDate.value=today();fCategory.value=state.categories[0]||'';fItem.value='';fVendor.value='';fStage.value='交車前';fAmount.value='';fPaid.value='';fMethod.value='轉帳';fDue.value='';fDoc.value='';fInclude.value='yes';fWarranty.value='';fNote.value='';editHint.textContent=''}
-function saveEntry(){const amount=Number(fAmount.value||0),paid=Math.min(Number(fPaid.value||0),amount);if(!fItem.value.trim()||amount<0){toast('請至少輸入品項與金額');return}const old=state.entries.find(e=>e.id===editingId);const rec={id:editingId||uid(),date:fDate.value||today(),category:fCategory.value,item:fItem.value.trim(),vendor:fVendor.value.trim(),stage:fStage.value,amount,paid,method:fMethod.value,due:fDue.value,doc:fDoc.value.trim(),include:fInclude.value==='yes',warranty:fWarranty.value,note:fNote.value.trim(),createdAt:old?.createdAt||Date.now()};if(editingId)state.entries=state.entries.map(e=>e.id===editingId?rec:e);else state.entries.push(rec);persist();toast(editingId?'已更新費用紀錄':'已新增費用紀錄');clearForm()}
-function editEntry(id){const e=state.entries.find(x=>x.id===id);if(!e)return;editingId=id;fDate.value=e.date||today();fCategory.value=e.category;fItem.value=e.item;fVendor.value=e.vendor||'';fStage.value=e.stage||'交車前';fAmount.value=e.amount;fPaid.value=e.paid;fMethod.value=e.method||'轉帳';fDue.value=e.due||'';fDoc.value=e.doc||'';fInclude.value=e.include!==false?'yes':'no';fWarranty.value=e.warranty||'';fNote.value=e.note||'';editHint.textContent='目前正在編輯既有紀錄';switchTab('ledger');setTimeout(()=>entrySection.scrollIntoView({behavior:'smooth'}),50)} window.editEntry=editEntry;
+function clearForm(){editingId=null;fDate.value=today();document.getElementById('fCategory').value=state.categories[0]||'';fItem.value='';fVendor.value='';fStage.value='交車前';fAmount.value='';fPaid.value='';fMethod.value='轉帳';fDue.value='';fDoc.value='';fInclude.value='yes';fWarranty.value='';fNote.value='';editHint.textContent=''}
+function saveEntry(){const amount=Number(fAmount.value||0),paid=Math.min(Number(fPaid.value||0),amount);if(!fItem.value.trim()||amount<0){toast('請至少輸入品項與金額');return}const old=state.entries.find(e=>e.id===editingId);const rec={id:editingId||uid(),date:fDate.value||today(),category:document.getElementById('fCategory').value,item:fItem.value.trim(),vendor:fVendor.value.trim(),stage:fStage.value,amount,paid,method:fMethod.value,due:fDue.value,doc:fDoc.value.trim(),include:fInclude.value==='yes',warranty:fWarranty.value,note:fNote.value.trim(),createdAt:old?.createdAt||Date.now()};if(editingId)state.entries=state.entries.map(e=>e.id===editingId?rec:e);else state.entries.push(rec);persist();toast(editingId?'已更新費用紀錄':'已新增費用紀錄');clearForm()}
+function editEntry(id){const e=state.entries.find(x=>x.id===id);if(!e)return;editingId=id;fDate.value=e.date||today();document.getElementById('fCategory').value=e.category;fItem.value=e.item;fVendor.value=e.vendor||'';fStage.value=e.stage||'交車前';fAmount.value=e.amount;fPaid.value=e.paid;fMethod.value=e.method||'轉帳';fDue.value=e.due||'';fDoc.value=e.doc||'';fInclude.value=e.include!==false?'yes':'no';fWarranty.value=e.warranty||'';fNote.value=e.note||'';editHint.textContent='目前正在編輯既有紀錄';switchTab('ledger');setTimeout(()=>entrySection.scrollIntoView({behavior:'smooth'}),50)} window.editEntry=editEntry;
 function dupEntry(id){const e=state.entries.find(x=>x.id===id);if(!e)return;state.entries.push({...e,id:uid(),date:today(),paid:0,createdAt:Date.now(),note:(e.note?e.note+'｜':'')+'由既有紀錄複製'});persist();toast('已複製一筆新紀錄')} window.dupEntry=dupEntry;
 function deleteEntry(id){if(!confirm('確定刪除這筆費用嗎？'))return;state.entries=state.entries.filter(e=>e.id!==id);persist();toast('已刪除')} window.deleteEntry=deleteEntry;
 
