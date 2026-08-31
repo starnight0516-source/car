@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="theme-color" content="#0b5cff" />
-<title>CAVIRA 購車費用帳本</title>
+<title>CAVIRA 購車費用帳本｜穩定分類版</title>
 <!-- V8 Mobile UX redesign: data/sync keys unchanged -->
 <style>
 :root{
@@ -185,6 +185,7 @@ button,input,select,textarea{font:inherit} button{cursor:pointer}
 .recoveryBanner{margin:14px 0;padding:14px 16px;border:1px solid #ffd7a3;background:#fff8eb;border-radius:16px;color:#754515;font-size:15px;font-weight:700}
 .recoveryList{display:grid;gap:10px;margin-top:12px}.recoveryItem{border:1px solid #dce5f0;border-radius:14px;padding:13px;background:#fbfdff}.recoveryTop{display:flex;justify-content:space-between;gap:10px;align-items:center}.recoveryMeta{color:#6c7a90;font-size:13px;margin-top:5px}.safeBadge{display:inline-flex;padding:4px 8px;border-radius:999px;background:#e8f7ef;color:#15764f;font-size:12px;font-weight:900}.warnBadge{display:inline-flex;padding:4px 8px;border-radius:999px;background:#fff0df;color:#9a5700;font-size:12px;font-weight:900}
 </style>
+<!-- v13 stable categories; no automatic expense seeding -->
 </head>
 <body>
 <div class="container">
@@ -285,8 +286,8 @@ button,input,select,textarea{font:inherit} button{cursor:pointer}
         <div style="margin-top:16px"><div class="budgetTop"><strong>目前使用比例</strong><span id="overallBudgetText">$0 / $0</span></div><div class="progressTrack"><div class="progressFill" id="overallBudgetBar" style="width:0%"></div></div></div>
       </div>
       <div class="section">
-        <div class="sectionTitle"><h2>🧩 分類管理</h2><div class="hint">新增你自己的採購分類</div></div>
-        <div class="btnRow"><input id="newCategory" placeholder="新增分類名稱" style="flex:1;border:1px solid var(--line);border-radius:12px;padding:11px"><button class="primaryBtn" id="addCategoryBtn">新增分類</button></div>
+        <div class="sectionTitle"><h2>🧩 分類管理</h2><div class="hint">預設分類固定保留，可另外新增自訂分類</div></div>
+        <div class="btnRow"><input id="newCategory" placeholder="新增分類名稱" style="flex:1;border:1px solid var(--line);border-radius:12px;padding:11px"><button class="primaryBtn" id="addCategoryBtn">新增分類</button><button class="ghostBtn" id="restoreCategoriesBtn">恢復預設分類</button></div>
         <div id="categoryChips" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"></div>
       </div>
     </div>
@@ -320,7 +321,6 @@ button,input,select,textarea{font:inherit} button{cursor:pointer}
       <div class="settingCard"><h3>📥 匯入 JSON</h3><p>從先前備份檔完整還原資料。</p><input type="file" id="importJsonInput" accept="application/json"></div>
       <div class="settingCard"><h3>📊 匯出 CSV</h3><p>把購車費用清單匯出成 Excel 可開啟的 CSV。</p><button class="ghostBtn" id="exportCsvBtn">匯出費用 CSV</button></div>
       <div class="settingCard"><h3>🖨️ 列印／存 PDF</h3><p>直接使用瀏覽器列印功能，可另存 PDF。</p><button class="ghostBtn" onclick="window.print()">列印目前頁面</button></div>
-      <div class="settingCard"><h3>🧰 修復已確認四筆資料</h3><p>若帳本被空白同步或分享模式蓋掉，可一鍵補回已確認的車款、保險、領牌與充電樁資料；其他既有紀錄不會刪除。</p><button class="primaryBtn" id="repairConfirmedBtn">立即修復四筆資料</button></div>
       <div class="settingCard"><h3>🧹 清除全部資料</h3><p>會刪除這台裝置上的帳本資料，請先備份。</p><button class="dangerBtn" id="clearAllBtn">清除全部</button></div>
     </div>
   </section>
@@ -334,27 +334,6 @@ button,input,select,textarea{font:inherit} button{cursor:pointer}
 
 <script>
 const KEY='caviraPurchaseLedgerV1';
-
-const CONFIRMED_PAYMENT_PATCH_V11='caviraConfirmedPaymentPatchV11';
-function applyConfirmedPaymentPatchV11(){
-  if(localStorage.getItem(CONFIRMED_PAYMENT_PATCH_V11)) return;
-  try{
-    let s=JSON.parse(localStorage.getItem(KEY)||'null');
-    if(!s||!Array.isArray(s.entries)) return;
-    const candidates=s.entries.filter(e=>{
-      const item=String(e.item||'');
-      const cat=String(e.category||'');
-      return (cat==='車價'||item.includes('CAVIRA')) && Number(e.amount||0)===1262500;
-    });
-    if(candidates.length){
-      candidates.forEach(e=>{e.paid=1262500; e.note=(e.note?e.note+'｜':'')+'車價已付清';});
-      s.updatedAt=Date.now();
-      localStorage.setItem(KEY,JSON.stringify(s));
-    }
-    localStorage.setItem(CONFIRMED_PAYMENT_PATCH_V11,'1');
-  }catch(_){ }
-}
-
 const SYNC_TOKEN_KEY='caviraGistTokenV1';
 const SYNC_GIST_KEY='caviraGistIdV1';
 const SYNC_DISCOVERY_KEY='caviraGistDiscoveryV7';
@@ -365,13 +344,6 @@ const SHARE_GIST_FILE='cavira_purchase_share.json';
 const SHARE_GIST_KEY='caviraFamilyShareGistV1';
 const SHARE_VIEW_KEY='caviraFamilyShareViewV1';
 const SHARE_CACHE_KEY='caviraFamilyShareCacheV1';
-const PAGE_PARAMS_V12=new URL(location.href).searchParams;
-const OWNER_REPAIR_MODE_V12=PAGE_PARAMS_V12.get('owner')==='1'||PAGE_PARAMS_V12.get('repair')==='1';
-if(OWNER_REPAIR_MODE_V12){
-  localStorage.removeItem(SHARE_VIEW_KEY);
-  localStorage.removeItem(SHARE_CACHE_KEY);
-}
-
 const defaultCategories=['車價','保險','稅費／領牌','家用充電','原廠配件','外廠配件','隔熱紙','鍍膜／美容','行車記錄器','停車／充電周邊','其他'];
 const defaultChecks=[
   ['文件','確認車主資料與領牌資料'],['文件','確認保險生效日與保單內容'],['文件','取得車主手冊／保固文件'],['付款','確認車價尾款與付款證明'],['付款','確認各項配件／加購金額'],
@@ -379,103 +351,27 @@ const defaultChecks=[
   ['配件','行車記錄器型號與錄影確認'],['配件','隔熱紙施工狀況確認'],['配件','腳踏墊／後廂墊／贈品確認'],['其他','設定 App／數位鑰匙／遠端功能'],['其他','拍照留存交車當下車況']
 ];
 const today=()=>new Date().toISOString().slice(0,10);
-applyConfirmedPaymentPatchV11();
 let state=loadState();
-const CONFIRMED_FIX_KEY='caviraConfirmedEntriesFix20260831V1';
-function mergeConfirmedEntriesOnce(){
-  if(localStorage.getItem(CONFIRMED_FIX_KEY)==='done')return;
-  try{
-    const before=JSON.parse(JSON.stringify(state));
-    // 留一份修正前快照，避免任何意外。
-    const raw=JSON.parse(localStorage.getItem(BACKUP_KEY)||'[]');
-    raw.unshift({id:'fix'+Date.now(),label:'補建四筆已確認資料前',createdAt:Date.now(),entries:Array.isArray(before.entries)?before.entries.length:0,data:before});
-    localStorage.setItem(BACKUP_KEY,JSON.stringify(raw.slice(0,20)));
-
-    const confirmed=[
-      {kind:'car',category:'車價',item:'FOXTRON CAVIRA Emerge 車款（含原廠選配）',amount:1262500,paid:1262500,method:'貸款',note:'2026-08-31 依已確認資料補建；實際付款日期／已付金額可再調整。'},
-      {kind:'insurance',category:'保險',item:'新車保險',amount:34549,paid:0,method:'轉帳',note:'2026-08-31 依已確認資料補建。'},
-      {kind:'plate',category:'稅費／領牌',item:'領牌費用',amount:4125,paid:0,method:'轉帳',note:'2026-08-31 依已確認資料補建。'},
-      {kind:'charger',category:'家用充電',item:'家用充電樁安裝',amount:118100,paid:22000,method:'轉帳',note:'2026-08-31 依已確認資料補建；已付 22,000 元。'}
-    ];
-    const matchEntry=(kind)=>state.entries.find(e=>{
-      const cat=String(e.category||''), item=String(e.item||'');
-      if(kind==='car')return cat==='車價' || /CAVIRA.*車|車價/.test(item);
-      if(kind==='insurance')return cat==='保險' || /保險/.test(item);
-      if(kind==='plate')return cat==='稅費／領牌' || /領牌/.test(item);
-      if(kind==='charger')return cat==='家用充電' || /充電樁/.test(item);
-      return false;
-    });
-    confirmed.forEach((c,idx)=>{
-      const e=matchEntry(c.kind);
-      if(e){
-        e.category=c.category;e.item=c.item;e.amount=c.amount;e.paid=c.paid;e.method=e.method||c.method;e.include=true;
-        e.note=(String(e.note||'').includes('2026-08-31 依已確認資料補建'))?e.note:c.note;
-      }else{
-        state.entries.push({id:uid(),date:'2026-08-31',category:c.category,item:c.item,vendor:c.kind==='car'?'FOXTRON':'',stage:'交車前',amount:c.amount,paid:c.paid,method:c.method,due:'',doc:'',include:true,warranty:'',note:c.note,createdAt:Date.now()+idx});
-      }
-    });
-    state.updatedAt=Date.now();
-    localStorage.setItem(KEY,JSON.stringify(state));
-    localStorage.setItem(CONFIRMED_FIX_KEY,'done');
-  }catch(e){console.warn('confirmed entry merge failed',e)}
-}
-mergeConfirmedEntriesOnce();
-
-const CONFIRMED_REPAIR_V12='caviraConfirmedRepairV12';
-function ensureConfirmedEntriesV12(force=false){
-  try{
-    if(!state || !Array.isArray(state.entries)) state=initialState();
-    const confirmed=[
-      {kind:'car',category:'車價',item:'FOXTRON CAVIRA Emerge 車款（含原廠選配）',amount:1262500,paid:1262500,method:'貸款',vendor:'FOXTRON',note:'已確認：車款含原廠選配 1,262,500 元，已付清。'},
-      {kind:'insurance',category:'保險',item:'新車保險',amount:34549,paid:0,method:'轉帳',vendor:'',note:'已確認：保險 34,549 元。'},
-      {kind:'plate',category:'稅費／領牌',item:'領牌費用',amount:4125,paid:0,method:'轉帳',vendor:'',note:'已確認：領牌費用 4,125 元。'},
-      {kind:'charger',category:'家用充電',item:'家用充電樁安裝',amount:118100,paid:22000,method:'轉帳',vendor:'',note:'已確認：充電樁 118,100 元，已付 22,000 元。'}
-    ];
-    const find=(kind)=>state.entries.find(e=>{
-      const cat=String(e.category||''),item=String(e.item||'');
-      if(kind==='car') return cat==='車價'||/CAVIRA.*車|車款|車價/.test(item);
-      if(kind==='insurance') return cat==='保險'||/保險/.test(item);
-      if(kind==='plate') return cat==='稅費／領牌'||/領牌/.test(item);
-      if(kind==='charger') return cat==='家用充電'||/充電樁/.test(item);
-      return false;
-    });
-    const missing=confirmed.some(c=>!find(c.kind));
-    if(!force && !OWNER_REPAIR_MODE_V12 && !missing && state.entries.length>=4) return false;
-    snapshotState('V12 修復四筆資料前',state);
-    confirmed.forEach((c,idx)=>{
-      let e=find(c.kind);
-      if(e){
-        e.category=c.category; e.item=c.item; e.amount=c.amount; e.include=true;
-        // 已知付款狀態只往上保護，不會把後續已付款金額改小。
-        e.paid=Math.max(Number(e.paid||0),c.paid);
-        e.method=e.method||c.method; e.vendor=e.vendor||c.vendor;
-        e.note=String(e.note||'').includes('已確認：')?e.note:c.note;
-      }else{
-        state.entries.push({id:uid(),date:'2026-08-31',category:c.category,item:c.item,vendor:c.vendor,stage:'交車前',amount:c.amount,paid:c.paid,method:c.method,due:'',doc:'',include:true,warranty:'',note:c.note,createdAt:Date.now()+idx});
-      }
-      if(!state.categories.includes(c.category)) state.categories.push(c.category);
-    });
-    state.updatedAt=Date.now();
-    localStorage.setItem(KEY,JSON.stringify(state));
-    localStorage.setItem(CONFIRMED_REPAIR_V12,'done');
-    snapshotState('V12 已修復四筆資料',state);
-    return true;
-  }catch(e){console.error('V12 confirmed repair failed',e);return false}
-}
-// 新版第一次載入時，只要缺任何一筆，就補回；owner=1 則強制修復並退出分享模式。
-ensureConfirmedEntriesV12(OWNER_REPAIR_MODE_V12);
+localStorage.setItem(KEY,JSON.stringify(state));
 let editingId=null;
 const isShareView=()=>!!localStorage.getItem(SHARE_VIEW_KEY);
 const normalizeShareCode=s=>String(s||'').trim().replace(/[^a-zA-Z0-9]/g,'');
 const currentShareCode=()=>normalizeShareCode(localStorage.getItem(SHARE_VIEW_KEY)||'');
-function seedEntries(){return [
-  {id:uid(),date:'2026-08-31',category:'車價',item:'FOXTRON CAVIRA Emerge 車款（含原廠選配）',vendor:'FOXTRON',stage:'交車前',amount:1262500,paid:1262500,method:'貸款',due:'',doc:'',include:true,warranty:'',note:'2026-08-31 依已確認資料補建；實際付款日期／已付金額可再調整。',createdAt:Date.now()-4000},
-  {id:uid(),date:'2026-08-31',category:'保險',item:'新車保險',vendor:'',stage:'交車前',amount:34549,paid:0,method:'轉帳',due:'',doc:'',include:true,warranty:'',note:'2026-08-31 依已確認資料補建。',createdAt:Date.now()-3000},
-  {id:uid(),date:'2026-08-31',category:'稅費／領牌',item:'領牌費用',vendor:'',stage:'交車前',amount:4125,paid:0,method:'轉帳',due:'',doc:'',include:true,warranty:'',note:'2026-08-31 依已確認資料補建。',createdAt:Date.now()-2000},
-  {id:uid(),date:'2026-08-31',category:'家用充電',item:'家用充電樁安裝',vendor:'',stage:'交車前',amount:118100,paid:22000,method:'轉帳',due:'',doc:'',include:true,warranty:'',note:'2026-08-31 依已確認資料補建；已付 22,000 元。',createdAt:Date.now()-1000}
-]}
-function initialState(){return {entries:seedEntries(),categories:[...defaultCategories],categoryBudgets:{},overallBudget:1500000,checks:defaultChecks.map((x,i)=>({id:'c'+i,group:x[0],text:x[1],done:false,custom:false})),updatedAt:Date.now()}}
-function loadState(){try{const s=JSON.parse(localStorage.getItem(KEY));return s&&s.entries?s:initialState()}catch(e){return initialState()}}
+function seedEntries(){return []}
+function blankChecks(){return defaultChecks.map((x,i)=>({id:'c'+i,group:x[0],text:x[1],done:false,custom:false}))}
+function initialState(){return {entries:[],categories:[...defaultCategories],categoryBudgets:{},overallBudget:1500000,checks:blankChecks(),updatedAt:Date.now()}}
+function normalizeState(raw){
+  const s=(raw&&typeof raw==='object')?raw:{};
+  const entries=Array.isArray(s.entries)?s.entries:[];
+  const savedCats=Array.isArray(s.categories)?s.categories.filter(x=>typeof x==='string'&&x.trim()).map(x=>x.trim()):[];
+  const entryCats=entries.map(e=>String(e?.category||'').trim()).filter(Boolean);
+  const categories=[...new Set([...defaultCategories,...savedCats,...entryCats])];
+  const categoryBudgets=(s.categoryBudgets&&typeof s.categoryBudgets==='object'&&!Array.isArray(s.categoryBudgets))?s.categoryBudgets:{};
+  const checks=Array.isArray(s.checks)&&s.checks.length?s.checks:blankChecks();
+  const overallBudget=Number.isFinite(Number(s.overallBudget))?Number(s.overallBudget):1500000;
+  return {...s,entries,categories,categoryBudgets,overallBudget,checks,updatedAt:Number(s.updatedAt)||Date.now()};
+}
+function loadState(){try{const raw=localStorage.getItem(KEY);return raw?normalizeState(JSON.parse(raw)):initialState()}catch(e){return initialState()}}
 function snapshotState(label='自動備份',data=state){
   try{
     const list=JSON.parse(localStorage.getItem(BACKUP_KEY)||'[]');
@@ -491,7 +387,7 @@ function isDefaultLike(s){
   return s.entries.length<=2 && s.entries.every(e=>String(e.note||'').includes('預設起始資料'));
 }
 function safeEntryCount(s){return Array.isArray(s?.entries)?s.entries.length:0}
-function persist(sync=true){if(isShareView()){toast('家庭分享模式為唯讀，不能修改資料');return}state.updatedAt=Date.now();localStorage.setItem(KEY,JSON.stringify(state));renderAll();if(sync&&localStorage.getItem(SYNC_TOKEN_KEY)) debounceAutoSync();if((state.familyShareGistId||localStorage.getItem(SHARE_GIST_KEY))&&localStorage.getItem(SYNC_TOKEN_KEY)) debounceSharePublish()}
+function persist(sync=true){if(isShareView()){toast('家庭分享模式為唯讀，不能修改資料');return}state=normalizeState(state);state.updatedAt=Date.now();localStorage.setItem(KEY,JSON.stringify(state));renderAll();if(sync&&localStorage.getItem(SYNC_TOKEN_KEY)) debounceAutoSync();if((state.familyShareGistId||localStorage.getItem(SHARE_GIST_KEY))&&localStorage.getItem(SYNC_TOKEN_KEY)) debounceSharePublish()}
 function uid(){return 'e'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
 function money(n){return new Intl.NumberFormat('zh-TW',{style:'currency',currency:'TWD',maximumFractionDigits:0}).format(Number(n||0))}
 function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
@@ -579,8 +475,19 @@ function renderChart(){
     </div>`;
   }).join('');
 }
-function populateCategories(){const opts=state.categories.map(c=>`<option>${esc(c)}</option>`).join('');fCategory.innerHTML=opts;qCategory.innerHTML='<option value="">全部分類</option>'+opts;categoryChips.innerHTML=state.categories.map(c=>`<span class="tag">${esc(c)} <button onclick="removeCategory('${encodeURIComponent(c)}')" style="border:0;background:transparent;color:#7c8ca3;font-weight:900">×</button></span>`).join('')}
-function removeCategory(enc){const c=decodeURIComponent(enc);if(state.entries.some(e=>e.category===c)){toast('這個分類仍有費用紀錄，不能刪除');return}state.categories=state.categories.filter(x=>x!==c);delete state.categoryBudgets[c];persist(false)} window.removeCategory=removeCategory;
+function populateCategories(){
+  state=normalizeState(state);
+  const opts=state.categories.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('');
+  fCategory.innerHTML=opts;
+  qCategory.innerHTML='<option value="">全部分類</option>'+opts;
+  categoryChips.innerHTML=state.categories.map(c=>`<span class="tag">${esc(c)} <button onclick="removeCategory('${encodeURIComponent(c)}')" style="border:0;background:transparent;color:#7c8ca3;font-weight:900">×</button></span>`).join('');
+}
+function removeCategory(enc){
+  const c=decodeURIComponent(enc);
+  if(defaultCategories.includes(c)){toast('這是系統預設分類，會固定保留');return}
+  if(state.entries.some(e=>e.category===c)){toast('這個分類仍有費用紀錄，不能刪除');return}
+  state.categories=state.categories.filter(x=>x!==c);delete state.categoryBudgets[c];persist(false)
+} window.removeCategory=removeCategory;
 
 function filteredEntries(){let arr=[...state.entries],q=qSearch.value.trim().toLowerCase();if(q)arr=arr.filter(e=>[e.item,e.vendor,e.note,e.doc].join(' ').toLowerCase().includes(q));if(qCategory.value)arr=arr.filter(e=>e.category===qCategory.value);if(qStatus.value)arr=arr.filter(e=>statusOf(e)===qStatus.value);if(qStage.value)arr=arr.filter(e=>e.stage===qStage.value);const s=qSort.value;arr.sort((a,b)=>s==='dateAsc'?String(a.date).localeCompare(String(b.date)):s==='amountDesc'?b.amount-a.amount:s==='amountAsc'?a.amount-b.amount:String(b.date).localeCompare(String(a.date)));return arr}
 function renderLedger(){const arr=filteredEntries();ledgerSummary.textContent=`${arr.length} 筆｜合計 ${money(arr.reduce((s,e)=>s+Number(e.amount||0),0))}`;ledgerBody.innerHTML=arr.length?arr.map(e=>{const bal=Math.max(0,Number(e.amount)-Number(e.paid)),s=statusOf(e);return `<tr><td data-label="日期">${e.date||'-'}</td><td data-label="分類"><span class="tag">${esc(e.category)}</span></td><td data-label="品項"><strong>${esc(e.item)}</strong><div style="font-size:16px;color:var(--muted);font-weight:700;margin-top:4px">${esc(e.stage||'')}</div></td><td data-label="店家">${esc(e.vendor||'-')}</td><td data-label="總額" class="money">${money(e.amount)}</td><td data-label="已付" class="money">${money(e.paid)}</td><td data-label="未付" class="money">${money(bal)}</td><td data-label="期限">${e.due||'-'}</td><td data-label="狀態"><span class="tag ${s}">${statusText(s)}</span></td><td data-label="納入成本">${e.include!==false?'✅':'—'}</td><td data-label="操作">${isShareView()?'—':`<div class="actionBtns"><button class="mini" onclick="editEntry('${e.id}')">編輯</button><button class="mini" onclick="dupEntry('${e.id}')">複製</button><button class="mini" onclick="deleteEntry('${e.id}')">刪除</button></div>`}</td></tr>`}).join(''):'<tr><td colspan="11"><div class="empty">沒有符合條件的紀錄</div></td></tr>'}
@@ -597,26 +504,21 @@ function renderChecks(){const groups=[...new Set(state.checks.map(x=>x.group))];
 function toggleCheck(id,v){const x=state.checks.find(i=>i.id===id);if(x)x.done=v;persist(false)} window.toggleCheck=toggleCheck;
 function deleteCheck(id){state.checks=state.checks.filter(x=>x.id!==id);persist(false)} window.deleteCheck=deleteCheck;
 function renderWarranty(){const arr=state.entries.filter(e=>e.warranty).sort((a,b)=>new Date(a.warranty)-new Date(b.warranty));warrantyGrid.innerHTML=arr.length?arr.map(e=>{const d=daysUntil(e.warranty);return `<div class="wCard ${d<0?'overdue':''}"><div style="font-size:13px;color:var(--muted)">${esc(e.category)}</div><strong>${esc(e.item)}</strong><div class="days">${d<0?'已過期':d+' 天'}</div><div style="font-size:13px;color:var(--muted)">到期日：${e.warranty}</div><div style="font-size:13px;margin-top:7px">${esc(e.vendor||'')}</div></div>`}).join(''):'<div class="empty" style="grid-column:1/-1">尚未設定任何保固到期日</div>'}
-function renderAll(){populateCategories();renderMetrics();renderRecent();renderDue();renderLedger();renderBudget();renderChecks();renderWarranty();applyViewMode();requestAnimationFrame(renderChart)}
+function renderAll(){state=normalizeState(state);populateCategories();renderMetrics();renderRecent();renderDue();renderLedger();renderBudget();renderChecks();renderWarranty();applyViewMode();requestAnimationFrame(renderChart)}
 function applyViewMode(){const share=isShareView();document.body.classList.toggle('shareView',share);shareBanner.classList.toggle('show',share);quickAddBtn.style.display=share?'none':'';syncBtn.style.display=share?'none':'';const backupTab=document.querySelector('[data-tab="backup"]');if(backupTab)backupTab.style.display=share?'none':'';if(share&&document.getElementById('backup').classList.contains('active'))switchTab('overview');const addRow=document.querySelector('#delivery .btnRow');if(addRow)addRow.style.display=share?'none':'';}
 
 saveEntryBtn.onclick=saveEntry;clearEntryBtn.onclick=clearForm;quickAddBtn.onclick=()=>{switchTab('ledger');clearForm()};
 [qSearch,qCategory,qStatus,qStage,qSort].forEach(el=>el.addEventListener('input',renderLedger));resetFilter.onclick=()=>{qSearch.value='';qCategory.value='';qStatus.value='';qStage.value='';qSort.value='dateDesc';renderLedger()};
 saveBudgetBtn.onclick=()=>{state.overallBudget=Number(overallBudget.value||0);persist(false);toast('預算已更新')};
 addCategoryBtn.onclick=()=>{const c=newCategory.value.trim();if(!c)return;if(!state.categories.includes(c))state.categories.push(c);newCategory.value='';persist(false)};
+restoreCategoriesBtn.onclick=()=>{state=normalizeState(state);persist(false);toast('預設分類已恢復，費用紀錄完全不變')};
 addCheckBtn.onclick=()=>{const t=newCheck.value.trim();if(!t)return;state.checks.push({id:uid(),group:newCheckGroup.value,text:t,done:false,custom:true});newCheck.value='';persist(false)};
 
 function download(name,content,type='application/octet-stream'){const blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),500)}
 exportJsonBtn.onclick=()=>download(`CAVIRA購車帳本_${today()}.json`,JSON.stringify(state,null,2),'application/json;charset=utf-8');
-importJsonInput.onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const s=JSON.parse(await f.text());if(!s.entries)throw 0;state=s;persist(false);toast('備份已匯入')}catch(_){alert('備份檔格式不正確')}};
+importJsonInput.onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const s=JSON.parse(await f.text());if(!s.entries)throw 0;state=normalizeState(s);persist(false);toast('備份已匯入')}catch(_){alert('備份檔格式不正確')}};
 exportCsvBtn.onclick=()=>{const heads=['日期','分類','階段','品項','店家','總金額','已付金額','未付金額','付款方式','付款期限','納入購車成本','保固到期','單據/訂單號','備註'];const lines=[heads,...state.entries.map(e=>[e.date,e.category,e.stage,e.item,e.vendor,e.amount,e.paid,Math.max(0,e.amount-e.paid),e.method,e.due,e.include!==false?'是':'否',e.warranty,e.doc,e.note])].map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(','));download(`CAVIRA購車費用_${today()}.csv`,'\ufeff'+lines.join('\n'),'text/csv;charset=utf-8')};
 clearAllBtn.onclick=()=>{if(confirm('確定清除全部帳本資料？此動作無法復原。')){localStorage.removeItem(KEY);state=initialState();persist(false);toast('已恢復成全新帳本')}};
-repairConfirmedBtn.onclick=()=>{
-  localStorage.removeItem(SHARE_VIEW_KEY);localStorage.removeItem(SHARE_CACHE_KEY);
-  const changed=ensureConfirmedEntriesV12(true);
-  renderAll();
-  toast(changed?'已補回四筆已確認資料':'四筆資料已存在');
-};
 
 // Gist sync
 const syncModal=document.getElementById('syncModal');function openSync(){syncToken.value=localStorage.getItem(SYNC_TOKEN_KEY)||'';syncGist.value=localStorage.getItem(SYNC_GIST_KEY)||'';syncModal.classList.add('show')}syncBtn.onclick=()=>{if(localStorage.getItem(SYNC_TOKEN_KEY))gistSync();else openSync()};openSyncSettings.onclick=openSync;closeSync.onclick=()=>syncModal.classList.remove('show');saveSync.onclick=()=>{if(!syncToken.value.trim()){toast('請輸入 GitHub Token');return}const oldToken=localStorage.getItem(SYNC_TOKEN_KEY)||'';const newToken=syncToken.value.trim();localStorage.setItem(SYNC_TOKEN_KEY,newToken);if(oldToken&&oldToken!==newToken){localStorage.removeItem(SYNC_GIST_KEY);localStorage.removeItem(SYNC_DISCOVERY_KEY);localStorage.removeItem(SYNC_LINKED_KEY)}if(syncGist.value.trim()){localStorage.setItem(SYNC_GIST_KEY,syncGist.value.trim());localStorage.setItem(SYNC_DISCOVERY_KEY,'manual')}syncModal.classList.remove('show');gistSync()};rediscoverCloud.onclick=()=>{if(syncToken.value.trim())localStorage.setItem(SYNC_TOKEN_KEY,syncToken.value.trim());localStorage.removeItem(SYNC_GIST_KEY);localStorage.removeItem(SYNC_DISCOVERY_KEY);localStorage.removeItem(SYNC_LINKED_KEY);syncGist.value='';syncModal.classList.remove('show');toast('正在尋找你的雲端帳本…');gistSync()};
@@ -670,7 +572,7 @@ async function discoverLedgerGist(){
 }
 function applyRemoteLedger(remote,id){
   snapshotState('套用雲端前的本機版本',state);
-  state=remote;
+  state=normalizeState(remote);
   localStorage.setItem(KEY,JSON.stringify(state));
   localStorage.setItem(SYNC_GIST_KEY,id);
   localStorage.setItem(SYNC_DISCOVERY_KEY,'auto');
@@ -734,7 +636,7 @@ scanLocalBackups.onclick=renderLocalRecovery;
 function fmtTime(ts){try{return new Date(Number(ts||0)).toLocaleString('zh-TW')}catch(_){return '-'}}
 function restoreRecoveryData(encoded,label){
   if(!confirm(`確定還原「${label}」？目前資料會先自動備份。`))return;
-  try{const data=JSON.parse(decodeURIComponent(encoded));snapshotState('還原前版本',state);state=data;localStorage.setItem(KEY,JSON.stringify(state));snapshotState('手動還原版本',state);renderAll();recoveryModal.classList.remove('show');toast(`已還原 ${safeEntryCount(state)} 筆資料`)}catch(e){alert('還原失敗：資料格式不正確')}
+  try{const data=JSON.parse(decodeURIComponent(encoded));snapshotState('還原前版本',state);state=normalizeState(data);localStorage.setItem(KEY,JSON.stringify(state));snapshotState('手動還原版本',state);renderAll();recoveryModal.classList.remove('show');toast(`已還原 ${safeEntryCount(state)} 筆資料`)}catch(e){alert('還原失敗：資料格式不正確')}
 }
 window.restoreRecoveryData=restoreRecoveryData;
 function recoveryCard(label,data,meta=''){
@@ -778,8 +680,7 @@ scanCloudHistory.onclick=async()=>{
 };
 
 clearForm();if(!isDefaultLike(state))snapshotState('載入頁面時備份',state);if(state.familyShareGistId)localStorage.setItem(SHARE_GIST_KEY,state.familyShareGistId);renderAll();
-if(OWNER_REPAIR_MODE_V12) setTimeout(()=>toast('主人模式：已退出分享模式並修復四筆資料'),300);
-const shareParam=OWNER_REPAIR_MODE_V12?null:new URL(location.href).searchParams.get('share');
+const shareParam=new URL(location.href).searchParams.get('share');
 if(shareParam){localStorage.setItem(SHARE_VIEW_KEY,normalizeShareCode(shareParam));history.replaceState({},'',location.pathname+location.hash);setTimeout(()=>fetchSharedState(shareParam,true),300)}
 else if(isShareView())setTimeout(()=>fetchSharedState(currentShareCode(),false),300);
 else if(localStorage.getItem(SYNC_TOKEN_KEY))setTimeout(()=>gistSync(true),800);
